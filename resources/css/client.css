@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    /* Light theme (default) */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9f9f9;
+    --text-primary: #222222;
+    --text-secondary: #666666;
+    --accent-primary: #e61c23;
+    --accent-secondary: #c41017;
+    --card-bg: #ffffff;
+    --header-bg: linear-gradient(to right, #e61c23, #d11419);
+    --footer-bg: #222222;
+    --footer-text: #ffffff;
+    --border-color: #e5e5e5;
+    --dropdown-bg: #ffffff;
+    --dropdown-text: #222222;
+    --dropdown-hover: #f3f4f6;
+    --input-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+    /* Dark theme */
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --accent-primary: #e61c23;
+    --accent-secondary: #ff3b41;
+    --card-bg: #2a2a2a;
+    --header-bg: #121212;
+    --footer-bg: #121212;
+    --footer-text: #ffffff;
+    --border-color: #333333;
+    --dropdown-bg: #2a2a2a;
+    --dropdown-text: #ffffff;
+    --dropdown-hover: #3a3a3a;
+    --input-bg: #2a2a2a;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bg-theme-primary {
+    background-color: var(--bg-primary);
+}
+
+.bg-theme-secondary {
+    background-color: var(--bg-secondary);
+}
+
+.text-theme-primary {
+    color: var(--text-primary);
+}
+
+.text-theme-secondary {
+    color: var(--text-secondary);
+}
+
+.border-theme {
+    border-color: var(--border-color);
+}
+
+.card {
+    background-color: var(--card-bg);
+}
+
+/* Custom styles for sliding sidebar */
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+.sidebar {
+    background-color: var(--bg-primary);
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80vw;
+    height: 100%;
+    z-index: 50;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+}
+.sidebar.active {
+    transform: translateX(0);
+}
+
+/* Mini cart dropdown */
+.mini-cart {
+    background-color: var(--dropdown-bg);
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 0.5rem;
+    width: 20rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 50;
+}
+.mini-cart.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Language dropdown */
+.lang-dropdown {
+    background-color: var(--dropdown-bg);
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 50;
+}
+.lang-dropdown.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Header with theme switching */
+header {
+    background: var(--header-bg);
+    transition: background 0.3s ease;
+}
+
+[data-theme="dark"] header {
+    background: #121212;
+    border-bottom: 1px solid #333;
+}
+
+[data-theme="dark"] .dropdown-item {
+    color: var(--dropdown-text);
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+    background-color: var(--dropdown-hover);
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] .bg-white {
+    background-color: var(--card-bg);
+}
+
+[data-theme="dark"] .text-gray-700,
+[data-theme="dark"] .text-gray-600,
+[data-theme="dark"] .text-gray-500 {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .border-gray-100,
+[data-theme="dark"] .border-gray-200 {
+    border-color: var(--border-color);
+}
+
+.theme-icon {
+    font-size: 1.25rem;
+}
+
+/* Form elements */
+input, select, textarea {
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+/* Dropdown hover states */
+.dropdown-item {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: var(--dropdown-text);
+}
+
+.dropdown-item:hover {
+    background-color: var(--dropdown-hover);
+}
