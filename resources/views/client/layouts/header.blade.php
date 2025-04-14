@@ -58,9 +58,9 @@
             
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex items-center space-x-1">
+                <a href="{{ route('home', ['locale' => $currentLocale]) }}" class="text-white font-medium px-4 py-2 rounded-md {{ request()->routeIs('home') ? 'bg-white/20' : 'hover:bg-white/10'}}">{{ trans_db('sections', 'home', false) ?: 'Home' }}</a>
                 <a href="#home" class="text-white font-medium px-4 py-2 rounded-md hover:bg-white/10 transition-colors">{{ trans_db('sections', 'about_us', false) ?: 'About Us' }}</a>
                 <a href="#menu" class="text-white font-medium px-4 py-2 rounded-md hover:bg-white/10 transition-colors">{{ trans_db('sections', 'menu', false) ?: 'Menu' }}</a>
-                <a href="#news" class="text-white font-medium px-4 py-2 rounded-md hover:bg-white/10 transition-colors">{{ trans_db('sections', 'news', false) ?: 'News' }}</a>
                 <a href="#contact" class="text-white font-medium px-4 py-2 rounded-md hover:bg-white/10 transition-colors">{{ trans_db('sections', 'contact', false) ?: 'Contact' }}</a>
             </nav>
             
@@ -257,6 +257,11 @@
     <div class="p-4">
         <ul class="mb-6 border-b border-theme pb-6">
             <li class="mb-1">
+                <a href="{{ route('home', ['locale' => $currentLocale]) }}" class="flex items-center p-3 rounded-md {{ request()->routeIs('home') ? 'text-aisuki-red bg-theme-secondary' : 'text-theme-primary hover:text-aisuki-red hover:bg-theme-secondary'}}">
+                    <i class="fas fa-home mr-3 w-5 text-center text-aisuki-red"></i> {{ trans_db('sections', 'home', false) ?: 'Home' }}
+                </a>
+            </li>
+            <li class="mb-1">
                 <a href="#home" class="flex items-center text-theme-primary hover:text-aisuki-red p-3 rounded-md hover:bg-theme-secondary">
                     <i class="fas fa-home mr-3 w-5 text-center text-aisuki-red"></i> {{ trans_db('sections', 'about_us', false) ?: 'About Us' }}
                 </a>
@@ -264,11 +269,6 @@
             <li class="mb-1">
                 <a href="#menu" class="flex items-center text-theme-primary hover:text-aisuki-red p-3 rounded-md hover:bg-theme-secondary">
                     <i class="fas fa-utensils mr-3 w-5 text-center text-aisuki-red"></i> {{ trans_db('sections', 'menu', false) ?: 'Menu' }}
-                </a>
-            </li>
-            <li class="mb-1">
-                <a href="#news" class="flex items-center text-theme-primary hover:text-aisuki-red p-3 rounded-md hover:bg-theme-secondary">
-                    <i class="fas fa-newspaper mr-3 w-5 text-center text-aisuki-red"></i> {{ trans_db('sections', 'news', false) ?: 'News' }}
                 </a>
             </li>
             <li class="mb-1">
