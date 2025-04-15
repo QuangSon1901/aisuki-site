@@ -1,4 +1,5 @@
 import './bootstrap';
+import './cart';
 
 // public/client/js/global.js
 $(document).ready(function() {

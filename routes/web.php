@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\LanguageController;
 use App\Http\Controllers\Client\MenuController;
@@ -19,4 +20,5 @@ Route::get('language/{locale}', [LanguageController::class, 'change'])->name('la
 Route::group(['prefix' => '{locale?}', 'middleware' => 'setLocale'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
 });

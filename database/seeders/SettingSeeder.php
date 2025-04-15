@@ -120,6 +120,12 @@ class SettingSeeder extends Seeder
                 'group' => 'seo',
                 'is_translatable' => true,
             ],
+            [
+                'key' => 'delivery_fee',
+                'value' => '2.50',
+                'group' => 'order',
+                'is_translatable' => false,
+            ],
         ];
 
         foreach ($settings as $setting) {

@@ -102,87 +102,34 @@
                     <button id="cartToggle" class="flex items-center bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-md transition-colors">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="ml-1.5 hidden sm:inline-block">{{ trans_db('sections', 'cart', false) ?: 'Cart' }}</span>
-                        <span class="absolute -top-2 -right-2 bg-aisuki-yellow text-aisuki-red text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                        <span class="absolute -top-2 -right-2 bg-aisuki-yellow text-aisuki-red text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center cart-count">0</span>
                     </button>
                     
                     <!-- Mini Cart Dropdown -->
                     <div id="miniCart" class="mini-cart">
                         <div class="p-4 border-b border-theme">
-                            <h3 class="font-bold text-lg text-theme-primary">{{ trans_db('sections', 'your_cart', false) ?: 'Your Cart' }} (3)</h3>
+                            <h3 class="font-bold text-lg text-theme-primary">{{ trans_db('sections', 'your_cart', false) ?: 'Giỏ hàng' }} (<span class="cart-count">0</span>)</h3>
                         </div>
-                        <div class="max-h-80 overflow-y-auto">
-                            <!-- Cart Item 1 -->
-                            <div class="p-4 border-b border-theme flex">
-                                <img src="{{ asset('uploads/sushi.jpg') }}" alt="Sushi" class="w-16 h-16 rounded object-cover">
-                                <div class="ml-3 flex-1">
-                                    <div class="flex justify-between">
-                                        <h4 class="font-medium text-theme-primary">{{ trans_db('menu_items', 'salmon_sushi_name', false) ?: 'Salmon Sushi' }}</h4>
-                                        <button class="text-gray-400 hover:text-aisuki-red">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                    <div class="flex justify-between mt-2">
-                                        <div class="flex items-center border rounded overflow-hidden border-theme">
-                                            <button class="px-2 py-1 bg-theme-secondary hover:bg-opacity-80">-</button>
-                                            <span class="px-2 text-theme-primary">1</span>
-                                            <button class="px-2 py-1 bg-theme-secondary hover:bg-opacity-80">+</button>
-                                        </div>
-                                        <p class="font-semibold text-aisuki-red">{{ setting('currency', '€') }}12.95</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Cart Item 2 -->
-                            <div class="p-4 border-b border-theme flex">
-                                <img src="{{ asset('uploads/california-roll.jpg') }}" alt="Maki" class="w-16 h-16 rounded object-cover">
-                                <div class="ml-3 flex-1">
-                                    <div class="flex justify-between">
-                                        <h4 class="font-medium text-theme-primary">{{ trans_db('menu_items', 'california_roll_name', false) ?: 'California Roll' }}</h4>
-                                        <button class="text-gray-400 hover:text-aisuki-red">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                    <div class="flex justify-between mt-2">
-                                        <div class="flex items-center border rounded overflow-hidden border-theme">
-                                            <button class="px-2 py-1 bg-theme-secondary hover:bg-opacity-80">-</button>
-                                            <span class="px-2 text-theme-primary">1</span>
-                                            <button class="px-2 py-1 bg-theme-secondary hover:bg-opacity-80">+</button>
-                                        </div>
-                                        <p class="font-semibold text-aisuki-red">{{ setting('currency', '€') }}10.50</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Cart Item 3 -->
-                            <div class="p-4 border-b border-theme flex">
-                                <img src="{{ asset('uploads/tempura.jpg') }}" alt="Tempura" class="w-16 h-16 rounded object-cover">
-                                <div class="ml-3 flex-1">
-                                    <div class="flex justify-between">
-                                        <h4 class="font-medium text-theme-primary">{{ trans_db('menu_items', 'tempura_shrimp_name', false) ?: 'Shrimp Tempura' }}</h4>
-                                        <button class="text-gray-400 hover:text-aisuki-red">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                    <div class="flex justify-between mt-2">
-                                        <div class="flex items-center border rounded overflow-hidden border-theme">
-                                            <button class="px-2 py-1 bg-theme-secondary hover:bg-opacity-80">-</button>
-                                            <span class="px-2 text-theme-primary">1</span>
-                                            <button class="px-2 py-1 bg-theme-secondary hover:bg-opacity-80">+</button>
-                                        </div>
-                                        <p class="font-semibold text-aisuki-red">{{ setting('currency', '€') }}12.05</p>
-                                    </div>
-                                </div>
+                        
+                        <div class="mini-cart-items max-h-80 overflow-y-auto">
+                            <!-- Nội dung giỏ hàng sẽ được điền bởi JavaScript -->
+                            <div class="p-6 text-center">
+                                <i class="fas fa-shopping-cart text-3xl mb-2 text-theme-secondary"></i>
+                                <p class="text-theme-secondary">{{ trans_db('sections', 'cart_empty', false) ?: 'Giỏ hàng trống' }}</p>
                             </div>
                         </div>
+                        
                         <div class="p-4 border-t border-theme">
                             <div class="flex justify-between mb-3">
-                                <span class="font-medium text-theme-primary">{{ trans_db('sections', 'total', false) ?: 'Total' }}:</span>
-                                <span class="font-bold text-aisuki-red">{{ setting('currency', '€') }}35.50</span>
+                                <span class="font-medium text-theme-primary">{{ trans_db('sections', 'total', false) ?: 'Tổng cộng' }}:</span>
+                                <span class="font-bold text-aisuki-red mini-cart-subtotal">0,00 €</span>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
-                                <a href="#" class="text-center py-2 px-4 border border-aisuki-red text-aisuki-red rounded-md hover:bg-aisuki-red hover:text-white transition-colors">
-                                    {{ trans_db('sections', 'view_cart', false) ?: 'View Cart' }}
+                                <a href="{{ route('cart', ['locale' => app()->getLocale()]) }}" class="text-center py-2 px-4 border border-aisuki-red text-aisuki-red rounded-md hover:bg-aisuki-red hover:text-white transition-colors">
+                                    {{ trans_db('sections', 'view_cart', false) ?: 'Xem giỏ hàng' }}
                                 </a>
-                                <a href="#" class="text-center py-2 px-4 bg-aisuki-red text-white rounded-md hover:bg-aisuki-red-dark transition-colors">
-                                    {{ trans_db('sections', 'checkout', false) ?: 'Checkout' }}
+                                <a href="{{ route('cart', ['locale' => app()->getLocale()]) }}" class="text-center py-2 px-4 bg-aisuki-red text-white rounded-md hover:bg-aisuki-red-dark transition-colors mini-cart-checkout opacity-50 pointer-events-none">
+                                    {{ trans_db('sections', 'checkout', false) ?: 'Thanh toán' }}
                                 </a>
                             </div>
                         </div>

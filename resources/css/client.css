@@ -204,3 +204,161 @@ input, select, textarea {
 .dropdown-item:hover {
     background-color: var(--dropdown-hover);
 }
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg);
+    border-left: 4px solid;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateX(110%);
+    opacity: 0;
+    max-width: 350px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0.375rem;
+}
+
+.toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast-success {
+    border-color: #10b981;
+}
+
+.toast-error {
+    border-color: #ef4444;
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.toast-icon {
+    margin-right: 12px;
+    font-size: 1.25rem;
+}
+
+.toast-success .toast-icon {
+    color: #10b981;
+}
+
+.toast-error .toast-icon {
+    color: #ef4444;
+}
+
+.toast-message {
+    color: var(--text-primary);
+    font-size: 0.875rem;
+}
+
+.toast-close {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    margin-left: 8px;
+    padding: 4px;
+}
+
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    animation: toast-progress 3s linear forwards;
+}
+
+.toast-success .toast-progress {
+    background-color: #10b981;
+}
+
+.toast-error .toast-progress {
+    background-color: #ef4444;
+}
+
+@keyframes toast-progress {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0%;
+    }
+}
+
+/* Mini Cart */
+.mini-cart {
+    background-color: var(--dropdown-bg);
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 0.5rem;
+    width: 20rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-0.5rem) scale(0.95);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 50;
+    transform-origin: top right;
+}
+
+.mini-cart.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.mini-cart-items {
+    min-height: 100px;
+}
+
+/* Custom Input Number */
+.cart-item-qty {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.cart-item-qty::-webkit-outer-spin-button,
+.cart-item-qty::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Mobile Cart Styles */
+@media (max-width: 768px) {
+    .toast-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+    
+    .toast {
+        max-width: none;
+    }
+    
+    .mini-cart {
+        width: calc(100vw - 20px);
+        max-width: 20rem;
+    }
+}

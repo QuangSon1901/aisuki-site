@@ -1052,6 +1052,307 @@ class TranslationSeeder extends Seeder
                 'language_code' => 'de',
                 'value' => 'Keine Artikel in dieser Kategorie gefunden.'
             ],
+            // Cart Section
+            [
+                'group' => 'sections',
+                'key' => 'your_cart',
+                'language_code' => 'en',
+                'value' => 'Your Cart'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'your_cart',
+                'language_code' => 'de',
+                'value' => 'Ihr Warenkorb'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'cart_items',
+                'language_code' => 'en',
+                'value' => 'Cart Items'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'cart_items',
+                'language_code' => 'de',
+                'value' => 'Warenkorb Artikel'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'cart_empty',
+                'language_code' => 'en',
+                'value' => 'Your cart is empty'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'cart_empty',
+                'language_code' => 'de',
+                'value' => 'Ihr Warenkorb ist leer'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'cart_empty_message',
+                'language_code' => 'en',
+                'value' => 'Add some delicious items to your cart'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'cart_empty_message',
+                'language_code' => 'de',
+                'value' => 'Fügen Sie Ihrem Warenkorb leckere Artikel hinzu'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'loading_cart',
+                'language_code' => 'en',
+                'value' => 'Loading your cart...'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'loading_cart',
+                'language_code' => 'de',
+                'value' => 'Ihr Warenkorb wird geladen...'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'continue_shopping',
+                'language_code' => 'en',
+                'value' => 'Continue Shopping'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'continue_shopping',
+                'language_code' => 'de',
+                'value' => 'Weiter einkaufen'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'clear_cart',
+                'language_code' => 'en',
+                'value' => 'Clear Cart'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'clear_cart',
+                'language_code' => 'de',
+                'value' => 'Warenkorb leeren'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'confirm_clear_cart',
+                'language_code' => 'en',
+                'value' => 'Are you sure you want to clear your cart?'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'confirm_clear_cart',
+                'language_code' => 'de',
+                'value' => 'Sind Sie sicher, dass Sie Ihren Warenkorb leeren möchten?'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'cart_cleared',
+                'language_code' => 'en',
+                'value' => 'Your cart has been cleared'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'cart_cleared',
+                'language_code' => 'de',
+                'value' => 'Ihr Warenkorb wurde geleert'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'proceed_to_checkout',
+                'language_code' => 'en',
+                'value' => 'Proceed to Checkout'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'proceed_to_checkout',
+                'language_code' => 'de',
+                'value' => 'Zur Kasse gehen'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'order_summary',
+                'language_code' => 'en',
+                'value' => 'Order Summary'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'order_summary',
+                'language_code' => 'de',
+                'value' => 'Bestellübersicht'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'subtotal',
+                'language_code' => 'en',
+                'value' => 'Subtotal'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'subtotal',
+                'language_code' => 'de',
+                'value' => 'Zwischensumme'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'delivery_fee',
+                'language_code' => 'en',
+                'value' => 'Delivery Fee'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'delivery_fee',
+                'language_code' => 'de',
+                'value' => 'Liefergebühr'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'discount',
+                'language_code' => 'en',
+                'value' => 'Discount'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'discount',
+                'language_code' => 'de',
+                'value' => 'Rabatt'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'promo_code_placeholder',
+                'language_code' => 'en',
+                'value' => 'Enter promo code'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'promo_code_placeholder',
+                'language_code' => 'de',
+                'value' => 'Gutscheincode eingeben'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'apply',
+                'language_code' => 'en',
+                'value' => 'Apply'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'apply',
+                'language_code' => 'de',
+                'value' => 'Einlösen'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'need_help',
+                'language_code' => 'en',
+                'value' => 'Need Help?'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'need_help',
+                'language_code' => 'de',
+                'value' => 'Hilfe benötigt?'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'call_us',
+                'language_code' => 'en',
+                'value' => 'Call us'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'call_us',
+                'language_code' => 'de',
+                'value' => 'Rufen Sie uns an'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'remove',
+                'language_code' => 'en',
+                'value' => 'Remove'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'remove',
+                'language_code' => 'de',
+                'value' => 'Entfernen'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'added_to_cart',
+                'language_code' => 'en',
+                'value' => 'added to cart'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'added_to_cart',
+                'language_code' => 'de',
+                'value' => 'zum Warenkorb hinzugefügt'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'removed_from_cart',
+                'language_code' => 'en',
+                'value' => 'removed from cart'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'removed_from_cart',
+                'language_code' => 'de',
+                'value' => 'aus dem Warenkorb entfernt'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'enter_promo_code',
+                'language_code' => 'en',
+                'value' => 'Please enter promo code'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'enter_promo_code',
+                'language_code' => 'de',
+                'value' => 'Bitte geben Sie einen Promo-Code ein'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'promo_applied',
+                'language_code' => 'en',
+                'value' => 'Promo code applied successfully'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'promo_applied',
+                'language_code' => 'de',
+                'value' => 'Promo-Code erfolgreich angewendet'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'invalid_promo',
+                'language_code' => 'en',
+                'value' => 'Invalid promo code'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'invalid_promo',
+                'language_code' => 'de',
+                'value' => 'Ungültiger Promo-Code'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'special_note_placeholder',
+                'language_code' => 'en',
+                'value' => 'Example: Less spicy, no onions...'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'special_note_placeholder',
+                'language_code' => 'de',
+                'value' => 'Beispiel: Weniger scharf, keine Zwiebeln...'
+            ],
         ];
 
         foreach ($translations as $translation) {
