@@ -178,13 +178,16 @@
     </div>
     
     <!-- Mobile Cart Summary -->
-    <div class="bg-theme-secondary px-4 py-2 flex justify-between items-center">
+    <div class="bg-theme-secondary px-4 py-2 flex justify-between items-center" id="mobileSummaryCart">
         <div>
-            <div class="font-medium text-theme-primary">{{ trans_db('sections', 'your_cart', false) ?: 'Your Cart' }}</div>
-            <div class="text-sm text-theme-secondary">3 {{ trans_db('sections', 'items', false) ?: 'items' }} - {{ setting('currency', '€') }}35.50</div>
+            <div class="font-medium text-theme-primary">{{ trans_db('sections', 'your_cart', false) ?: 'Giỏ hàng' }}</div>
+            <div class="text-sm text-theme-secondary">
+                <span class="cart-count">0</span> {{ trans_db('sections', 'items', false) ?: 'món' }} - 
+                <span class="mobile-cart-subtotal">{{ setting('currency', '€') }}0,00</span>
+            </div>
         </div>
-        <a href="#" class="bg-aisuki-red text-white px-3 py-1.5 rounded-md text-sm">
-            {{ trans_db('sections', 'view_cart', false) ?: 'View Cart' }}
+        <a href="{{ route('cart', ['locale' => app()->getLocale()]) }}" class="bg-aisuki-red text-white px-3 py-1.5 rounded-md text-sm">
+            {{ trans_db('sections', 'view_cart', false) ?: 'Xem giỏ hàng' }}
         </a>
     </div>
     

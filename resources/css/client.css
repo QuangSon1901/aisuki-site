@@ -362,3 +362,7 @@ input, select, textarea {
         max-width: 20rem;
     }
 }
+
+#mobileSummaryCart a.opacity-50.pointer-events-none {
+    background-color: rgba(230, 28, 35, 0.5);
+}

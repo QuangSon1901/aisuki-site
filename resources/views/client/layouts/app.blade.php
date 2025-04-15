@@ -48,5 +48,28 @@
     
     <!-- Page specific JS -->
     @stack('scripts')
+
+    <script>
+        window.translations = {
+            added_to_cart: "{{ trans_db('sections', 'added_to_cart', false) ?: 'Added to cart' }}",
+            cart_items: "{{ trans_db('sections', 'cart_items', false) ?: 'Cart Items' }}",
+            cart_empty: "{{ trans_db('sections', 'cart_empty', false) ?: 'Giỏ hàng trống' }}",
+            cart_empty_message: "{{ trans_db('sections', 'cart_empty_message', false) ?: 'Hãy thêm món ăn vào giỏ hàng' }}",
+            view_menu: "{{ trans_db('sections', 'view_menu', false) ?: 'Xem thực đơn' }}",
+            removed_from_cart: "{{ trans_db('sections', 'removed_from_cart', false) ?: 'đã xóa khỏi giỏ hàng' }}",
+            remove: "{{ trans_db('sections', 'remove', false) ?: 'Remove' }}",
+            cart_cleared: "{{ trans_db('sections', 'cart_cleared', false) ?: 'Giỏ hàng đã được xóa' }}",
+            confirm_clear_cart: "{{ trans_db('sections', 'confirm_clear_cart', false) ?: 'Bạn có chắc muốn xóa toàn bộ giỏ hàng không?' }}",
+            enter_promo_code: "{{ trans_db('sections', 'enter_promo_code', false) ?: 'Vui lòng nhập mã giảm giá' }}",
+            promo_applied: "{{ trans_db('sections', 'promo_applied', false) ?: 'Đã áp dụng mã giảm giá' }}",
+            invalid_promo: "{{ trans_db('sections', 'invalid_promo', false) ?: 'Mã giảm giá không hợp lệ' }}",
+            enter_promo_code: "{{ trans_db('sections', 'enter_promo_code', false) ?: 'Mã giảm giá không hợp lệ' }}"
+        };
+        
+        window.routes = {
+            cart: "{{ route('cart', ['locale' => app()->getLocale()]) }}",
+            menu: "{{ route('menu', ['locale' => app()->getLocale()]) }}"
+        };
+    </script>
 </body>
 </html>

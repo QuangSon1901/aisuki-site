@@ -133,12 +133,23 @@ const Cart = {
         const cartCount = this.getCount();
         $('.cart-count').text(cartCount);
         
-        // Cập nhật mini cart dropdown
+        // Cập nhật tổng tiền hiển thị trên mobile sidebar
+        const subtotal = this.getSubtotal();
+        $('.mobile-cart-subtotal').text(this.formatPrice(subtotal));
+        
+        // Cập nhật mini cart trong dropdown
         this.updateMiniCart();
         
         // Nếu đang ở trang giỏ hàng, cập nhật trang giỏ hàng
         if ($('#cartPage').length) {
             this.updateCartPage();
+        }
+        
+        // Cập nhật trạng thái nút checkout trong sidebar nếu không có sản phẩm
+        if (this.isEmpty()) {
+            $('#mobileSummaryCart a').addClass('opacity-50 pointer-events-none');
+        } else {
+            $('#mobileSummaryCart a').removeClass('opacity-50 pointer-events-none');
         }
     },
     
@@ -241,7 +252,7 @@ const Cart = {
             $('.cart-title').text(window.translations.cart_empty || 'Giỏ hàng trống');
         } else {
             // Cập nhật tiêu đề
-            $('.cart-title').text(`${window.translations.cart_items || 'Món ăn trong giỏ'} (${cartItems.length})`);
+            $('.cart-title').text(`${window.translations.cart_items || 'Cart Items'} (${cartItems.length})`);
             
             // Thêm từng sản phẩm vào giỏ hàng
             cartItems.forEach((item, index) => {
@@ -285,7 +296,7 @@ const Cart = {
                                     <button class="px-2 py-1 bg-theme-secondary text-theme-primary hover:bg-opacity-80 cart-item-increase" data-index="${index}">+</button>
                                 </div>
                                 <button class="text-theme-secondary hover:text-aisuki-red transition-colors cart-item-remove" data-index="${index}">
-                                    <i class="fas fa-trash-alt mr-1"></i> ${window.translations.remove || 'Xóa'}
+                                    <i class="fas fa-trash-alt mr-1"></i> ${window.translations.remove || 'Remove'}
                                 </button>
                             </div>
                         </div>
@@ -548,8 +559,10 @@ const Cart = {
             }
         });
         
-        // Giảm số lượng trong mini cart
+            // Giảm số lượng trong mini cart
         $(document).on('click', '.decrease-qty-mini', function(e) {
+            console.log(123);
+            
             e.preventDefault();
             e.stopPropagation();
             const index = $(this).data('index');

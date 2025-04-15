@@ -1353,6 +1353,42 @@ class TranslationSeeder extends Seeder
                 'language_code' => 'de',
                 'value' => 'Beispiel: Weniger scharf, keine Zwiebeln...'
             ],
+            [
+                'group' => 'sections',
+                'key' => 'view_menu',
+                'language_code' => 'en',
+                'value' => 'View menu'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'view_menu',
+                'language_code' => 'de',
+                'value' => 'Speisekarte ansehen'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'opening_hours',
+                'language_code' => 'en',
+                'value' => 'Opening hours'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'opening_hours',
+                'language_code' => 'de',
+                'value' => 'Öffnungszeiten'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'items',
+                'language_code' => 'en',
+                'value' => 'items'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'items',
+                'language_code' => 'de',
+                'value' => 'Artikel'
+            ],
         ];
 
         foreach ($translations as $translation) {

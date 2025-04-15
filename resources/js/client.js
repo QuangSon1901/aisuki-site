@@ -81,11 +81,6 @@ $(document).ready(function() {
         $('#langDropdown, #miniCart').removeClass('active');
     });
 
-    // Prevent closing when clicking inside dropdown
-    $('.mini-cart, .lang-dropdown').click(function(e) {
-        e.stopPropagation();
-    });
-
     // Scroll handling
     let lastScrollTop = 0;
     const header = $('header');
@@ -167,8 +162,4 @@ $(document).ready(function() {
     if ($(window).scrollTop() > 300 && $(window).width() < 768) {
         $('#mobileCta').css('transform', 'translateY(0)');
     }
-
-    $(document).on('click', '.mini-cart button', function(e) {
-        e.preventDefault();
-    });
 });
