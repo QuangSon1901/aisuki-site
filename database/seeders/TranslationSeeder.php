@@ -919,6 +919,139 @@ class TranslationSeeder extends Seeder
                 'language_code' => 'de',
                 'value' => 'Frische Garnelen in knusprigem japanischem Teig, mit spezieller Tempura-Soße'
             ],
+            // Menu Page
+            [
+                'group' => 'sections',
+                'key' => 'menu_page_title',
+                'language_code' => 'en',
+                'value' => 'Our Menu'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'menu_page_title',
+                'language_code' => 'de',
+                'value' => 'Unsere Speisekarte'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'menu_page_subtitle',
+                'language_code' => 'en',
+                'value' => 'Discover authentic Japanese flavors'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'menu_page_subtitle',
+                'language_code' => 'de',
+                'value' => 'Entdecken Sie authentische japanische Aromen'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'lunch_special_note',
+                'language_code' => 'en',
+                'value' => 'Available from 11:00 to 14:30'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'lunch_special_note',
+                'language_code' => 'de',
+                'value' => 'Verfügbar von 11:00 bis 14:30 Uhr'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'all_categories',
+                'language_code' => 'en',
+                'value' => 'All Categories'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'all_categories',
+                'language_code' => 'de',
+                'value' => 'Alle Kategorien'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'special_note',
+                'language_code' => 'en',
+                'value' => 'Special Note'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'special_note',
+                'language_code' => 'de',
+                'value' => 'Besondere Anmerkung'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'add_to_cart',
+                'language_code' => 'en',
+                'value' => 'Add to Cart'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'add_to_cart',
+                'language_code' => 'de',
+                'value' => 'In den Warenkorb'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'order_now',
+                'language_code' => 'en',
+                'value' => 'Order Now'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'order_now',
+                'language_code' => 'de',
+                'value' => 'Jetzt bestellen'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'quantity',
+                'language_code' => 'en',
+                'value' => 'Quantity'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'quantity',
+                'language_code' => 'de',
+                'value' => 'Menge'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'addons',
+                'language_code' => 'en',
+                'value' => 'Add-ons'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'addons',
+                'language_code' => 'de',
+                'value' => 'Extras'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'total',
+                'language_code' => 'en',
+                'value' => 'Total'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'total',
+                'language_code' => 'de',
+                'value' => 'Gesamt'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'no_items_found',
+                'language_code' => 'en',
+                'value' => 'No items found in this category.'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'no_items_found',
+                'language_code' => 'de',
+                'value' => 'Keine Artikel in dieser Kategorie gefunden.'
+            ],
         ];
 
         foreach ($translations as $translation) {

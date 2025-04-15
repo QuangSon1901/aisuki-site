@@ -87,15 +87,32 @@ $(document).ready(function() {
 
     // Scroll handling
     let lastScrollTop = 0;
+    const header = $('header');
+    const categoryNav = $('.sticky-category-nav');
+    let headerHeight = header.outerHeight();
+    let isHeaderVisible = true;
+
+    function updateStickyNav() {
+        if (isHeaderVisible) {
+            categoryNav.css('top', headerHeight + 'px');
+        } else {
+            categoryNav.css('top', '0');
+        }
+    }
+
     $(window).scroll(function() {
         let scrollTop = $(window).scrollTop();
         
         // Header visibility
         if (scrollTop > lastScrollTop && scrollTop > 200) {
-            $('header').css('transform', 'translateY(-100%)');
+            header.css('transform', 'translateY(-100%)');
+            isHeaderVisible = false;
         } else {
-            $('header').css('transform', 'translateY(0)');
+            header.css('transform', 'translateY(0)');
+            isHeaderVisible = true;
         }
+        
+        updateStickyNav();
         
         // Mobile CTA visibility
         if (scrollTop > 300 && $(window).width() < 768) {
@@ -112,6 +129,17 @@ $(document).ready(function() {
         }
         
         lastScrollTop = scrollTop;
+    });
+
+    // Update on resize
+    $(window).resize(function() {
+        headerHeight = header.outerHeight();
+        updateStickyNav();
+    });
+
+    // Initial setup
+    $(document).ready(function() {
+        updateStickyNav();
     });
 
     // Scroll to top functionality

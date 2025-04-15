@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
             LanguageSeeder::class,
             SettingSeeder::class,
             TranslationSeeder::class,
+            MenuCategorySeeder::class,
+            MenuItemSeeder::class,
+            AddonItemSeeder::class,
         ]);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-
+// app/Http/Controllers/Client/MenuController.php
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
@@ -8,7 +8,7 @@ use App\Models\MenuCategory;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class MenuController extends Controller
 {
     public function index()
     {
@@ -16,21 +16,24 @@ class HomeController extends Controller
         $contactSettings = settings_group('contact');
         $socialSettings = settings_group('social');
         
-        // Lấy danh mục món ăn
+        // Lấy tất cả danh mục hiện có với ngôn ngữ hiện tại
         $categories = MenuCategory::getActive();
         
-        // Lấy món ăn nổi bật (có is_featured = true)
-        $featuredItems = MenuItem::getFeatured()->take(4);
+        // Lấy món ăn theo danh mục
+        $menuItems = [];
+        foreach ($categories as $category) {
+            $menuItems[$category->slug] = MenuItem::getByCategory($category->id);
+        }
         
-        // Lấy các addon (món ăn kèm)
+        // Lấy các add-on với ngôn ngữ hiện tại
         $addons = AddonItem::getActive();
         
-        return view('client.pages.home', compact(
+        return view('client.pages.menu', compact(
             'seoSettings', 
             'contactSettings', 
-            'socialSettings',
+            'socialSettings', 
             'categories',
-            'featuredItems',
+            'menuItems',
             'addons'
         ));
     }

@@ -18,7 +18,7 @@
     <style> @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Boldonse&display=swap'); </style>
     
     <!-- Vite CSS -->
-    @vite(['resources/css/client.css', 'resources/js/client.js'])
+    @vite(['resources/css/client.css', 'resources/js/client.js', 'resources/js/cart.js'])
     <!-- Page specific CSS -->
     @stack('styles')
 </head>
