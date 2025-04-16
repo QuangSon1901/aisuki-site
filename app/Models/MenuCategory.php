@@ -22,6 +22,11 @@ class MenuCategory extends Model
     {
         return $this->belongsTo(Language::class, 'language_id');
     }
+
+    public function menuItems()
+    {
+        return $this->hasMany(MenuItem::class, 'category_id');
+    }
     
     /**
      * Lấy các record cùng nội dung (cùng mass_id) nhưng khác ngôn ngữ
@@ -89,5 +94,18 @@ class MenuCategory extends Model
         }
         
         return $categories;
+    }
+
+    public static function getActiveForCurrentLanguage()
+    {
+        $currentLanguage = Language::where('code', app()->getLocale())->first();
+        if (!$currentLanguage) {
+            $currentLanguage = Language::where('is_default', true)->first();
+        }
+        
+        return self::where('language_id', $currentLanguage->id)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
     }
 }

@@ -24,6 +24,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     
     // Resource Routes
+    // Menu Categories with translation support
+    Route::get('menu-categories/{id}/create-translation', [MenuCategoryController::class, 'createTranslation'])->name('admin.menu-categories.create-translation');
+    Route::post('menu-categories/{id}/create-translation', [MenuCategoryController::class, 'storeTranslation'])->name('admin.menu-categories.store-translation');
     Route::resource('menu-categories', MenuCategoryController::class)->names('admin.menu-categories');
     
     Route::resource('menu-items', MenuItemController::class)->names('admin.menu-items');
