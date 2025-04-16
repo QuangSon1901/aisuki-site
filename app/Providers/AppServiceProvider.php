@@ -7,6 +7,7 @@ use App\Http\Helpers\SettingHelper;
 use App\Services\MailService;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (env('APP_ENV') == 'production') {
+            URL::forceScheme('https');
+        }
+        
         View::composer('*', function ($view) {
             $view->with('activeLanguages', get_languages());
             $view->with('defaultLanguage', default_language());
