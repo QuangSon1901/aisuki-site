@@ -31,6 +31,8 @@ Route::group(['prefix' => '{locale?}', 'middleware' => 'setLocale', 'where' => [
     Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
     Route::post('/checkout/submit', [CartController::class, 'submitOrder'])->name('checkout.submit');
 
+    Route::get('/order-success/{orderNumber}', [CartController::class, 'orderSuccess'])->name('order.success');
+    
     Route::get('{slug}', [PageController::class, 'show'])->name('page.show');
 });
 
@@ -53,11 +55,6 @@ Route::middleware('setLocale')->group(function () {
     Route::get('/cart', function() {
         $locale = app()->getLocale();
         return redirect("/{$locale}/cart");
-    });
-    
-    Route::get('/page/{slug}', function($slug) {
-        $locale = app()->getLocale();
-        return redirect("/{$locale}/page/{$slug}");
     });
 
     Route::get('/checkout', function() {

@@ -197,4 +197,59 @@ class MailService
             return false;
         }
     }
+
+    public function sendOrderConfirmation($to, array $data)
+    {
+        // Check if notifications are enabled
+        $enableNotification = setting('mail_enable_notification') == '1';
+        if (!$enableNotification) {
+            return false;
+        }
+
+        try {
+            // Configure mail settings
+            $this->configureMailSettings();
+
+            // Send email
+            Mail::send('emails.order_confirmation', $data, function ($message) use ($to, $data) {
+                $message->to($to);
+                $message->subject('Order Confirmation - ' . $data['order']->order_number);
+                
+                if (!empty($this->defaultReplyTo)) {
+                    $message->replyTo($this->defaultReplyTo);
+                }
+            });
+
+            return true;
+        } catch (Exception $e) {
+            Log::error('Cannot send order confirmation email: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function sendOrderNotificationToAdmin($to, array $data)
+    {
+        // Check if notifications are enabled
+        $enableNotification = setting('mail_enable_notification') == '1';
+        if (!$enableNotification) {
+            return false;
+        }
+
+        try {
+            // Configure mail settings
+            $this->configureMailSettings();
+
+            // Send email
+            Mail::send('emails.admin_order_notification', $data, function ($message) use ($to, $data) {
+                $message->to($to);
+                $message->subject('New Order Received - ' . $data['order']->order_number);
+                $message->replyTo($data['order']->email, $data['order']->full_name);
+            });
+
+            return true;
+        } catch (Exception $e) {
+            Log::error('Cannot send admin order notification: ' . $e->getMessage());
+            return false;
+        }
+    }
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\AddonItemController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\LanguageController;
+use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\TranslationController;
 use App\Http\Controllers\Admin\UserController;
@@ -21,7 +23,9 @@ Route::post('logout', [AuthController::class, 'logout'])->name('admin.logout');
 // Admin Protected Routes
 Route::middleware(['auth', 'admin'])->group(function () {
     // Dashboard 
-    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('admin');
+    Route::get('admin', [DashboardController::class, 'index'])->name('admin.home');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     
     // Resource Routes
     // Menu Categories with translation support
@@ -66,4 +70,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('profile', [ProfileController::class, 'update'])->name('admin.profile.update');
     Route::get('profile/change-password', [ProfileController::class, 'changePassword'])->name('admin.profile.change-password');
     Route::put('profile/change-password', [ProfileController::class, 'updatePassword'])->name('admin.profile.update-password');
+
+    // Orders
+    Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
+    Route::post('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.update-status');
+    
+    // Notifications
+    Route::get('notifications', [NotificationController::class, 'index'])->name('admin.notifications.index');
+    Route::get('notifications/{notification}', [NotificationController::class, 'show'])->name('admin.notifications.show');
+    Route::post('notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('admin.notifications.mark-read');
+    Route::post('notifications/{notification}/processed', [NotificationController::class, 'markAsProcessed'])->name('admin.notifications.mark-processed');
+    Route::post('notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('admin.notifications.mark-all-read');
 });
