@@ -1389,6 +1389,333 @@ class TranslationSeeder extends Seeder
                 'language_code' => 'de',
                 'value' => 'Artikel'
             ],
+            // Checkout page translations
+            [
+                'group' => 'sections',
+                'key' => 'checkout_title',
+                'language_code' => 'en',
+                'value' => 'Checkout'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'checkout_title',
+                'language_code' => 'de',
+                'value' => 'Zur Kasse'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'customer_information',
+                'language_code' => 'en',
+                'value' => 'Customer Information'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'customer_information',
+                'language_code' => 'de',
+                'value' => 'Kundeninformationen'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'full_name',
+                'language_code' => 'en',
+                'value' => 'Full Name'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'full_name',
+                'language_code' => 'de',
+                'value' => 'Vollständiger Name'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'delivery_method',
+                'language_code' => 'en',
+                'value' => 'Delivery Method'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'delivery_method',
+                'language_code' => 'de',
+                'value' => 'Liefermethode'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'delivery',
+                'language_code' => 'en',
+                'value' => 'Delivery'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'delivery',
+                'language_code' => 'de',
+                'value' => 'Lieferung'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'pickup',
+                'language_code' => 'en',
+                'value' => 'Pickup'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'pickup',
+                'language_code' => 'de',
+                'value' => 'Abholung'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'delivery_to_address',
+                'language_code' => 'en',
+                'value' => 'Delivery to your address'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'delivery_to_address',
+                'language_code' => 'de',
+                'value' => 'Lieferung an Ihre Adresse'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'pickup_from_restaurant',
+                'language_code' => 'en',
+                'value' => 'Pickup from our restaurant'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'pickup_from_restaurant',
+                'language_code' => 'de',
+                'value' => 'Abholung in unserem Restaurant'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'street',
+                'language_code' => 'en',
+                'value' => 'Street'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'street',
+                'language_code' => 'de',
+                'value' => 'Straße'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'house_number',
+                'language_code' => 'en',
+                'value' => 'House Number'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'house_number',
+                'language_code' => 'de',
+                'value' => 'Hausnummer'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'city',
+                'language_code' => 'en',
+                'value' => 'City'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'city',
+                'language_code' => 'de',
+                'value' => 'Stadt'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'postal_code',
+                'language_code' => 'en',
+                'value' => 'Postal Code'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'postal_code',
+                'language_code' => 'de',
+                'value' => 'Postleitzahl'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'submit_order',
+                'language_code' => 'en',
+                'value' => 'Submit Order'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'submit_order',
+                'language_code' => 'de',
+                'value' => 'Bestellung aufgeben'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'back_to_cart',
+                'language_code' => 'en',
+                'value' => 'Back to Cart'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'back_to_cart',
+                'language_code' => 'de',
+                'value' => 'Zurück zum Warenkorb'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'order_success',
+                'language_code' => 'en',
+                'value' => 'Your order has been submitted! We will contact you shortly to confirm your order.'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'order_success',
+                'language_code' => 'de',
+                'value' => 'Ihre Bestellung wurde übermittelt! Wir werden Sie in Kürze kontaktieren, um Ihre Bestellung zu bestätigen.'
+            ],
+            // Contact page translations
+            [
+                'group' => 'sections',
+                'key' => 'contact_title',
+                'language_code' => 'en',
+                'value' => 'Contact Us'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'contact_title',
+                'language_code' => 'de',
+                'value' => 'Kontakt'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'contact_subtitle',
+                'language_code' => 'en',
+                'value' => 'We would love to hear from you'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'contact_subtitle',
+                'language_code' => 'de',
+                'value' => 'Wir würden uns freuen, von Ihnen zu hören'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'send_message',
+                'language_code' => 'en',
+                'value' => 'Send Message'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'send_message',
+                'language_code' => 'de',
+                'value' => 'Nachricht senden'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'contact_form',
+                'language_code' => 'en',
+                'value' => 'Contact Form'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'contact_form',
+                'language_code' => 'de',
+                'value' => 'Kontaktformular'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'subject',
+                'language_code' => 'en',
+                'value' => 'Subject'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'subject',
+                'language_code' => 'de',
+                'value' => 'Betreff'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'message',
+                'language_code' => 'en',
+                'value' => 'Message'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'message',
+                'language_code' => 'de',
+                'value' => 'Nachricht'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'find_us',
+                'language_code' => 'en',
+                'value' => 'Find Us'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'find_us',
+                'language_code' => 'de',
+                'value' => 'Finden Sie uns'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'contact_success',
+                'language_code' => 'en',
+                'value' => 'Thank you for your message. We will contact you shortly!'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'contact_success',
+                'language_code' => 'de',
+                'value' => 'Vielen Dank für Ihre Nachricht. Wir werden uns in Kürze bei Ihnen melden!'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'business_hours',
+                'language_code' => 'en',
+                'value' => 'Business Hours'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'business_hours',
+                'language_code' => 'de',
+                'value' => 'Öffnungszeiten'
+            ],
+            // Thêm bản dịch mới cho trang liên hệ và đặt bàn
+            [
+                'group' => 'sections',
+                'key' => 'reservation_success',
+                'language_code' => 'en',
+                'value' => 'Thank you for your reservation. We will contact you shortly to confirm!'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'reservation_success',
+                'language_code' => 'de',
+                'value' => 'Vielen Dank für Ihre Reservierung. Wir werden uns in Kürze bei Ihnen melden, um zu bestätigen!'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'contact_info_section',
+                'language_code' => 'en',
+                'value' => 'Contact Information'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'contact_info_section',
+                'language_code' => 'de',
+                'value' => 'Kontaktinformationen'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'make_reservation_contact',
+                'language_code' => 'en',
+                'value' => 'Make a Reservation'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'make_reservation_contact',
+                'language_code' => 'de',
+                'value' => 'Einen Tisch reservieren'
+            ],
         ];
 
         foreach ($translations as $translation) {

@@ -24,13 +24,25 @@ Route::group(['prefix' => '{locale?}', 'middleware' => 'setLocale', 'where' => [
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
     
     Route::get('/about-us', [PageController::class, 'about'])->name('about');
+
+    Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+    Route::post('/reservation/submit', [PageController::class, 'submitReservation'])->name('reservation.submit');
+
     Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
+
+    Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout/submit', [CartController::class, 'submitOrder'])->name('checkout.submit');
 });
 
 Route::middleware('setLocale')->group(function () {
     Route::get('/about-us', function() {
         $locale = app()->getLocale();
         return redirect("/{$locale}/about-us");
+    });
+
+    Route::get('/contact', function() {
+        $locale = app()->getLocale();
+        return redirect("/{$locale}/contact");
     });
     
     Route::get('/menu', function() {
@@ -46,5 +58,10 @@ Route::middleware('setLocale')->group(function () {
     Route::get('/page/{slug}', function($slug) {
         $locale = app()->getLocale();
         return redirect("/{$locale}/page/{$slug}");
+    });
+
+    Route::get('/checkout', function() {
+        $locale = app()->getLocale();
+        return redirect("/{$locale}/checkout");
     });
 });

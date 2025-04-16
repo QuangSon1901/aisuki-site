@@ -32,6 +32,40 @@ class PageController extends Controller
             'socialSettings'
         ));
     }
+
+    public function contact()
+    {
+        $seoSettings = settings_group('seo');
+        $contactSettings = settings_group('contact');
+        $socialSettings = settings_group('social');
+        
+        return view('client.pages.contact', compact(
+            'seoSettings',
+            'contactSettings',
+            'socialSettings'
+        ));
+    }
+
+    public function submitReservation(Request $request)
+    {
+        // Validate form input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'date' => 'required|date',
+            'time' => 'required',
+            'guests' => 'required|string',
+            'notes' => 'nullable|string',
+        ]);
+        
+        // Phần này sẽ được xử lý sau (gửi mail, lưu vào database...)
+        
+        // Redirect với thông báo thành công
+        return redirect()->route('contact', ['locale' => app()->getLocale()])->with('success', 
+            trans_db('sections', 'reservation_success', false) ?: 'Thank you for your reservation. We will contact you shortly to confirm!'
+        );
+    }
     
     /**
      * Show the about us page (convenience method)

@@ -126,6 +126,36 @@ class SettingSeeder extends Seeder
                 'group' => 'order',
                 'is_translatable' => false,
             ],
+            [
+                'key' => 'enable_delivery',
+                'value' => '1',
+                'group' => 'order',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'enable_pickup',
+                'value' => '1',
+                'group' => 'order',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'min_order_amount',
+                'value' => '10.00',
+                'group' => 'order',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'store_address',
+                'value' => 'Leopoldstraße 123, 80802 Munich, Germany',
+                'group' => 'order',
+                'is_translatable' => true,
+            ],
+            [
+                'key' => 'pickup_instructions',
+                'value' => 'Please come to the restaurant and give your name at the counter.',
+                'group' => 'order',
+                'is_translatable' => true,
+            ],
         ];
 
         foreach ($settings as $setting) {

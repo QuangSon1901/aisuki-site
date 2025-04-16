@@ -1,6 +1,9 @@
 @extends('client.layouts.app')
 
 @section('content')
+@php
+    $currentLocale = app()->getLocale();
+@endphp
 <!-- Hero Banner -->
 <section class="relative h-[400px] sm:h-[450px] lg:h-[500px] bg-cover bg-center flex justify-center items-center" id="home" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')">
     <div class="absolute inset-0 bg-black/40"></div>
@@ -9,7 +12,7 @@
         <p class="text-lg mb-8 drop-shadow-md">
             {{ trans_db('sections', 'hero_subtitle', false) ?: 'Authentic Japanese restaurant with traditional flavors and cozy atmosphere' }}
         </p>
-        <a href="#reservation" class="inline-block bg-aisuki-red text-white py-3 px-6 rounded-full font-semibold hover:bg-[#c41017] transform hover:-translate-y-0.5 transition-all duration-300 mb-2 md:mb-0">
+        <a href="{{ route('contact', ['locale' => $currentLocale]) }}" class="inline-block bg-aisuki-red text-white py-3 px-6 rounded-full font-semibold hover:bg-[#c41017] transform hover:-translate-y-0.5 transition-all duration-300 mb-2 md:mb-0">
             {{ trans_db('sections', 'hero_button_reservation', false) ?: 'Book a Table Now' }}
         </a>
         <a href="#menu" class="inline-block bg-transparent border-2 border-white text-white py-3 px-6 rounded-full font-semibold mb-4 md:mb-0 md:ml-4 hover:bg-white hover:text-aisuki-red transform hover:-translate-y-0.5 transition-all duration-300">
@@ -162,7 +165,7 @@
             <a href="tel:{{ setting('phone') }}" class="flex items-center justify-center text-white bg-aisuki-red py-3 px-6 rounded-full font-semibold transition-all hover:bg-[#c41017]">
                 <i class="fas fa-phone-alt mr-2"></i> {{ trans_db('sections', 'call', false) ?: 'Call' }} {{ setting('phone') }}
             </a>
-            <a href="#reservation" class="flex items-center justify-center bg-transparent border-2 border-white text-white py-3 px-6 rounded-full font-semibold transition-all hover:bg-white hover:text-aisuki-red">
+            <a href="{{ route('contact', ['locale' => $currentLocale]) }}" class="flex items-center justify-center bg-transparent border-2 border-white text-white py-3 px-6 rounded-full font-semibold transition-all hover:bg-white hover:text-aisuki-red">
                 <i class="fas fa-calendar-alt mr-2"></i> {{ trans_db('sections', 'online_reservation', false) ?: 'Online Reservation' }}
             </a>
         </div>

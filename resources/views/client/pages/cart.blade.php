@@ -39,9 +39,9 @@
                                         <i class="fas fa-trash-alt mr-1"></i> {{ trans_db('sections', 'clear_cart', false) ?: 'Xóa giỏ hàng' }}
                                     </button>
                                 </div>
-                                <button id="proceedToCheckout" class="bg-aisuki-red text-white py-2 px-6 rounded-md hover:bg-aisuki-red-dark transition-colors">
+                                <a href="{{ route('checkout', ['locale' => app()->getLocale()]) }}" id="proceedToCheckout" class="bg-aisuki-red text-white py-2 px-6 rounded-md hover:bg-aisuki-red-dark transition-colors">
                                     {{ trans_db('sections', 'proceed_to_checkout', false) ?: 'Tiến hành đặt hàng' }} <i class="fas fa-chevron-right ml-2"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="flex justify-between text-theme-primary">
                                     <span>{{ trans_db('sections', 'delivery_fee', false) ?: 'Phí vận chuyển' }}:</span>
-                                    <span id="deliveryFee" data-fee="{{ $deliveryFee }}">{{ setting('currency', '€') }}{{ number_format($deliveryFee, 2, ',', '.') }}</span>
+                                    <span id="deliveryFee" data-fee="{{ $deliveryFee }}">{{ number_format($deliveryFee, 2, ',', '.') }} {{ setting('currency', '€') }}</span>
                                 </div>
                                 <div id="discountRow" class="flex justify-between text-green-600 hidden">
                                     <span>{{ trans_db('sections', 'discount', false) ?: 'Giảm giá' }}:</span>

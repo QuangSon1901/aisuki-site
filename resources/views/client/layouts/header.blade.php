@@ -61,7 +61,7 @@
                 <a href="{{ route('home', ['locale' => $currentLocale]) }}" class="text-white font-medium px-4 py-2 rounded-md {{ request()->routeIs('home') ? 'bg-white/20' : 'hover:bg-white/10'}}">{{ trans_db('sections', 'home', false) ?: 'Home' }}</a>
                 <a href="{{ route('about', ['locale' => $currentLocale]) }}" class="text-white font-medium px-4 py-2 rounded-md {{ request()->routeIs('about') ? 'bg-white/20' : 'hover:bg-white/10'}}">{{ trans_db('sections', 'about_us', false) ?: 'About Us' }}</a>
                 <a href="{{ route('menu', ['locale' => $currentLocale]) }}" class="text-white font-medium px-4 py-2 rounded-md {{ request()->routeIs('menu') ? 'bg-white/20' : 'hover:bg-white/10'}}">{{ trans_db('sections', 'menu', false) ?: 'Menu' }}</a>
-                <a href="{{ route('home', ['locale' => $currentLocale]) }}#contact" class="text-white font-medium px-4 py-2 rounded-md hover:bg-white/10 transition-colors">{{ trans_db('sections', 'contact', false) ?: 'Contact' }}</a>
+                <a href="{{ route('contact', ['locale' => $currentLocale]) }}" class="text-white font-medium px-4 py-2 rounded-md {{ request()->routeIs('contact') ? 'bg-white/20' : 'hover:bg-white/10'}}">{{ trans_db('sections', 'contact', false) ?: 'Contact' }}</a>
             </nav>
             
             <!-- Right Side Actions -->
@@ -128,8 +128,8 @@
                                 <a href="{{ route('cart', ['locale' => app()->getLocale()]) }}" class="text-center py-2 px-4 border border-aisuki-red text-aisuki-red rounded-md hover:bg-aisuki-red hover:text-white transition-colors">
                                     {{ trans_db('sections', 'view_cart', false) ?: 'Xem giỏ hàng' }}
                                 </a>
-                                <a href="{{ route('cart', ['locale' => app()->getLocale()]) }}" class="text-center py-2 px-4 bg-aisuki-red text-white rounded-md hover:bg-aisuki-red-dark transition-colors mini-cart-checkout opacity-50 pointer-events-none">
-                                    {{ trans_db('sections', 'checkout', false) ?: 'Thanh toán' }}
+                                <a href="{{ route('checkout', ['locale' => app()->getLocale()]) }}" class="text-center py-2 px-4 bg-aisuki-red text-white rounded-md hover:bg-aisuki-red-dark transition-colors mini-cart-checkout opacity-50 pointer-events-none">
+                                    {{ trans_db('sections', 'checkout', false) ?: 'Đặt hàng' }}
                                 </a>
                             </div>
                         </div>
@@ -222,7 +222,7 @@
                 </a>
             </li>
             <li class="mb-1">
-                <a href="{{ route('home', ['locale' => $currentLocale]) }}#contact" class="flex items-center text-theme-primary hover:text-aisuki-red p-3 rounded-md hover:bg-theme-secondary">
+                <a href="{{ route('contact', ['locale' => $currentLocale]) }}" class="flex items-center p-3 rounded-md {{ request()->routeIs('contact') ? 'text-aisuki-red bg-theme-secondary' : 'text-theme-primary hover:text-aisuki-red hover:bg-theme-secondary'}}">
                     <i class="fas fa-envelope mr-3 w-5 text-center text-aisuki-red"></i> {{ trans_db('sections', 'contact', false) ?: 'Contact' }}
                 </a>
             </li>

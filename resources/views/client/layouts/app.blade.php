@@ -23,6 +23,9 @@
     @stack('styles')
 </head>
 <body>
+    @php
+        $currentLocale = app()->getLocale();
+    @endphp
     @include('client.layouts.header')
     
     <main>
@@ -36,7 +39,7 @@
         <a href="tel:{{ setting('phone') }}" class="flex-1 bg-aisuki-red text-white font-semibold py-2 px-1 rounded text-center text-sm mr-2">
             <i class="fas fa-phone-alt mr-1"></i> Call Now
         </a>
-        <a href="#reservation" class="flex-1 bg-aisuki-yellow text-aisuki-black font-semibold py-2 px-1 rounded text-center text-sm ml-2">
+        <a href="{{ route('contact', ['locale' => $currentLocale]) }}" class="flex-1 bg-aisuki-yellow text-aisuki-black font-semibold py-2 px-1 rounded text-center text-sm ml-2">
             <i class="fas fa-calendar-alt mr-1"></i> Reservation
         </a>
     </div>

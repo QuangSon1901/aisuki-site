@@ -44,7 +44,7 @@
                     <li><a href="{{ route('home', ['locale' => $currentLocale]) }}" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'home', false) ?: 'Home' }}</a></li>
                     <li><a href="{{ route('about', ['locale' => $currentLocale]) }}" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'about_us', false) ?: 'About Us' }}</a></li>
                     <li><a href="{{ route('menu', ['locale' => $currentLocale]) }}" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'menu', false) ?: 'Menu' }}</a></li>
-                    <li><a href="{{ route('home', ['locale' => $currentLocale]) }}#contact" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'contact', false) ?: 'Contact' }}</a></li>
+                    <li><a href="{{ route('contact', ['locale' => $currentLocale]) }}" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'contact', false) ?: 'Contact' }}</a></li>
                 </ul>
             </div>
             <div>
