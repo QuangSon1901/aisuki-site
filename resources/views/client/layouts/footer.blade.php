@@ -1,11 +1,15 @@
-<footer class="bg-footer-bg text-footer-text py-12 sm:py-16 px-4" id="contact">
+@php
+    $currentLocale = app()->getLocale();
+@endphp
+<footer class="bg-footer-bg text-footer-text pt-12 pb-20 sm:pt-16 sm:pb-16 px-4" id="contact">
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
             <div>
-                <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="inline-block mb-6">
+                <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="flex items-center mb-6">
                     <img src="{{ asset(setting('logo', 'logo.png')) }}" alt="{{ setting('site_name', 'AISUKI') }} Logo" class="h-12">
+                    <h3 class="text-white ml-2.5 text-xl font-brand tracking-wide">AISUKI</h3>
                 </a>
-                <p class="text-gray-400 text-sm font-brand mb-4">
+                <p class="text-gray-400 text-sm mb-4">
                     {{ trans_db('sections', 'footer_about_text', false) ?: 'AISUKI is an authentic Japanese restaurant, bringing diners the true culinary experiences of the cherry blossom country.' }}
                 </p>
                 <div class="flex gap-3 mt-6">
@@ -37,10 +41,10 @@
             <div>
                 <h3 class="text-lg font-semibold mb-6 pb-2 border-b border-aisuki-red inline-block text-aisuki-red">{{ trans_db('sections', 'quick_links', false) ?: 'Quick Links' }}</h3>
                 <ul class="space-y-2">
-                    <li><a href="#home" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'home', false) ?: 'Home' }}</a></li>
-                    <li><a href="#about" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'about_us', false) ?: 'About Us' }}</a></li>
-                    <li><a href="#menu" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'menu', false) ?: 'Menu' }}</a></li>
-                    <li><a href="#contact" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'contact', false) ?: 'Contact' }}</a></li>
+                    <li><a href="{{ route('home', ['locale' => $currentLocale]) }}" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'home', false) ?: 'Home' }}</a></li>
+                    <li><a href="{{ route('about', ['locale' => $currentLocale]) }}" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'about_us', false) ?: 'About Us' }}</a></li>
+                    <li><a href="{{ route('menu', ['locale' => $currentLocale]) }}" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'menu', false) ?: 'Menu' }}</a></li>
+                    <li><a href="{{ route('home', ['locale' => $currentLocale]) }}#contact" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'contact', false) ?: 'Contact' }}</a></li>
                 </ul>
             </div>
             <div>

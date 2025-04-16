@@ -20,7 +20,7 @@ class HomeController extends Controller
         $categories = MenuCategory::getActive();
         
         // Lấy món ăn nổi bật (có is_featured = true)
-        $featuredItems = MenuItem::getFeatured()->take(4);
+        $featuredItems = MenuItem::getFeatured()->take(8);
         
         // Lấy các addon (món ăn kèm)
         $addons = AddonItem::getActive();

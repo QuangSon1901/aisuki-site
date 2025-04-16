@@ -205,6 +205,42 @@
             headerHeight = header.outerHeight();
             updateStickyNav();
         });
+        
+        // NEW CODE: Check URL hash on page load to activate the correct category tab
+        function activateCategoryFromHash() {
+            if (window.location.hash) {
+                // Extract the category slug from the hash (e.g., #category-sushi -> sushi)
+                const categorySlug = window.location.hash.substring(1).replace('category-', '');
+                
+                // Find the corresponding category tab
+                const categoryTab = $(`.category-tabs button[data-target="${categorySlug}"]`);
+                
+                if (categoryTab.length) {
+                    // Activate the category tab
+                    categoryTab.click();
+                    
+                    // Calculate scroll offset considering sticky header
+                    const headerHeight = $('header').outerHeight() || 0;
+                    const categoriesNavHeight = $('.sticky-category-nav').outerHeight() || 0;
+                    const scrollOffset = headerHeight + categoriesNavHeight + 20;
+                    
+                    // Smooth scroll to the category section
+                    setTimeout(function() {
+                        $('html, body').animate({
+                            scrollTop: $(window.location.hash).offset().top - scrollOffset
+                        }, 500);
+                    }, 100);
+                }
+            }
+        }
+        
+        // Activate category from URL hash when page loads
+        activateCategoryFromHash();
+        
+        // Also handle hash changes during navigation
+        $(window).on('hashchange', function() {
+            activateCategoryFromHash();
+        });
     });
 </script>
 @endpush

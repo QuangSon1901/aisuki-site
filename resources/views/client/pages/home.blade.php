@@ -65,11 +65,11 @@
                 {{ trans_db('sections', 'menu_title', false) ?: 'Menu' }}
                 <span class="absolute w-20 h-0.5 bg-aisuki-red -bottom-2 left-1/2 transform -translate-x-1/2"></span>
             </h2>
-            <p class="text-theme-secondary mt-6">{{ setting('phone') }}</p>
+            <p class="text-theme-secondary mt-6">{{trans_db('sections', 'call_hotline', false)}}: {{ setting('phone') }}</p>
         </div>
 
         <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
-            <a href="tel:{{ setting('phone') }}" class="flex items-center justify-center bg-theme-primary text-aisuki-red border-2 border-aisuki-red rounded-full py-3 px-6 font-semibold transition-all hover:bg-aisuki-yellow">
+            <a href="tel:{{ setting('phone') }}" class="flex items-center justify-center bg-aisuki-red text-white rounded-full py-3 px-6 font-semibold transition-all hover:bg-[#c41017]">
                 <i class="fas fa-phone-alt mr-2"></i> {{ trans_db('sections', 'call_hotline', false) ?: 'Call Hotline' }}
             </a>
             <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('whatsapp')) }}" target="_blank" class="flex items-center justify-center bg-[#25D366] text-white rounded-full py-3 px-6 font-semibold transition-all hover:bg-[#128C7E]">
@@ -159,7 +159,7 @@
             {{ trans_db('sections', 'cta_subtitle', false) ?: 'Make a reservation to choose your favorite seat and experience authentic Japanese cuisine at AISUKI' }}
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="tel:{{ setting('phone') }}" class="flex items-center justify-center bg-white text-aisuki-red py-3 px-6 rounded-full font-semibold transition-all hover:bg-aisuki-yellow">
+            <a href="tel:{{ setting('phone') }}" class="flex items-center justify-center text-white bg-aisuki-red py-3 px-6 rounded-full font-semibold transition-all hover:bg-[#c41017]">
                 <i class="fas fa-phone-alt mr-2"></i> {{ trans_db('sections', 'call', false) ?: 'Call' }} {{ setting('phone') }}
             </a>
             <a href="#reservation" class="flex items-center justify-center bg-transparent border-2 border-white text-white py-3 px-6 rounded-full font-semibold transition-all hover:bg-white hover:text-aisuki-red">
@@ -198,7 +198,7 @@
 </section>
 
 <!-- Reservation Section -->
-<section class="py-12 sm:py-16 px-4" id="reservation">
+<section class="py-12 sm:py-16 px-4" id="contact">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12">
             <h2 class="text-3xl sm:text-4xl text-aisuki-red font-bold mb-4 inline-block relative">
