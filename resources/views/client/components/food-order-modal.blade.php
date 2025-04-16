@@ -1,4 +1,4 @@
-<!-- Modal đặt món -->
+<!-- Modal đặt món - Enhanced Desktop Design -->
 <div class="product-modal-overlay" id="productModalOverlay"></div>
 <div class="product-modal" id="productModal">
     <!-- Modal Header -->
@@ -11,10 +11,12 @@
     
     <!-- Modal Content -->
     <div class="modal-content">
-        <!-- Hình ảnh và thông tin cơ bản -->
+        <!-- Enhanced Product Showcase -->
         <div class="product-showcase">
             <div class="product-image-container">
-                <img id="modalProductImage" src="" alt="Product" class="product-image">
+                <div class="image-wrapper">
+                    <img id="modalProductImage" src="" alt="Product" class="product-image">
+                </div>
             </div>
             <div class="product-basic-info">
                 <div class="product-name-price">
@@ -25,52 +27,50 @@
                         <div id="modalProductPrice" class="product-price"></div>
                     </div>
                 </div>
-                <p id="modalProductDesc" class="product-description mt-2"></p>
+                <div class="product-description-container">
+                    <p id="modalProductDesc" class="product-description"></p>
+                </div>
+                
+                <!-- Product options moved inside basic info for better layout -->
+                <div class="product-options-wrapper">
+                    <!-- Quantity Selection - Enhanced -->
+                    <div class="option-section quantity-section">
+                        <h5 class="option-title">{{ trans_db('sections', 'quantity', false) ?: 'Số lượng' }}</h5>
+                        <div class="quantity-control">
+                            <button class="quantity-btn" id="decreaseQty">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="number" value="1" min="1" class="quantity-input" id="productQty">
+                            <button class="quantity-btn" id="increaseQty">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                
+                    <!-- Special Note -->
+                    <div class="option-section note-section">
+                        <h5 class="option-title">{{ trans_db('sections', 'special_note', false) ?: 'Ghi chú' }}</h5>
+                        <textarea id="orderNote" rows="2" placeholder="{{ trans_db('sections', 'special_note_placeholder', false) ?: 'VD: Ít cay, không hành...' }}" class="order-note"></textarea>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <!-- Tùy chọn sản phẩm -->
-        <div class="product-options">
-            <!-- Phần số lượng -->
-            <div class="option-section">
-                <h5 class="option-title">{{ trans_db('sections', 'quantity', false) ?: 'Số lượng' }}</h5>
-                <div class="quantity-control">
-                    <button class="quantity-btn" id="decreaseQty">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <input type="number" value="1" min="1" class="quantity-input" id="productQty">
-                    <button class="quantity-btn" id="increaseQty">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
+        <!-- Addon Section - Enhanced -->
+        <div class="addon-container" id="addonSection">
+            <h5 class="addon-container-title">{{ trans_db('sections', 'addons', false) ?: 'Món ăn kèm' }}</h5>
             
-            <!-- Phần add-on -->
-            <div class="option-section" id="addonSection">
-                <h5 class="option-title">{{ trans_db('sections', 'addons', false) ?: 'Món ăn kèm' }}</h5>
-                
-                <div class="addons-grid" id="menuItemAddons">
-                    <!-- Addon items will be loaded dynamically here -->
-                    <div class="text-center py-3 text-theme-secondary">
-                        <i class="fas fa-spinner fa-spin mr-2"></i> {{ trans_db('sections', 'loading_addons', false) ?: 'Đang tải món ăn kèm...' }}
-                    </div>
+            <div class="addons-grid" id="menuItemAddons">
+                <!-- Loading state -->
+                <div class="loading-addons">
+                    <div class="loader-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+                    <p>{{ trans_db('sections', 'loading_addons', false) ?: 'Đang tải món ăn kèm...' }}</p>
                 </div>
-                
-                <!-- Empty state for when no addons are available -->
-                <div id="noAddonsMessage" class="text-center py-3 text-theme-secondary hidden">
-                    <i class="fas fa-info-circle mr-2"></i> {{ trans_db('sections', 'no_addons', false) ?: 'Không có món ăn kèm cho sản phẩm này' }}
-                </div>
-            </div>
-            
-            <!-- Ghi chú đặc biệt -->
-            <div class="option-section">
-                <h5 class="option-title">{{ trans_db('sections', 'special_note', false) ?: 'Ghi chú' }}</h5>
-                <textarea id="orderNote" rows="2" placeholder="{{ trans_db('sections', 'special_note_placeholder', false) ?: 'VD: Ít cay, không hành...' }}" class="order-note"></textarea>
             </div>
         </div>
     </div>
     
-    <!-- Modal Footer -->
+    <!-- Modal Footer - Enhanced -->
     <div class="modal-footer">
         <div class="order-summary">
             <div class="total-amount">
@@ -82,23 +82,23 @@
             </div>
         </div>
         <button class="add-to-cart-btn" id="addToCartBtn">
-            {{ trans_db('sections', 'add_to_cart', false) ?: 'Thêm vào giỏ hàng' }}
+            <i class="fas fa-cart-plus mr-2"></i> {{ trans_db('sections', 'add_to_cart', false) ?: 'Thêm vào giỏ hàng' }}
         </button>
     </div>
 </div>
 
 <style>
-    /* Kiểu dáng cho modal đặt món */
+    /* Modern styled modal for desktop */
     .product-modal-overlay {
         position: fixed;
         inset: 0;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
         z-index: 50;
-        transition: opacity 0.3s;
+        transition: opacity 0.3s ease;
         opacity: 0;
         visibility: hidden;
-        backdrop-filter: blur(2px);
-        -webkit-backdrop-filter: blur(2px);
     }
     
     .product-modal-overlay.active {
@@ -112,18 +112,18 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        max-height: calc(100vh - 4rem);
-        max-width: 900px;
-        width: 100%;
+        max-height: 90vh;
+        max-width: 1000px;
+        width: 90%;
         position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) scale(0.95);
         opacity: 0;
         visibility: hidden;
-        transition: all 0.3s ease;
-        border-radius: 16px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        border-radius: 20px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
         color: var(--text-primary, #222222);
     }
     
@@ -137,8 +137,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.6rem 1.25rem;
-        border-bottom: 1px solid var(--border-color, #e5e5e5);
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--border-color, rgba(229, 229, 229, 0.5));
         position: relative;
         background-color: var(--card-bg, #ffffff);
     }
@@ -147,6 +147,10 @@
         font-weight: 700;
         font-size: 1.25rem;
         color: var(--text-primary, #222222);
+        padding: 0.5rem 1rem;
+        background-color: var(--accent-primary, #e61c23);
+        color: white;
+        border-radius: 8px;
     }
     
     .modal-close-btn {
@@ -155,18 +159,19 @@
         font-size: 1.25rem;
         cursor: pointer;
         color: var(--text-secondary, #666666);
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 50%;
-        transition: all 0.2s;
+        transition: all 0.2s ease;
     }
     
     .modal-close-btn:hover {
         color: var(--accent-primary, #e61c23);
         background-color: var(--bg-secondary, #f9f9f9);
+        transform: rotate(90deg);
     }
     
     .modal-content {
@@ -174,54 +179,77 @@
         flex: 1;
         scrollbar-width: thin;
         scrollbar-color: var(--border-color, #e5e5e5) var(--bg-secondary, #f9f9f9);
+        padding: 0;
         background-color: var(--card-bg, #ffffff);
     }
     
     .modal-content::-webkit-scrollbar {
-        width: 6px;
+        width: 8px;
     }
     
     .modal-content::-webkit-scrollbar-track {
         background: var(--bg-secondary, #f9f9f9);
+        border-radius: 4px;
     }
     
     .modal-content::-webkit-scrollbar-thumb {
         background-color: var(--border-color, #e5e5e5);
-        border-radius: 6px;
+        border-radius: 4px;
     }
     
+    /* Enhanced Product Showcase */
     .product-showcase {
         display: flex;
-        flex-direction: column;
+        padding: 0;
+        min-height: 350px;
     }
     
     .product-image-container {
-        width: 100%;
+        width: 45%;
         position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--bg-secondary, #f9f9f9);
+    }
+    
+    .image-wrapper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
     }
     
     .product-image {
         width: 100%;
-        height: auto;
-        max-height: 320px;
+        height: 100%;
         object-fit: cover;
         display: block;
+        transition: transform 0.5s ease;
+    }
+    
+    .product-image-container:hover .product-image {
+        transform: scale(1.05);
     }
     
     .product-basic-info {
-        padding: 1.5rem;
+        width: 55%;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
     }
     
     .product-name-price {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
     }
     
     .product-name {
         font-weight: 700;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         color: var(--text-primary, #222222);
         margin-bottom: 0.5rem;
         word-break: normal;
@@ -233,6 +261,9 @@
         text-align: right;
         flex-shrink: 0;
         margin-left: 1rem;
+        background-color: rgba(230, 28, 35, 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
     }
     
     .product-price {
@@ -241,51 +272,85 @@
         color: var(--accent-primary, #e61c23);
     }
     
+    .product-description-container {
+        background-color: var(--bg-secondary, #f9f9f9);
+        padding: 1rem;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+        flex-grow: 0;
+    }
+    
     .product-description {
         color: var(--text-secondary, #666666);
         font-size: 1rem;
         line-height: 1.6;
+        margin: 0;
     }
     
-    .product-options {
-        padding: 0 1.5rem;
+    .product-options-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
     }
     
     .option-section {
-        margin-bottom: 2rem;
-        padding-bottom: 2rem;
-        border-bottom: 1px solid var(--border-color, #e5e5e5);
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
     }
     
     .option-title {
         font-weight: 600;
-        font-size: 1.125rem;
-        margin-bottom: 1rem;
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
         color: var(--text-primary, #222222);
+        position: relative;
+        padding-left: 0.75rem;
+    }
+    
+    .option-title::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 16px;
+        background-color: var(--accent-primary, #e61c23);
+        border-radius: 2px;
+    }
+    
+    .quantity-section {
+        background-color: var(--bg-secondary, #f9f9f9);
+        padding: 1rem;
+        border-radius: 10px;
     }
     
     .quantity-control {
         display: flex;
         align-items: center;
+        justify-content: center;
     }
     
     .quantity-btn {
         width: 40px;
         height: 40px;
-        background-color: var(--button-bg-secondary, #f3f4f6);
-        border: none;
+        background-color: white;
+        border: 1px solid var(--border-color, #e5e7eb);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--button-text-secondary, #4b5563);
+        color: var(--text-primary, #222222);
         cursor: pointer;
         transition: all 0.2s;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
     
     .quantity-btn:hover {
         background-color: var(--accent-primary, #e61c23);
         color: white;
+        border-color: var(--accent-primary, #e61c23);
     }
     
     .quantity-input {
@@ -296,9 +361,11 @@
         text-align: center;
         border-radius: 8px;
         -moz-appearance: textfield;
-        background-color: var(--bg-primary, #ffffff);
+        background-color: white;
         color: var(--text-primary, #222222);
         font-size: 1.125rem;
+        font-weight: 600;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
     }
     
     .quantity-input::-webkit-outer-spin-button,
@@ -307,18 +374,80 @@
         margin: 0;
     }
     
+    .note-section {
+        background-color: var(--bg-secondary, #f9f9f9);
+        padding: 1rem;
+        border-radius: 10px;
+    }
+    
+    .order-note {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border-color, #e5e7eb);
+        border-radius: 8px;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        resize: vertical;
+        min-height: 40px;
+        transition: all 0.2s;
+        background-color: white;
+        color: var(--text-primary, #222222);
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    .order-note:focus {
+        outline: none;
+        border-color: var(--accent-primary, #e61c23);
+        box-shadow: 0 0 0 2px rgba(230, 28, 35, 0.1);
+    }
+    
+    /* Enhanced Addon Section */
+    .addon-container {
+        padding: 1.5rem 2rem;
+        border-top: 1px solid var(--border-color, rgba(229, 229, 229, 0.5));
+    }
+    
+    .addon-container-title {
+        font-weight: 600;
+        font-size: 1.2rem;
+        margin-bottom: 1.25rem;
+        color: var(--text-primary, #222222);
+        position: relative;
+        display: inline-block;
+    }
+    
+    .addon-container-title::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 100%;
+        height: 3px;
+        background-color: var(--accent-primary, #e61c23);
+        border-radius: 1.5px;
+    }
+    
     .addons-grid {
         display: grid;
-        gap: 0.75rem;
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
     }
     
     .addon-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.75rem 0;
-        border-bottom: 1px solid var(--border-color, #e5e5e5);
+        padding: 0.75rem;
+        border: 1px solid var(--border-color, #e5e7eb);
+        border-radius: 10px;
+        transition: all 0.2s;
+        background-color: var(--bg-primary, white);
+    }
+    
+    .addon-item:hover {
+        border-color: var(--accent-primary, #e61c23);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        transform: translateY(-2px);
     }
     
     .addon-checkbox-container {
@@ -337,9 +466,10 @@
     .addon-label {
         cursor: pointer;
         color: var(--text-primary, #222222);
-        padding-left: 2rem;
+        padding-left: 2.2rem;
         position: relative;
-        font-size: 1rem;
+        font-size: 0.95rem;
+        font-weight: 500;
     }
     
     .addon-label::before {
@@ -348,12 +478,13 @@
         left: 0;
         top: 50%;
         transform: translateY(-50%);
-        width: 1.25rem;
-        height: 1.25rem;
+        width: 1.5rem;
+        height: 1.5rem;
         border: 2px solid var(--border-color, #e5e7eb);
-        border-radius: 4px;
-        background-color: var(--bg-primary, #ffffff);
+        border-radius: 5px;
+        background-color: var(--bg-primary, white);
         transition: all 0.2s;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
     
     .custom-checkbox:checked + .addon-label::before {
@@ -364,55 +495,79 @@
     .custom-checkbox:checked + .addon-label::after {
         content: '✓';
         position: absolute;
-        left: 0.35rem;
+        left: 0.45rem;
         top: 50%;
         transform: translateY(-50%);
         color: white;
-        font-size: 0.75rem;
+        font-size: 0.8rem;
+        font-weight: bold;
     }
     
     .addon-price {
         font-weight: 600;
         color: var(--accent-primary, #e61c23);
-        font-size: 1rem;
+        font-size: 0.95rem;
+        padding: 0.35rem 0.75rem;
+        background-color: rgba(230, 28, 35, 0.08);
+        border-radius: 8px;
     }
     
-    .order-note {
-        width: 100%;
-        padding: 1rem;
-        border: 1px solid var(--border-color, #e5e7eb);
-        border-radius: 0.5rem;
-        font-size: 1rem;
-        line-height: 1.6;
-        resize: vertical;
-        min-height: 100px;
-        transition: border-color 0.2s;
-        background-color: var(--bg-primary, #ffffff);
-        color: var(--text-primary, #222222);
+    /* Loading and empty states */
+    .loading-addons {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        text-align: center;
+        color: var(--text-secondary, #666666);
     }
     
-    .order-note:focus {
-        outline: none;
-        border-color: var(--accent-primary, #e61c23);
-        box-shadow: 0 0 0 2px rgba(230, 28, 35, 0.1);
+    .loader-spinner {
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
+        color: var(--accent-primary, #e61c23);
     }
     
+    .empty-addons-message {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        text-align: center;
+        color: var(--text-secondary, #666666);
+        background-color: var(--bg-secondary, #f9f9f9);
+        border-radius: 10px;
+    }
+    
+    .empty-addons-message i {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        opacity: 0.7;
+    }
+    
+    /* Enhanced Footer */
     .modal-footer {
-        border-top: 1px solid var(--border-color, #e5e5e5);
-        padding: 1.25rem;
-        background-color: var(--card-bg, #ffffff);
+        border-top: 1px solid var(--border-color, rgba(229, 229, 229, 0.5));
+        padding: 1.5rem 2rem;
+        background-color: var(--card-bg, white);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
     
     .order-summary {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.25rem;
+        flex-direction: column;
     }
     
     .total-amount {
         display: flex;
         align-items: center;
+        margin-bottom: 0.5rem;
     }
     
     .total-label {
@@ -428,62 +583,47 @@
     }
     
     .order-calculation {
-        font-size: 1rem;
+        font-size: 0.95rem;
         color: var(--text-secondary, #666666);
     }
     
     .add-to-cart-btn {
-        width: 100%;
         background-color: var(--accent-primary, #e61c23);
         color: white;
         border: none;
-        border-radius: 9999px;
-        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        padding: 1rem 2rem;
         font-weight: 700;
-        font-size: 1.125rem;
+        font-size: 1rem;
         cursor: pointer;
-        transition: background-color 0.2s;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 4px 12px rgba(230, 28, 35, 0.25);
     }
     
     .add-to-cart-btn:hover {
         background-color: var(--accent-secondary, #c41017);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(230, 28, 35, 0.35);
     }
     
-    @media (min-width: 768px) {
-        /* Hiển thị 2 cột cho modal lớn */
-        .product-showcase {
-            flex-direction: row;
-        }
-        
-        .product-image-container {
-            width: 45%;
-        }
-        
-        .product-image {
-            height: 100%;
-            max-height: 400px;
-            object-fit: cover;
-        }
-        
-        .product-basic-info {
-            width: 55%;
-            padding: 2rem;
-        }
-        
-        .addons-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
+    .add-to-cart-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(230, 28, 35, 0.2);
     }
     
+    /* Mobile styles */
     @media (max-width: 767px) {
-        /* Cấu hình cho mobile */
         .product-modal {
             top: auto;
             left: 0;
             right: 0;
             bottom: 0;
             transform: translateY(100%);
-            border-radius: 16px 16px 0 0;
+            width: 100%;
+            max-width: 100%;
+            border-radius: 20px 20px 0 0;
             max-height: 90vh;
         }
         
@@ -491,45 +631,46 @@
             transform: translateY(0);
         }
         
-        .modal-header::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 48px;
-            height: 5px;
-            background-color: var(--border-color, #e5e5e5);
-            border-radius: 2.5px;
+        .product-showcase {
+            flex-direction: column;
+            min-height: auto;
         }
         
-        .product-image {
-            max-height: 240px;
+        .product-image-container,
+        .product-basic-info {
+            width: 100%;
         }
         
-        .product-price {
-            font-size: 1.25rem;
+        .product-basic-info {
+            padding: 1.5rem;
         }
         
-        .product-name {
-            font-size: 1.25rem;
+        .product-options-wrapper {
+            grid-template-columns: 1fr;
+            gap: 1rem;
         }
         
-        .option-title {
-            font-size: 1rem;
+        .addon-container {
+            padding: 1.5rem;
         }
         
-        .addon-label {
-            font-size: 0.9375rem;
+        .addons-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .modal-footer {
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.25rem;
         }
         
         .add-to-cart-btn {
-            padding: 0.875rem 1.5rem;
-            font-size: 1rem;
+            width: 100%;
+            justify-content: center;
         }
     }
     
-    /* Hỗ trợ Dark Mode */
+    /* Dark Mode Support */
     [data-theme="dark"] .product-modal,
     [data-theme="dark"] .modal-header,
     [data-theme="dark"] .modal-content,
@@ -537,38 +678,49 @@
         background-color: var(--card-bg, #2a2a2a);
     }
     
-    [data-theme="dark"] .modal-title,
-    [data-theme="dark"] .product-name {
-        color: var(--text-primary, #ffffff);
+    [data-theme="dark"] .modal-title {
+        background-color: var(--accent-primary, #e61c23);
     }
     
-    [data-theme="dark"] .product-description,
-    [data-theme="dark"] .addon-label {
-        color: var(--text-secondary, #cccccc);
+    [data-theme="dark"] .product-image-container {
+        background-color: rgba(255, 255, 255, 0.05);
     }
     
-    [data-theme="dark"] .order-note,
-    [data-theme="dark"] .quantity-input {
-        background-color: var(--bg-secondary, #1e1e1e);
-        border-color: var(--border-color, #333333);
-        color: var(--text-primary, #ffffff);
+    [data-theme="dark"] .product-description-container,
+    [data-theme="dark"] .quantity-section,
+    [data-theme="dark"] .note-section,
+    [data-theme="dark"] .empty-addons-message {
+        background-color: var(--bg-secondary, #222);
     }
     
-    [data-theme="dark"] .addon-label::before {
-        border-color: var(--border-color, #444444);
-        background-color: var(--bg-secondary, #1e1e1e);
+    [data-theme="dark"] .product-price-container {
+        background-color: rgba(230, 28, 35, 0.15);
+    }
+    
+    [data-theme="dark"] .addon-price {
+        background-color: rgba(230, 28, 35, 0.15);
+    }
+    
+    [data-theme="dark"] .addon-item {
+        background-color: var(--bg-primary, #333);
+        border-color: var(--border-color, #444);
     }
     
     [data-theme="dark"] .quantity-btn {
-        background-color: var(--button-bg-secondary, #333333);
-        color: var(--button-text-secondary, #cccccc);
+        background-color: var(--bg-primary, #333);
+        border-color: var(--border-color, #444);
+        color: var(--text-primary, white);
     }
     
-    [data-theme="dark"] .modal-close-btn {
-        color: var(--text-secondary, #aaaaaa);
+    [data-theme="dark"] .quantity-input,
+    [data-theme="dark"] .order-note {
+        background-color: var(--bg-primary, #333);
+        border-color: var(--border-color, #444);
+        color: var(--text-primary, white);
     }
     
-    [data-theme="dark"] .modal-close-btn:hover {
-        background-color: var(--bg-secondary, #333333);
+    [data-theme="dark"] .addon-label::before {
+        background-color: var(--bg-primary, #333);
+        border-color: var(--border-color, #444);
     }
 </style>

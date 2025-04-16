@@ -1716,6 +1716,127 @@ class TranslationSeeder extends Seeder
                 'language_code' => 'de',
                 'value' => 'Einen Tisch reservieren'
             ],
+            // Loading Addons
+            [
+                'group' => 'sections',
+                'key' => 'loading_addons',
+                'language_code' => 'en',
+                'value' => 'Loading addon items...'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'loading_addons',
+                'language_code' => 'de',
+                'value' => 'Zusätzliche Artikel werden geladen...'
+            ],
+
+            // No Addons
+            [
+                'group' => 'sections',
+                'key' => 'no_addons',
+                'language_code' => 'en',
+                'value' => 'No addon items available for this product'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'no_addons',
+                'language_code' => 'de',
+                'value' => 'Keine Zusatzartikel für dieses Produkt verfügbar'
+            ],
+
+            // Addon Groups
+            [
+                'group' => 'sections',
+                'key' => 'addon_group_sauces',
+                'language_code' => 'en',
+                'value' => 'Sauces'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'addon_group_sauces',
+                'language_code' => 'de',
+                'value' => 'Soßen'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'addon_group_sides',
+                'language_code' => 'en',
+                'value' => 'Side Items'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'addon_group_sides',
+                'language_code' => 'de',
+                'value' => 'Beilagen'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'addon_group_extras',
+                'language_code' => 'en',
+                'value' => 'Extra Items'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'addon_group_extras',
+                'language_code' => 'de',
+                'value' => 'Extras'
+            ],
+
+            // Recommended Addon
+            [
+                'group' => 'sections',
+                'key' => 'recommended_addon',
+                'language_code' => 'en',
+                'value' => 'Recommended'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'recommended_addon',
+                'language_code' => 'de',
+                'value' => 'Empfohlen'
+            ],
+
+            // Addon Selection
+            [
+                'group' => 'sections',
+                'key' => 'addon_selection',
+                'language_code' => 'en',
+                'value' => 'Select Add-ons'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'addon_selection',
+                'language_code' => 'de',
+                'value' => 'Zusätze auswählen'
+            ],
+
+            // Customize Order
+            [
+                'group' => 'sections',
+                'key' => 'customize_your_order',
+                'language_code' => 'en',
+                'value' => 'Customize Your Order'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'customize_your_order',
+                'language_code' => 'de',
+                'value' => 'Passen Sie Ihre Bestellung an'
+            ],
+
+            // Continue to Cart
+            [
+                'group' => 'sections',
+                'key' => 'continue_to_cart',
+                'language_code' => 'en',
+                'value' => 'Continue'
+            ],
+            [
+                'group' => 'sections',
+                'key' => 'continue_to_cart',
+                'language_code' => 'de',
+                'value' => 'Fortfahren'
+            ]
         ];
 
         foreach ($translations as $translation) {
