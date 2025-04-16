@@ -14,7 +14,7 @@ class SettingSeeder extends Seeder
             // General settings
             [
                 'key' => 'site_name',
-                'value' => 'AISUKI - Asian Cooking - Sushi & Bowls',
+                'value' => 'AISUKI',
                 'group' => 'general',
                 'is_translatable' => false,
             ],
