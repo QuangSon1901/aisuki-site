@@ -201,7 +201,7 @@
                                 </h2>
                             </div>
                             <div class="p-6">
-                                <label for="paymentMethod1" class="flex items-center p-4 border border-theme rounded-md cursor-pointer transition-colors border-aisuki-red">
+                                <label for="paymentMethod1" class="flex items-center p-4 border rounded-md cursor-pointer transition-colors border-aisuki-red">
                                     <input type="radio" id="paymentMethod1" name="payment_method" value="cash" class="hidden" checked>
                                     <div class="w-6 h-6 rounded-full border-2 border-theme-secondary flex items-center justify-center mr-3">
                                         <div class="w-3 h-3 rounded-full bg-aisuki-red"></div>
