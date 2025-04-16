@@ -44,6 +44,7 @@ class Page extends Model
             ->where('language_id', $currentLanguage->id)
             ->where('is_active', true)
             ->first();
+        dd($slug);
             
         if (!$page) {
             // Fallback: Get the page in the default language

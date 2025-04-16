@@ -78,7 +78,6 @@ class SettingController extends Controller
                 $setting->save();
             }
         }
-        
         // Process and save translations for translatable settings
         if ($request->has('translations')) {
             foreach ($request->translations as $langCode => $settings) {

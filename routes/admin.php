@@ -25,10 +25,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
     
     // Resource Routes
     Route::resource('menu-categories', MenuCategoryController::class)->names('admin.menu-categories');
+    
     Route::resource('menu-items', MenuItemController::class)->names('admin.menu-items');
+
     Route::resource('addon-items', AddonItemController::class)->names('admin.addon-items');
+
+    Route::post('pages/upload-image', [PageController::class, 'uploadEditorImage'])->name('admin.pages.upload-image');
     Route::resource('pages', PageController::class)->names('admin.pages');
+
     Route::resource('users', UserController::class)->names('admin.users');
+
     Route::resource('languages', LanguageController::class)->names('admin.languages');
     
     // Settings
