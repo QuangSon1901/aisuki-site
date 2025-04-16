@@ -34,7 +34,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Settings
     Route::get('settings', [SettingController::class, 'index'])->name('admin.settings.index');
     Route::post('settings/update', [SettingController::class, 'update'])->name('admin.settings.update');
-    
+    Route::post('settings/test-email', [SettingController::class, 'testEmail'])->name('admin.settings.test-email');
+
     // Translations
     Route::get('translations', [TranslationController::class, 'index'])->name('admin.translations.index');
     Route::get('translations/group/{group}', [TranslationController::class, 'group'])->name('admin.translations.group');

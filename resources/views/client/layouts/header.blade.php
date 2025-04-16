@@ -50,7 +50,7 @@
             <div class="flex items-center">
                 <a href="{{ route('home', ['locale' => $currentLocale]) }}" class="flex items-center">
                     <div class="rounded-full">
-                        <img src="{{ asset(setting('logo', 'logo.png')) }}" alt="{{ setting('site_name', 'AISUKI') }} Logo" class="h-10 scale-[1.2] sm:scale-[1.4]">
+                        <img src="{{ asset(setting('site_logo', 'logo.png')) }}" alt="{{ setting('site_name', 'AISUKI') }} Logo" class="h-10 scale-[1.2] sm:scale-[1.4]">
                     </div>
                     <h1 class="text-white ml-2.5 text-xl font-brand tracking-wide">{{ setting('site_name', 'AISUKI') }}</h1>
                 </a>
@@ -122,7 +122,7 @@
                         <div class="p-4 border-t border-theme">
                             <div class="flex justify-between mb-3">
                                 <span class="font-medium text-theme-primary">{{ trans_db('sections', 'total', false) ?: 'Tổng cộng' }}:</span>
-                                <span class="font-bold text-aisuki-red mini-cart-subtotal">0,00 €</span>
+                                <span class="font-bold text-aisuki-red mini-cart-subtotal">0,00 {{ setting('currency', '€') }}</span>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
                                 <a href="{{ route('cart', ['locale' => app()->getLocale()]) }}" class="text-center py-2 px-4 border border-aisuki-red text-aisuki-red rounded-md hover:bg-aisuki-red hover:text-white transition-colors">
@@ -156,7 +156,7 @@
 <div class="sidebar shadow-2xl" id="sidebar">
     <div class="px-4 py-3 flex justify-between items-center border-b border-theme bg-aisuki-red text-white">
         <div class="flex items-center">
-            <img src="{{ asset(setting('logo', 'logo.png')) }}" alt="{{ setting('site_name', 'AISUKI') }} Logo" class="h-10 scale-[1.2]">
+            <img src="{{ asset(setting('site_logo', 'logo.png')) }}" alt="{{ setting('site_name', 'AISUKI') }} Logo" class="h-10 scale-[1.2]">
             <h2 class="text-xl font-brand ml-2">{{ setting('site_name', 'AISUKI') }}</h2>
         </div>
         <button id="closeSidebar" class="text-2xl text-white hover:text-aisuki-yellow">

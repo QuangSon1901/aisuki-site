@@ -25,7 +25,7 @@ class SettingSeeder extends Seeder
                 'is_translatable' => false,
             ],
             [
-                'key' => 'logo',
+                'key' => 'site_logo',
                 'value' => 'uploads/logo.png',
                 'group' => 'general',
                 'is_translatable' => false,
@@ -155,6 +155,79 @@ class SettingSeeder extends Seeder
                 'value' => 'Please come to the restaurant and give your name at the counter.',
                 'group' => 'order',
                 'is_translatable' => true,
+            ],
+            // Mail settings - NEW
+            [
+                'key' => 'mail_driver',
+                'value' => 'smtp',
+                'group' => 'mail',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'mail_host',
+                'value' => 'smtp.gmail.com',
+                'group' => 'mail',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'mail_port',
+                'value' => '587',
+                'group' => 'mail',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'mail_username',
+                'value' => '',
+                'group' => 'mail',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'mail_password',
+                'value' => '',
+                'group' => 'mail',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'mail_encryption',
+                'value' => 'tls',
+                'group' => 'mail',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'mail_from_address',
+                'value' => 'noreply@aisuki.de',
+                'group' => 'mail',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'mail_from_name',
+                'value' => 'AISUKI Restaurant',
+                'group' => 'mail',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'mail_reply_to',
+                'value' => 'info@aisuki.de',
+                'group' => 'mail',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'mail_contact_to',
+                'value' => 'contact@aisuki.de',
+                'group' => 'mail',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'mail_enable_contact_form',
+                'value' => '1',
+                'group' => 'mail',
+                'is_translatable' => false,
+            ],
+            [
+                'key' => 'mail_enable_notification',
+                'value' => '1',
+                'group' => 'mail',
+                'is_translatable' => false,
             ],
         ];
 

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Http\Helpers\LanguageHelper;
 use App\Http\Helpers\SettingHelper;
+use App\Services\MailService;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
         foreach (glob(app_path('Helpers') . '/*.php') as $file) {
             require_once $file;
         }
+
+        $this->app->singleton(MailService::class, function ($app) {
+            return new MailService();
+        });
     }
 
     /**

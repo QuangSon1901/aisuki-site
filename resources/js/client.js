@@ -11,6 +11,7 @@ $(document).ready(function() {
     const getCurrentTheme = () => {
         const savedTheme = localStorage.getItem('aisuki-theme');
         if (savedTheme) return savedTheme;
+        if (window.settings.theme_mode && window.settings.theme_mode != 'system') return window.settings.theme_mode;
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     };
 

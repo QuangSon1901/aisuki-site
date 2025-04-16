@@ -6,7 +6,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
             <div>
                 <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="flex items-center mb-6">
-                    <img src="{{ asset(setting('logo', 'logo.png')) }}" alt="{{ setting('site_name', 'AISUKI') }} Logo" class="h-12">
+                    <img src="{{ asset(setting('site_logo', 'logo.png')) }}" alt="{{ setting('site_name', 'AISUKI') }} Logo" class="h-12">
                     <h3 class="text-white ml-2.5 text-xl font-brand tracking-wide">AISUKI</h3>
                 </a>
                 <p class="text-gray-400 text-sm mb-4">

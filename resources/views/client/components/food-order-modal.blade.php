@@ -58,7 +58,7 @@
                                 data-price="{{ $addon->price }}">
                             <label for="addon{{ $addon->id }}" class="addon-label">{{ $addon->name }}</label>
                         </div>
-                        <span class="addon-price">{{ setting('currency', '€') }}{{ number_format($addon->price, 2, ',', '.') }}</span>
+                        <span class="addon-price">{{ number_format($addon->price, 2, ',', '.') }} {{ setting('currency', '€') }}</span>
                     </div>
                     @endforeach
                 </div>

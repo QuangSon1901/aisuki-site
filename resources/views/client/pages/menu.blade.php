@@ -61,7 +61,7 @@
                                 <h3 class="font-semibold text-lg mb-1 text-theme-primary truncate-none">{{ $item->name }}</h3>
                                 <p class="text-theme-secondary text-sm mb-3 line-clamp-2">{{ $item->description }}</p>
                                 <div class="flex justify-between items-center mb-3">
-                                    <span class="text-aisuki-red font-bold text-lg">{{ number_format($item->price, 2, ',', '.') }} €</span>
+                                    <span class="text-aisuki-red font-bold text-lg">{{ number_format($item->price, 2, ',', '.') }} {{ setting('currency', '€') }}</span>
                                 </div>
                                 <button class="w-full bg-aisuki-red text-white py-2 px-4 rounded-full font-medium hover:bg-aisuki-red-dark transition-colors order-btn" 
                                     data-id="{{ $item->id }}" 
@@ -92,7 +92,7 @@
                                     <p class="text-theme-secondary text-xs mt-1 line-clamp-2">{{ $item->description }}</p>
                                 </div>
                                 <div class="flex justify-between items-center mt-1">
-                                    <span class="text-aisuki-red font-bold text-sm">{{ number_format($item->price, 2, ',', '.') }} €</span>
+                                    <span class="text-aisuki-red font-bold text-sm">{{ number_format($item->price, 2, ',', '.') }} {{ setting('currency', '€') }}</span>
                                     <button class="bg-aisuki-red text-white py-1.5 px-3 rounded-full text-xs font-medium hover:bg-aisuki-red-dark transition-colors order-btn" 
                                         data-id="{{ $item->id }}" 
                                         data-code="{{ $item->code }}"

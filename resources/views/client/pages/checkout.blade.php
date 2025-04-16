@@ -242,7 +242,7 @@
                             <div class="space-y-3 mb-4">
                                 <div class="flex justify-between text-theme-primary">
                                     <span>{{ trans_db('sections', 'subtotal', false) ?: 'Subtotal' }}:</span>
-                                    <span id="checkoutSubtotal">0,00 €</span>
+                                    <span id="checkoutSubtotal">0,00 {{ setting('currency', '€') }}</span>
                                 </div>
                                 <div class="flex justify-between text-theme-primary" id="checkoutDeliveryRow">
                                     <span>{{ trans_db('sections', 'delivery_fee', false) ?: 'Delivery Fee' }}:</span>
@@ -250,14 +250,14 @@
                                 </div>
                                 <div id="checkoutDiscountRow" class="flex justify-between text-green-600 hidden">
                                     <span>{{ trans_db('sections', 'discount', false) ?: 'Discount' }}:</span>
-                                    <span id="checkoutDiscountAmount" data-value="0">-0,00 €</span>
+                                    <span id="checkoutDiscountAmount" data-value="0">-0,00 {{ setting('currency', '€') }}</span>
                                 </div>
                             </div>
                             
                             <div class="border-t border-theme pt-3">
                                 <div class="flex justify-between font-semibold text-theme-primary">
                                     <span>{{ trans_db('sections', 'total', false) ?: 'Total' }}:</span>
-                                    <span class="text-aisuki-red text-lg" id="checkoutTotal">0,00 €</span>
+                                    <span class="text-aisuki-red text-lg" id="checkoutTotal">0,00 {{ setting('currency', '€') }}</span>
                                 </div>
                                 <p class="text-xs text-theme-secondary text-right mt-1">{{ trans_db('sections', 'including_vat', false) ?: 'Including VAT' }}</p>
                             </div>

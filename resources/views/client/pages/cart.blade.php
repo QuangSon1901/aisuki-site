@@ -57,7 +57,7 @@
                             <div class="space-y-3 mb-4">
                                 <div class="flex justify-between text-theme-primary">
                                     <span>{{ trans_db('sections', 'subtotal', false) ?: 'Tạm tính' }}:</span>
-                                    <span id="cartSubtotal">0,00 €</span>
+                                    <span id="cartSubtotal">0,00 {{ setting('currency', '€') }}</span>
                                 </div>
                                 <div class="flex justify-between text-theme-primary">
                                     <span>{{ trans_db('sections', 'delivery_fee', false) ?: 'Phí vận chuyển' }}:</span>
@@ -65,14 +65,14 @@
                                 </div>
                                 <div id="discountRow" class="flex justify-between text-green-600 hidden">
                                     <span>{{ trans_db('sections', 'discount', false) ?: 'Giảm giá' }}:</span>
-                                    <span id="discountAmount" data-value="0">-0,00 €</span>
+                                    <span id="discountAmount" data-value="0">-0,00 {{ setting('currency', '€') }}</span>
                                 </div>
                             </div>
                             
                             <div class="border-t border-theme pt-3 mb-4">
                                 <div class="flex justify-between font-semibold text-theme-primary">
                                     <span>{{ trans_db('sections', 'total', false) ?: 'Tổng cộng' }}:</span>
-                                    <span class="text-aisuki-red text-lg" id="cartTotal">0,00 €</span>
+                                    <span class="text-aisuki-red text-lg" id="cartTotal">0,00 {{ setting('currency', '€') }}</span>
                                 </div>
                             </div>
 

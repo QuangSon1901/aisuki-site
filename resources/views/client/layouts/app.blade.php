@@ -68,6 +68,10 @@
             invalid_promo: "{{ trans_db('sections', 'invalid_promo', false) ?: 'Mã giảm giá không hợp lệ' }}",
             enter_promo_code: "{{ trans_db('sections', 'enter_promo_code', false) ?: 'Mã giảm giá không hợp lệ' }}"
         };
+
+        window.settings = {
+            theme_mode: "{{ setting('theme_mode', 'light') }}"
+        }
         
         window.routes = {
             cart: "{{ route('cart', ['locale' => app()->getLocale()]) }}",
