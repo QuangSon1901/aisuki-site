@@ -25,6 +25,11 @@ class MenuItem extends Model
     {
         return $this->belongsTo(Language::class, 'language_id');
     }
+
+    public function addons()
+    {
+        return $this->belongsToMany(AddonItem::class, 'menu_item_addon', 'menu_item_id', 'addon_item_id');
+    }
     
     /**
      * Lấy các record cùng nội dung (cùng mass_id) nhưng khác ngôn ngữ

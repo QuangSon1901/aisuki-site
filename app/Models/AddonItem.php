@@ -20,6 +20,14 @@ class AddonItem extends Model
     }
     
     /**
+     * Get menu items that use this addon
+     */
+    public function menuItems()
+    {
+        return $this->belongsToMany(MenuItem::class, 'menu_item_addon', 'addon_item_id', 'menu_item_id');
+    }
+    
+    /**
      * Lấy các record cùng nội dung (cùng mass_id) nhưng khác ngôn ngữ
      */
     public function translations()

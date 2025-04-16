@@ -206,6 +206,48 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="mb-4">
+    <label class="form-label">Addon Items</label>
+    <div class="card">
+        <div class="card-body bg-light">
+            <div class="addon-items-container">
+                @if($addons->isEmpty())
+                    <div class="alert alert-info mb-0">
+                        <i class="fas fa-info-circle me-1"></i> No addon items available in this language.
+                    </div>
+                @else
+                    <div class="row">
+                        @foreach($addons as $addon)
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" 
+                                           name="addon_ids[]" id="addon_{{ $addon->id }}" 
+                                           value="{{ $addon->id }}" {{ in_array($addon->id, old('addon_ids', $selectedAddonIds)) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="addon_{{ $addon->id }}">
+                                        {{ $addon->name }} ({{ number_format($addon->price, 2) }} {{ setting('currency', '€') }})
+                                    </label>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="form-text">Select addon items that can be added to this menu item</div>
+    
+    @if(count($translations) > 0)
+    <div class="form-check mt-2">
+        <input class="form-check-input" type="checkbox" id="sync_addons_to_translations" name="sync_addons_to_translations" value="1">
+        <label class="form-check-label" for="sync_addons_to_translations">
+            <strong>Sync these addon items to all translations</strong>
+        </label>
+        <div class="form-text text-warning">
+            <i class="fas fa-exclamation-triangle me-1"></i> This will replace addon items for all language versions
+        </div>
+    </div>
+    @endif
+</div>
                                 
                                 <div class="d-flex justify-content-between">
                                     <a href="{{ route('admin.menu-items.index') }}" class="btn btn-secondary">
@@ -272,6 +314,16 @@
                                         @endif
                                     </span>
                                 </li>
+                                <li class="list-group-item d-flex justify-content-between px-0">
+    <span class="text-muted">Add-ons:</span>
+    <span>
+        @if($menuItem->addons->count() > 0)
+            <span class="badge bg-info">{{ $menuItem->addons->count() }} items</span>
+        @else
+            <span class="badge bg-secondary">None</span>
+        @endif
+    </span>
+</li>
                                 <li class="list-group-item d-flex justify-content-between px-0">
                                     <span class="text-muted">Mass ID:</span>
                                     <span>{{ $menuItem->mass_id }}</span>

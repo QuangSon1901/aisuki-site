@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Language;
 use App\Models\MenuCategory;
 use App\Models\MenuItem;
+use App\Models\AddonItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -31,12 +32,12 @@ class MenuItemController extends Controller
             $defaultLanguage = Language::where('is_default', true)->first();
             $defaultItem = MenuItem::where('mass_id', $massId)
                 ->where('language_id', $defaultLanguage->id)
-                ->with('category')
+                ->with(['category', 'addons'])
                 ->first();
                 
             if (!$defaultItem) {
                 $defaultItem = MenuItem::where('mass_id', $massId)
-                    ->with('category')
+                    ->with(['category', 'addons'])
                     ->first();
             }
             
@@ -73,6 +74,15 @@ class MenuItemController extends Controller
                 ->get();
         }
         
+        // Get all available addon items for the default language
+        $addons = [];
+        if ($defaultLanguage) {
+            $addons = AddonItem::where('language_id', $defaultLanguage->id)
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get();
+        }
+        
         // Generate next available mass_id
         $nextMassId = MenuItem::max('mass_id') + 1;
         
@@ -87,7 +97,7 @@ class MenuItemController extends Controller
             $nextCode = 'ITEM' . str_pad($codeNumber, 3, '0', STR_PAD_LEFT);
         }
         
-        return view('admin.menu-items.create', compact('languages', 'defaultLanguage', 'categories', 'nextMassId', 'nextCode'));
+        return view('admin.menu-items.create', compact('languages', 'defaultLanguage', 'categories', 'addons', 'nextMassId', 'nextCode'));
     }
 
     /**
@@ -115,6 +125,8 @@ class MenuItemController extends Controller
             'price' => 'required|numeric|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'sort_order' => 'nullable|integer|min:0',
+            'addon_ids' => 'nullable|array',
+            'addon_ids.*' => 'exists:addon_items,id',
         ]);
 
         if ($validator->fails()) {
@@ -136,7 +148,7 @@ class MenuItemController extends Controller
             }
             
             // Create the menu item
-            MenuItem::create([
+            $menuItem = MenuItem::create([
                 'language_id' => $request->language_id,
                 'mass_id' => $request->mass_id,
                 'category_id' => $request->category_id,
@@ -149,6 +161,11 @@ class MenuItemController extends Controller
                 'is_featured' => $request->has('is_featured'),
                 'sort_order' => $request->sort_order ?? 0,
             ]);
+            
+            // Attach addon items if any
+            if ($request->has('addon_ids') && is_array($request->addon_ids)) {
+                $menuItem->addons()->attach($request->addon_ids);
+            }
             
             DB::commit();
             
@@ -170,11 +187,17 @@ class MenuItemController extends Controller
      */
     public function edit($id)
     {
-        $menuItem = MenuItem::with(['language', 'category'])->findOrFail($id);
+        $menuItem = MenuItem::with(['language', 'category', 'addons'])->findOrFail($id);
         $languages = Language::where('is_active', true)->get();
         
         // Get categories for the menu item's language
         $categories = MenuCategory::where('language_id', $menuItem->language_id)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+        
+        // Get all available addon items for the menu item's language
+        $addons = AddonItem::where('language_id', $menuItem->language_id)
             ->where('is_active', true)
             ->orderBy('sort_order')
             ->get();
@@ -185,7 +208,10 @@ class MenuItemController extends Controller
             ->with(['language', 'category'])
             ->get();
         
-        return view('admin.menu-items.edit', compact('menuItem', 'languages', 'categories', 'translations'));
+        // Get current addon IDs for the menu item
+        $selectedAddonIds = $menuItem->addons->pluck('id')->toArray();
+        
+        return view('admin.menu-items.edit', compact('menuItem', 'languages', 'categories', 'addons', 'translations', 'selectedAddonIds'));
     }
 
     /**
@@ -205,8 +231,8 @@ class MenuItemController extends Controller
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('menu_items')->where(function ($query) use ($request, $id) {
-                    return $query->where('language_id', $request->language_id)
+                Rule::unique('menu_items')->where(function ($query) use ($menuItem, $id) {
+                    return $query->where('language_id', $menuItem->language_id)
                                  ->where('id', '!=', $id);
                 }),
             ],
@@ -215,6 +241,8 @@ class MenuItemController extends Controller
             'price' => 'required|numeric|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'sort_order' => 'nullable|integer|min:0',
+            'addon_ids' => 'nullable|array',
+            'addon_ids.*' => 'exists:addon_items,id',
         ]);
 
         if ($validator->fails()) {
@@ -255,6 +283,39 @@ class MenuItemController extends Controller
             $menuItem->is_featured = $request->has('is_featured');
             $menuItem->sort_order = $request->sort_order ?? 0;
             $menuItem->save();
+            
+            // Sync addon items
+            $addonIds = $request->has('addon_ids') ? $request->addon_ids : [];
+            $menuItem->addons()->sync($addonIds);
+            
+            // Sync addon items with translations if requested
+            if ($request->has('sync_addons_to_translations')) {
+                $translations = MenuItem::where('mass_id', $menuItem->mass_id)
+                    ->where('id', '!=', $menuItem->id)
+                    ->get();
+                
+                foreach ($translations as $translation) {
+                    // Get addon mass_ids from the current language
+                    $addonMassIds = [];
+                    if (!empty($addonIds)) {
+                        $addonMassIds = AddonItem::whereIn('id', $addonIds)
+                            ->pluck('mass_id')
+                            ->toArray();
+                    }
+                    
+                    // Get corresponding addon IDs in the translation language
+                    $translationAddonIds = [];
+                    if (!empty($addonMassIds)) {
+                        $translationAddonIds = AddonItem::where('language_id', $translation->language_id)
+                            ->whereIn('mass_id', $addonMassIds)
+                            ->pluck('id')
+                            ->toArray();
+                    }
+                    
+                    // Sync addon items for the translation
+                    $translation->addons()->sync($translationAddonIds);
+                }
+            }
             
             DB::commit();
             
@@ -302,7 +363,7 @@ class MenuItemController extends Controller
      */
     public function createTranslation($id)
     {
-        $sourceItem = MenuItem::with(['language', 'category'])->findOrFail($id);
+        $sourceItem = MenuItem::with(['language', 'category', 'addons'])->findOrFail($id);
         
         // Get languages that don't have a translation for this menu item yet
         $existingLanguages = MenuItem::where('mass_id', $sourceItem->mass_id)
@@ -320,14 +381,25 @@ class MenuItemController extends Controller
         
         // Get categories for each available language
         $categoriesByLanguage = [];
+        $addonsByLanguage = [];
+        
         foreach ($availableLanguages as $language) {
             $categoriesByLanguage[$language->id] = MenuCategory::where('language_id', $language->id)
                 ->where('is_active', true)
                 ->orderBy('sort_order')
                 ->get();
+                
+            $addonsByLanguage[$language->id] = AddonItem::where('language_id', $language->id)
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get();
         }
         
-        return view('admin.menu-items.create-translation', compact('sourceItem', 'availableLanguages', 'categoriesByLanguage'));
+        // Get source item addon IDs
+        $sourceAddonIds = $sourceItem->addons->pluck('id')->toArray();
+        
+        return view('admin.menu-items.create-translation', 
+            compact('sourceItem', 'availableLanguages', 'categoriesByLanguage', 'addonsByLanguage', 'sourceAddonIds'));
     }
     
     /**
@@ -339,7 +411,7 @@ class MenuItemController extends Controller
      */
     public function storeTranslation(Request $request, $id)
     {
-        $sourceItem = MenuItem::findOrFail($id);
+        $sourceItem = MenuItem::with('addons')->findOrFail($id);
         
         $validator = Validator::make($request->all(), [
             'language_id' => 'required|exists:languages,id',
@@ -355,6 +427,8 @@ class MenuItemController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'addon_ids' => 'nullable|array',
+            'addon_ids.*' => 'exists:addon_items,id',
         ]);
 
         if ($validator->fails()) {
@@ -404,6 +478,24 @@ class MenuItemController extends Controller
                 'sort_order' => $sourceItem->sort_order, // Use same sort order as source
             ]);
             
+            // Handle addon synchronization
+            if ($request->has('use_source_addons')) {
+                // Use source item addons
+                $addonMassIds = $sourceItem->addons->pluck('mass_id')->toArray();
+                
+                // Get corresponding addon IDs in the new language
+                $translationAddonIds = AddonItem::where('language_id', $request->language_id)
+                    ->whereIn('mass_id', $addonMassIds)
+                    ->pluck('id')
+                    ->toArray();
+                
+                // Attach addon items
+                $translation->addons()->attach($translationAddonIds);
+            } elseif ($request->has('addon_ids')) {
+                // Use selected addon items
+                $translation->addons()->attach($request->addon_ids);
+            }
+            
             DB::commit();
             
             return redirect()->route('admin.menu-items.edit', $translation->id)
@@ -436,5 +528,27 @@ class MenuItemController extends Controller
             ->get(['id', 'name']);
             
         return response()->json(['categories' => $categories]);
+    }
+    
+    /**
+     * Get addon items for a specific language (AJAX)
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getAddonsByLanguage(Request $request)
+    {
+        $languageId = $request->language_id;
+        
+        if (!$languageId) {
+            return response()->json(['error' => 'Language ID is required'], 400);
+        }
+        
+        $addons = AddonItem::where('language_id', $languageId)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get(['id', 'name', 'price']);
+            
+        return response()->json(['addons' => $addons]);
     }
 }

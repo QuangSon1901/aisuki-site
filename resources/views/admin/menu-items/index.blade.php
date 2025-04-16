@@ -23,6 +23,7 @@
                                         <th width="15%">Name</th>
                                         <th width="10%">Code</th>
                                         <th width="15%">Category</th>
+                                        <th width="10%">Add-ons</th>
                                         <th width="10%">Price</th>
                                         <th width="10%">Languages</th>
                                         <th width="10%" class="text-center">Status</th>
@@ -51,6 +52,13 @@
                                                     {{ $itemData['item']->category->name }}
                                                 @else
                                                     <span class="text-danger">No category</span>
+                                                @endif
+                                            </td>
+                                            <td class="align-middle">
+                                                @if($itemData['item']->addons->count() > 0)
+                                                    <span class="badge bg-info">{{ $itemData['item']->addons->count() }} items</span>
+                                                @else
+                                                    <span class="badge bg-secondary">None</span>
                                                 @endif
                                             </td>
                                             <td class="align-middle">
