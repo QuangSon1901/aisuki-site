@@ -85,7 +85,7 @@
             @foreach($categories as $category)
             <div class="flex-shrink-0 text-center snap-center min-w-[100px] sm:min-w-[120px]">
                 <a href="{{ route('menu', ['locale' => app()->getLocale()]) }}#category-{{ $category->slug }}" class="block">
-                    <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" class="w-20 h-20 sm:w-28 sm:h-28 object-cover rounded-full mx-auto mb-2 transition-all hover:transform hover:-translate-y-1 hover:shadow-lg">
+                    <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" class="w-20 h-20 sm:w-28 sm:h-28 object-cover rounded-full mx-auto mb-2 transition-all hover:shadow-lg">
                     <h3 class="text-xs sm:text-sm font-medium text-theme-primary">{{ $category->name }}</h3>
                 </a>
             </div>
@@ -95,7 +95,7 @@
         <!-- Menu Items - Desktop Layout -->
         <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             @foreach($featuredItems as $item)
-            <div class="card rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-2">
+            <div class="card rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all">
                 <div class="h-44 sm:h-48 bg-cover bg-center relative" style="background-image: url('{{ asset($item->image) }}')"></div>
                 <div class="p-5">
                     <div class="flex justify-between items-center mb-3">

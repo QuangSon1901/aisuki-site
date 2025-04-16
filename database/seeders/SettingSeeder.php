@@ -14,7 +14,7 @@ class SettingSeeder extends Seeder
             // General settings
             [
                 'key' => 'site_name',
-                'value' => 'AISUKI',
+                'value' => 'AISUKI - Asian Cooking - Sushi & Bowls',
                 'group' => 'general',
                 'is_translatable' => false,
             ],
@@ -40,31 +40,31 @@ class SettingSeeder extends Seeder
             // Contact settings
             [
                 'key' => 'phone',
-                'value' => '+49 89 12345678',
+                'value' => '+49 176 57904182',
                 'group' => 'contact',
                 'is_translatable' => false,
             ],
             [
                 'key' => 'email',
-                'value' => 'info@aisuki.de',
+                'value' => 'contact@aisuki.de',
                 'group' => 'contact',
                 'is_translatable' => false,
             ],
             [
                 'key' => 'address',
-                'value' => 'Leopoldstraße 123, 80802 Munich, Germany',
+                'value' => 'Korbinianstraße 60 (Ecke Frankfurter Ring 12). 80807 München',
                 'group' => 'contact',
                 'is_translatable' => true,
             ],
             [
                 'key' => 'opening_hours',
-                'value' => '10:00 - 22:00 (Mon-Sun)',
+                'value' => '11:00 - 14:30 (Mon-Fri)',
                 'group' => 'contact',
                 'is_translatable' => true,
             ],
             [
                 'key' => 'google_maps_iframe',
-                'value' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2661.568533668056!2d11.576603776692168!3d48.15362284666392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479e75eb52a19259%3A0x1e31a9efc1aaaed3!2sLeopoldstra%C3%9Fe%2C%2080802%20M%C3%BCnchen%2C%20Germany!5e0!3m2!1sen!2sus!4v1681484909322!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>',
+                'value' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d877.2329059688166!2d11.568594733635424!3d48.18711584303955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479e7427925783ab%3A0xcaec8c4a43effb96!2sFrankfurter%20Ring%2012%2C%2080807%20M%C3%BCnchen%2C%20Germany!5e0!3m2!1sen!2s!4v1744798556211!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
                 'group' => 'contact',
                 'is_translatable' => false,
             ],
@@ -90,7 +90,7 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key' => 'whatsapp',
-                'value' => '+4989123456789',
+                'value' => '+4917657904182',
                 'group' => 'social',
                 'is_translatable' => false,
             ],
@@ -104,25 +104,25 @@ class SettingSeeder extends Seeder
             // SEO settings
             [
                 'key' => 'meta_title',
-                'value' => 'AISUKI - Japanese Restaurant',
+                'value' => 'AISUKI - Asian Cooking - Sushi & Bowls',
                 'group' => 'seo',
                 'is_translatable' => true,
             ],
             [
                 'key' => 'meta_description',
-                'value' => 'Authentic Japanese restaurant in Munich with traditional flavors and cozy atmosphere.',
+                'value' => 'AISUKI - Asian Cooking - Sushi & Bowls',
                 'group' => 'seo',
                 'is_translatable' => true,
             ],
             [
                 'key' => 'meta_keywords',
-                'value' => 'japanese restaurant, sushi, munich, ramen, authentic japanese food',
+                'value' => 'asian cooking, sushi, munich, ramen, pho viet nam',
                 'group' => 'seo',
                 'is_translatable' => true,
             ],
             [
                 'key' => 'delivery_fee',
-                'value' => '2.50',
+                'value' => '0.00',
                 'group' => 'order',
                 'is_translatable' => false,
             ],
@@ -140,13 +140,13 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key' => 'min_order_amount',
-                'value' => '10.00',
+                'value' => '0.00',
                 'group' => 'order',
                 'is_translatable' => false,
             ],
             [
                 'key' => 'store_address',
-                'value' => 'Leopoldstraße 123, 80802 Munich, Germany',
+                'value' => 'Korbinianstraße 60 (Ecke Frankfurter Ring 12). 80807 München',
                 'group' => 'order',
                 'is_translatable' => true,
             ],
@@ -245,7 +245,7 @@ class SettingSeeder extends Seeder
                 'group' => 'settings',
                 'key' => 'address',
                 'language_code' => 'de',
-                'value' => 'Leopoldstraße 123, 80802 München, Deutschland',
+                'value' => 'Korbinianstraße 60 (Ecke Frankfurter Ring 12). 80807 München',
             ],
             
             // Opening hours translations
@@ -261,19 +261,19 @@ class SettingSeeder extends Seeder
                 'group' => 'settings',
                 'key' => 'meta_title',
                 'language_code' => 'de',
-                'value' => 'AISUKI - Japanisches Restaurant',
+                'value' => 'AISUKI - Asian Cooking - Sushi & Bowls',
             ],
             [
                 'group' => 'settings',
                 'key' => 'meta_description',
                 'language_code' => 'de',
-                'value' => 'Authentisches japanisches Restaurant in München mit traditionellen Aromen und gemütlicher Atmosphäre.',
+                'value' => 'AISUKI - Asian Cooking - Sushi & Bowls',
             ],
             [
                 'group' => 'settings',
                 'key' => 'meta_keywords',
                 'language_code' => 'de',
-                'value' => 'japanisches restaurant, sushi, münchen, ramen, authentisches japanisches essen',
+                'value' => 'asian cooking, sushi, munich, ramen, pho viet nam',
             ],
         ];
 

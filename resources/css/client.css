@@ -370,3 +370,41 @@ input, select, textarea {
 #mobileSummaryCart a.opacity-50.pointer-events-none {
     background-color: rgba(230, 28, 35, 0.5);
 }
+
+
+/* Custom Scrollbar Styling */
+.mini-cart-items::-webkit-scrollbar {
+    width: 5px;
+}
+
+.mini-cart-items::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.mini-cart-items::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+.mini-cart-items::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* For Firefox */
+.mini-cart-items {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+}
+
+/* Hide scrollbar but keep functionality for very minimal UI 
+   Uncomment if you prefer no visible scrollbar */
+/*
+.mini-cart-items {
+    -ms-overflow-style: none;  /* IE and Edge */
+    /*scrollbar-width: none;  /* Firefox */
+/*}
+
+.mini-cart-items::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+/*}
+*/
