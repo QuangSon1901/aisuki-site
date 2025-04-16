@@ -279,11 +279,11 @@
                                     <label for="featured_image" class="form-label d-block">Upload New Image</label>
                                     <input type="file" class="form-control image-preview-input @error('featured_image') is-invalid @enderror" 
                                            id="featured_image" name="featured_image" data-preview="image_preview"
-                                           accept="image/jpeg,image/png,image/gif,image/jpg">
+                                           accept="image/jpeg,image/png,image/gif,image/jpg,image/webp">
                                     @error('featured_image')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                    <small class="text-muted">Recommended size: 1200 x 630 pixels (JPEG, PNG, GIF)</small>
+                                    <small class="text-muted">Recommended size: 1200 x 630 pixels (JPEG, PNG, GIF, WEBP)</small>
                                 </div>
                             </div>
                         </div>

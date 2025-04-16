@@ -28,10 +28,10 @@ Route::group(['prefix' => '{locale?}', 'middleware' => 'setLocale', 'where' => [
     Route::get('/contact', [PageController::class, 'contact'])->name('contact');
     Route::post('/reservation/submit', [PageController::class, 'submitReservation'])->name('reservation.submit');
 
-    Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
-
     Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
     Route::post('/checkout/submit', [CartController::class, 'submitOrder'])->name('checkout.submit');
+
+    Route::get('{slug}', [PageController::class, 'show'])->name('page.show');
 });
 
 Route::middleware('setLocale')->group(function () {

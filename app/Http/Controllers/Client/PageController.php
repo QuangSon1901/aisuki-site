@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\Language;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -72,6 +73,21 @@ class PageController extends Controller
      */
     public function about($locale)
     {
+        // Try to find the about page by language-specific slug
+        $language = Language::where('code', $locale)->first();
+        
+        // Assume mass_id 1 is the about page
+        // You might want to use a more reliable way to identify the about page
+        $aboutPage = Page::where('mass_id', 1)
+            ->where('language_id', $language->id)
+            ->where('is_active', true)
+            ->first();
+            
+        if ($aboutPage) {
+            return $this->show($locale, $aboutPage->slug);
+        }
+        
+        // Fallback to default about-us slug if no custom slug found
         return $this->show($locale, 'about-us');
     }
 }

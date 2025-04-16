@@ -31,6 +31,22 @@ class Page extends Model
     }
     
     /**
+     * Get translation of this page in a specific locale
+     */
+    public function getTranslationByLocale($locale)
+    {
+        $language = Language::where('code', $locale)->first();
+        if (!$language) {
+            return null;
+        }
+        
+        return self::where('mass_id', $this->mass_id)
+            ->where('language_id', $language->id)
+            ->where('is_active', true)
+            ->first();
+    }
+    
+    /**
      * Get a page by slug and the current language
      */
     public static function getBySlug($slug)
@@ -44,7 +60,6 @@ class Page extends Model
             ->where('language_id', $currentLanguage->id)
             ->where('is_active', true)
             ->first();
-        dd($slug);
             
         if (!$page) {
             // Fallback: Get the page in the default language
@@ -58,6 +73,38 @@ class Page extends Model
         }
         
         return $page;
+    }
+    
+    /**
+     * Get a page by slug and specific locale
+     */
+    public static function getBySlugAndLocale($slug, $locale)
+    {
+        $language = Language::where('code', $locale)->first();
+        if (!$language) {
+            return null;
+        }
+        
+        return self::where('slug', $slug)
+            ->where('language_id', $language->id)
+            ->where('is_active', true)
+            ->first();
+    }
+    
+    /**
+     * Find a page by its mass_id and locale
+     */
+    public static function findByMassIdAndLocale($massId, $locale)
+    {
+        $language = Language::where('code', $locale)->first();
+        if (!$language) {
+            return null;
+        }
+        
+        return self::where('mass_id', $massId)
+            ->where('language_id', $language->id)
+            ->where('is_active', true)
+            ->first();
     }
     
     /**

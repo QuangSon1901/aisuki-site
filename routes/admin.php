@@ -35,8 +35,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::resource('users', UserController::class)->names('admin.users');
 
+    Route::post('languages/{id}/set-default', [LanguageController::class, 'setDefault'])->name('admin.languages.set-default');
+    Route::post('languages/{id}/toggle-active', [LanguageController::class, 'toggleActive'])->name('admin.languages.toggle-active');
     Route::resource('languages', LanguageController::class)->names('admin.languages');
-    
+
     // Settings
     Route::get('settings', [SettingController::class, 'index'])->name('admin.settings.index');
     Route::post('settings/update', [SettingController::class, 'update'])->name('admin.settings.update');

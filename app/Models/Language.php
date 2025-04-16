@@ -43,4 +43,12 @@ class Language extends Model
     {
         return $this->translations()->count();
     }
+
+    public function getOtherActiveLanguages()
+    {
+        return self::where('is_active', true)
+            ->where('id', '!=', $this->id)
+            ->orderBy('sort_order')
+            ->get();
+    }
 }
