@@ -1,7 +1,47 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MenuCategoryController;
+use App\Http\Controllers\Admin\MenuItemController;
+use App\Http\Controllers\Admin\AddonItemController;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\LanguageController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\TranslationController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
-    // Admin routes
+// Admin Auth Routes (no admin prefix needed as it's already added in RouteServiceProvider)
+Route::get('login', [AuthController::class, 'showLoginForm'])->name('admin.login');
+Route::post('login', [AuthController::class, 'login'])->name('admin.login.submit');
+Route::post('logout', [AuthController::class, 'logout'])->name('admin.logout');
+
+// Admin Protected Routes
+Route::middleware(['auth', 'admin'])->group(function () {
+    // Dashboard 
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    
+    // Resource Routes
+    Route::resource('menu-categories', MenuCategoryController::class)->names('admin.menu-categories');
+    Route::resource('menu-items', MenuItemController::class)->names('admin.menu-items');
+    Route::resource('addon-items', AddonItemController::class)->names('admin.addon-items');
+    Route::resource('pages', PageController::class)->names('admin.pages');
+    Route::resource('users', UserController::class)->names('admin.users');
+    Route::resource('languages', LanguageController::class)->names('admin.languages');
+    
+    // Settings
+    Route::get('settings', [SettingController::class, 'index'])->name('admin.settings.index');
+    Route::post('settings/update', [SettingController::class, 'update'])->name('admin.settings.update');
+    
+    // Translations
+    Route::get('translations', [TranslationController::class, 'index'])->name('admin.translations.index');
+    Route::get('translations/group/{group}', [TranslationController::class, 'group'])->name('admin.translations.group');
+    Route::post('translations/update', [TranslationController::class, 'update'])->name('admin.translations.update');
+
+    Route::get('profile', [ProfileController::class, 'edit'])->name('admin.profile.edit');
+    Route::put('profile', [ProfileController::class, 'update'])->name('admin.profile.update');
+    Route::get('profile/change-password', [ProfileController::class, 'changePassword'])->name('admin.profile.change-password');
+    Route::put('profile/change-password', [ProfileController::class, 'updatePassword'])->name('admin.profile.update-password');
 });
