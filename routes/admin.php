@@ -48,6 +48,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('translations', [TranslationController::class, 'index'])->name('admin.translations.index');
     Route::get('translations/group/{group}', [TranslationController::class, 'group'])->name('admin.translations.group');
     Route::post('translations/update', [TranslationController::class, 'update'])->name('admin.translations.update');
+    Route::post('translations/import', [TranslationController::class, 'import'])->name('admin.translations.import');
+    Route::post('translations/export', [TranslationController::class, 'export'])->name('admin.translations.export');
+    Route::post('translations/add-key', [TranslationController::class, 'addKey'])->name('admin.translations.add-key');
+    Route::post('translations/create-group', [TranslationController::class, 'createGroup'])->name('admin.translations.create-group');
 
     Route::get('profile', [ProfileController::class, 'edit'])->name('admin.profile.edit');
     Route::put('profile', [ProfileController::class, 'update'])->name('admin.profile.update');
