@@ -1,5 +1,6 @@
 // resources/js/admin.js
 import './bootstrap';
+import './notification-polling';
 
 $(document).ready(function() {
     // Sidebar toggle functionality

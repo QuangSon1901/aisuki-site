@@ -87,13 +87,14 @@
                     <li class="nav-item {{ request()->routeIs('admin.notifications.*') ? 'active' : '' }}">
                         <a href="{{ route('admin.notifications.index') }}" class="nav-link">
                             <i class="fas fa-bell"></i>
-                            <span class="nav-text">Notifications</span>
+                            <span class="nav-text" style="flex: 1;">Thông báo</span>
                             @php
                                 $unreadCount = \App\Models\Notification::where('is_read', false)->count();
                             @endphp
-                            @if($unreadCount > 0)
-                                <span class="badge bg-danger ms-auto">{{ $unreadCount }}</span>
-                            @endif
+                            <!-- Thêm class notification-badge -->
+                            <span class="badge bg-danger notification-badge {{ $unreadCount > 0 ? '' : 'd-none' }}">
+                                {{ $unreadCount > 99 ? '99+' : $unreadCount }}
+                            </span>
                         </a>
                     </li>
 
@@ -158,51 +159,56 @@
                         <button class="position-relative btn btn-link text-dark notification-button" type="button" data-bs-toggle="dropdown">
                             <i class="fas fa-bell"></i>
                             @php
-                            $unreadCount = \App\Models\Notification::where('is_read', false)->count();
+                                $unreadCount = \App\Models\Notification::where('is_read', false)->count();
                             @endphp
-
-                            @if($unreadCount > 0)
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            
+                            <!-- Thêm class notification-badge -->
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge {{ $unreadCount > 0 ? '' : 'd-none' }}">
                                 {{ $unreadCount > 99 ? '99+' : $unreadCount }}
                             </span>
-                            @endif
                         </button>
                         <div class="dropdown-menu dropdown-menu-end notification-dropdown">
                             <div class="dropdown-header d-flex justify-content-between align-items-center">
-                                <span>Notifications</span>
-                                <a href="{{ route('admin.notifications.index') }}" class="text-decoration-none small">View All</a>
+                                <span>Thông báo</span>
+                                <a href="{{ route('admin.notifications.index') }}" class="text-decoration-none small">Xem tất cả</a>
                             </div>
                             <div class="dropdown-divider"></div>
-
-                            @php
-                            $recentNotifications = \App\Models\Notification::orderBy('created_at', 'desc')->take(5)->get();
-                            @endphp
-
-                            @if($recentNotifications->isEmpty())
-                            <div class="dropdown-item text-center text-muted py-3">
-                                <i class="fas fa-bell-slash me-1"></i> No notifications
-                            </div>
-                            @else
-                            @foreach($recentNotifications as $notification)
-                            <a href="{{ route('admin.notifications.show', $notification) }}" class="dropdown-item d-flex align-items-center {{ $notification->is_read ? '' : 'bg-light' }}">
-                                <div class="flex-shrink-0">
-                                    <div class="bg-{{ $notification->getColorClass() }} text-white rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                        <i class="fas {{ $notification->getIconClass() }}"></i>
+                            
+                            <!-- Thêm class notification-list -->
+                            <div class="notification-list">
+                                @php
+                                    $recentNotifications = \App\Models\Notification::orderBy('is_read', 'asc')
+                                        ->orderBy('created_at', 'desc')
+                                        ->take(5)
+                                        ->get();
+                                @endphp
+                                
+                                @if($recentNotifications->isEmpty())
+                                    <div class="dropdown-item text-center text-muted py-3">
+                                        <i class="fas fa-bell-slash me-1"></i> Không có thông báo
                                     </div>
-                                </div>
-                                <div class="ms-3 flex-grow-1">
-                                    <div class="small {{ $notification->is_read ? '' : 'fw-bold' }}">{{ Str::limit($notification->title, 40) }}</div>
-                                    <div class="text-muted smaller">{{ $notification->created_at->diffForHumans() }}</div>
-                                </div>
-                            </a>
-                            @endforeach
-                            @endif
-
+                                @else
+                                    @foreach($recentNotifications as $notification)
+                                        <a href="{{ route('admin.notifications.show', $notification) }}" class="dropdown-item d-flex align-items-center {{ $notification->is_read ? '' : 'bg-light' }}">
+                                            <div class="flex-shrink-0">
+                                                <div class="bg-{{ $notification->getColorClass() }} text-white rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                    <i class="fas {{ $notification->getIconClass() }}"></i>
+                                                </div>
+                                            </div>
+                                            <div class="ms-3 flex-grow-1">
+                                                <div class="small {{ $notification->is_read ? '' : 'fw-bold' }}">{{ Str::limit($notification->title, 40) }}</div>
+                                                <div class="text-muted smaller">{{ $notification->created_at->diffForHumans() }}</div>
+                                            </div>
+                                        </a>
+                                    @endforeach
+                                @endif
+                            </div>
+                            
                             <div class="dropdown-divider"></div>
                             <form action="{{ route('admin.notifications.mark-all-read') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="dropdown-item text-center">
-                                    <i class="fas fa-check-double me-1"></i> Mark All as Read
+                                    <i class="fas fa-check-double me-1"></i> Đánh dấu đã đọc tất cả
                                 </button>
                             </form>
                         </div>
@@ -288,6 +294,12 @@
 
     <!-- Page specific JS -->
     @stack('scripts')
+
+    <script>
+        window.routes = {
+            'admin.api.notifications.check': '{{ route("admin.api.notifications.check") }}'
+        };
+    </script>
 </body>
 
 </html>

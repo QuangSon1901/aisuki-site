@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AddonItemController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\LanguageController;
+use App\Http\Controllers\Admin\NotificationApiController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -82,4 +83,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('admin.notifications.mark-read');
     Route::post('notifications/{notification}/processed', [NotificationController::class, 'markAsProcessed'])->name('admin.notifications.mark-processed');
     Route::post('notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('admin.notifications.mark-all-read');
+
+    Route::get('api/notifications/check', [NotificationApiController::class, 'checkNewNotifications'])
+        ->name('admin.api.notifications.check');
 });
