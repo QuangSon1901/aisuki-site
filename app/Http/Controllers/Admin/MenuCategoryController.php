@@ -78,7 +78,7 @@ class MenuCategoryController extends Controller
             'slug' => 'required|string|max:255|regex:/^[a-z0-9-]+$/|unique:menu_categories,slug,NULL,id,language_id,' . $request->language_id,
             'language_id' => 'required|exists:languages,id',
             'mass_id' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'sort_order' => 'nullable|integer|min:0',
         ]);
 
@@ -157,7 +157,7 @@ class MenuCategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|regex:/^[a-z0-9-]+$/|unique:menu_categories,slug,' . $id . ',id,language_id,' . $category->language_id,
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'sort_order' => 'nullable|integer|min:0',
         ]);
 
@@ -286,7 +286,7 @@ class MenuCategoryController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|regex:/^[a-z0-9-]+$/|unique:menu_categories,slug,NULL,id,language_id,' . $request->language_id,
             'language_id' => 'required|exists:languages,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
         if ($validator->fails()) {

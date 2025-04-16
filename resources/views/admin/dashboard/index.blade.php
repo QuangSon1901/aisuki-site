@@ -87,12 +87,12 @@
                             <p class="action-description">Create a new menu category</p>
                         </a>
                         
-                        <a href="{{ route('admin.pages.create') }}" class="action-card">
+                        <a href="{{ route('admin.pages.index') }}" class="action-card">
                             <div class="action-icon">
                                 <i class="fas fa-file-alt"></i>
                             </div>
-                            <h5 class="action-title">Create Page</h5>
-                            <p class="action-description">Add a new content page</p>
+                            <h5 class="action-title">Pages</h5>
+                            <p class="action-description">Manage content page</p>
                         </a>
                         
                         <a href="{{ route('admin.settings.index') }}" class="action-card">

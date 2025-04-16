@@ -29,6 +29,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('menu-categories/{id}/create-translation', [MenuCategoryController::class, 'storeTranslation'])->name('admin.menu-categories.store-translation');
     Route::resource('menu-categories', MenuCategoryController::class)->names('admin.menu-categories');
     
+    Route::get('menu-items/get-categories', [MenuItemController::class, 'getCategoriesByLanguage'])->name('admin.menu-items.get-categories');
+    Route::get('menu-items/{id}/create-translation', [MenuItemController::class, 'createTranslation'])->name('admin.menu-items.create-translation');
+    Route::post('menu-items/{id}/create-translation', [MenuItemController::class, 'storeTranslation'])->name('admin.menu-items.store-translation');
     Route::resource('menu-items', MenuItemController::class)->names('admin.menu-items');
 
     Route::resource('addon-items', AddonItemController::class)->names('admin.addon-items');
