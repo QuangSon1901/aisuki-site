@@ -46,6 +46,10 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+input, textarea, select {
+    outline: none;
+}
+
 .bg-theme-primary {
     background-color: var(--bg-primary);
 }
