@@ -1,5 +1,4 @@
 <?php
-// app/Http/Controllers/Client/MenuController.php
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
@@ -16,25 +15,36 @@ class MenuController extends Controller
         $contactSettings = settings_group('contact');
         $socialSettings = settings_group('social');
         
-        // Lấy tất cả danh mục hiện có với ngôn ngữ hiện tại
+        // Get active categories
         $categories = MenuCategory::getActive();
         
-        // Lấy món ăn theo danh mục
+        // Initialize menuItems array
         $menuItems = [];
-        foreach ($categories as $category) {
-            $menuItems[$category->slug] = MenuItem::getByCategory($category->id);
-        }
         
-        // Lấy các add-on với ngôn ngữ hiện tại
-        $addons = AddonItem::getActive();
+        // Get menu items by category with their associated addons
+        foreach ($categories as $category) {
+            // Get basic items first
+            $items = MenuItem::getByCategory($category->id);
+            
+            if($items->isNotEmpty()) {
+                // Then eager load addons for these items
+                $itemIds = $items->pluck('id')->toArray();
+                $itemsWithAddons = MenuItem::with('addons')
+                    ->whereIn('id', $itemIds)
+                    ->get();
+                
+                $menuItems[$category->slug] = $itemsWithAddons;
+            } else {
+                $menuItems[$category->slug] = collect([]);
+            }
+        }
         
         return view('client.pages.menu', compact(
             'seoSettings', 
             'contactSettings', 
             'socialSettings', 
             'categories',
-            'menuItems',
-            'addons'
+            'menuItems'
         ));
     }
 }

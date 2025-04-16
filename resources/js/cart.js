@@ -1,34 +1,35 @@
 /**
  * AISUKI Restaurant - Cart Module
- * Xử lý tất cả các tính năng liên quan đến giỏ hàng
+ * Enhanced version with item-specific addon support
  */
 
-// Định nghĩa object Cart - chịu trách nhiệm quản lý giỏ hàng
+// Define the Cart object - responsible for managing cart functionality
 const Cart = {
-    // Khóa lưu giỏ hàng trong localStorage
+    // Key for storing cart in localStorage
     storageKey: 'aisuki_cart',
     
-    // Ký hiệu tiền tệ
+    // Currency symbol
     currencySymbol: '€',
     
-    // Lấy danh sách sản phẩm trong giỏ hàng
+    // --- CART DATA MANAGEMENT METHODS ---
+    
+    // Get items from cart
     getItems() {
         const cartData = localStorage.getItem(this.storageKey);
         return cartData ? JSON.parse(cartData) : [];
     },
     
-    // Lưu giỏ hàng vào localStorage
+    // Save cart to localStorage
     saveCart(items) {
         localStorage.setItem(this.storageKey, JSON.stringify(items));
         this.updateCartUI();
     },
     
-    // Thêm sản phẩm vào giỏ hàng
+    // Add item to cart
     addItem(item) {
         const cartItems = this.getItems();
         
-        // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
-        // So sánh ID và danh sách addon
+        // Check if item already exists (compare ID, addons, and note)
         const existingItemIndex = cartItems.findIndex(cartItem => 
             cartItem.id === item.id && 
             JSON.stringify(cartItem.addons || []) === JSON.stringify(item.addons || []) &&
@@ -36,11 +37,11 @@ const Cart = {
         );
         
         if (existingItemIndex !== -1) {
-            // Cập nhật số lượng nếu sản phẩm đã tồn tại
+            // Update quantity if item exists
             cartItems[existingItemIndex].quantity += item.quantity;
             cartItems[existingItemIndex].total = this.calculateItemTotal(cartItems[existingItemIndex]);
         } else {
-            // Thêm sản phẩm mới
+            // Add new item
             item.total = this.calculateItemTotal(item);
             cartItems.push(item);
         }
@@ -49,7 +50,7 @@ const Cart = {
         return cartItems;
     },
     
-    // Xóa sản phẩm khỏi giỏ hàng
+    // Remove item from cart
     removeItem(index) {
         const cartItems = this.getItems();
         if (index >= 0 && index < cartItems.length) {
@@ -59,11 +60,11 @@ const Cart = {
         return cartItems;
     },
     
-    // Cập nhật số lượng sản phẩm
+    // Update item quantity
     updateQuantity(index, quantity) {
         const cartItems = this.getItems();
         if (index >= 0 && index < cartItems.length) {
-            // Đảm bảo số lượng ít nhất là 1
+            // Ensure quantity is at least 1
             quantity = Math.max(1, parseInt(quantity) || 1);
             
             cartItems[index].quantity = quantity;
@@ -73,11 +74,13 @@ const Cart = {
         return cartItems;
     },
     
-    // Tính tổng giá trị của một sản phẩm (giá * số lượng + giá addon)
+    // --- CALCULATION METHODS ---
+    
+    // Calculate total price for an item (price * quantity + addon prices)
     calculateItemTotal(item) {
         let total = parseFloat(item.price || 0) * parseInt(item.quantity || 1);
         
-        // Cộng thêm giá trị addon (addon chỉ tính 1 lần, không nhân với số lượng)
+        // Add addon prices (addons are counted once, not multiplied by quantity)
         if (item.addons && item.addons.length > 0) {
             item.addons.forEach(addon => {
                 total += parseFloat(addon.price || 0);
@@ -87,27 +90,27 @@ const Cart = {
         return parseFloat(total.toFixed(2));
     },
     
-    // Tính tổng tiền tạm tính (chưa bao gồm phí vận chuyển)
+    // Calculate subtotal (before shipping, discounts)
     getSubtotal() {
         const cartItems = this.getItems();
         const subtotal = cartItems.reduce((total, item) => total + (parseFloat(item.total) || 0), 0);
         return parseFloat(subtotal.toFixed(2));
     },
     
-    // Tính tổng tiền (bao gồm phí vận chuyển)
+    // Calculate total (including shipping, discounts)
     getTotal(deliveryFee = 0, discount = 0) {
         const subtotal = this.getSubtotal();
         const total = subtotal + parseFloat(deliveryFee || 0) - parseFloat(discount || 0);
         return parseFloat(total.toFixed(2));
     },
     
-    // Lấy tổng số sản phẩm trong giỏ hàng
+    // Get total number of items in cart
     getCount() {
         const cartItems = this.getItems();
         return cartItems.reduce((count, item) => count + (parseInt(item.quantity) || 0), 0);
     },
     
-    // Định dạng giá tiền
+    // Format price with currency symbol
     formatPrice(price) {
         return new Intl.NumberFormat('de-DE', { 
             style: 'decimal',
@@ -116,36 +119,38 @@ const Cart = {
         }).format(price) + ' ' + this.currencySymbol;
     },
     
-    // Kiểm tra giỏ hàng có trống không
+    // Check if cart is empty
     isEmpty() {
         return this.getItems().length === 0;
     },
     
-    // Xóa toàn bộ giỏ hàng
+    // Clear entire cart
     clearCart() {
         localStorage.removeItem(this.storageKey);
         this.updateCartUI();
     },
     
-    // Cập nhật giao diện người dùng
+    // --- UI UPDATE METHODS ---
+    
+    // Update all UI elements
     updateCartUI() {
-        // Cập nhật số lượng sản phẩm hiển thị trên icon giỏ hàng
+        // Update cart count on icons
         const cartCount = this.getCount();
         $('.cart-count').text(cartCount);
         
-        // Cập nhật tổng tiền hiển thị trên mobile sidebar
+        // Update total on mobile sidebar
         const subtotal = this.getSubtotal();
         $('.mobile-cart-subtotal').text(this.formatPrice(subtotal));
         
-        // Cập nhật mini cart trong dropdown
+        // Update mini cart dropdown
         this.updateMiniCart();
         
-        // Nếu đang ở trang giỏ hàng, cập nhật trang giỏ hàng
+        // Update cart page if we're on it
         if ($('#cartPage').length) {
             this.updateCartPage();
         }
         
-        // Cập nhật trạng thái nút checkout trong sidebar nếu không có sản phẩm
+        // Update checkout button state
         if (this.isEmpty()) {
             $('#mobileSummaryCart a').addClass('opacity-50 pointer-events-none');
         } else {
@@ -153,20 +158,20 @@ const Cart = {
         }
     },
     
-    // Cập nhật mini cart trong dropdown
+    // Update mini cart dropdown
     updateMiniCart() {
         const cartItems = this.getItems();
         const subtotal = this.getSubtotal();
         
-        // Lấy container của mini cart
+        // Get mini cart container
         const miniCartItems = $('.mini-cart-items');
         if (!miniCartItems.length) return;
         
-        // Xóa nội dung hiện tại
+        // Clear current content
         miniCartItems.empty();
         
         if (cartItems.length === 0) {
-            // Hiển thị thông báo giỏ hàng trống
+            // Show empty cart message
             miniCartItems.html(`
                 <div class="p-6 text-center">
                     <i class="fas fa-shopping-cart text-3xl mb-2 text-theme-secondary"></i>
@@ -174,10 +179,10 @@ const Cart = {
                 </div>
             `);
             
-            // Vô hiệu hóa nút thanh toán
+            // Disable checkout button
             $('.mini-cart-checkout').addClass('opacity-50 pointer-events-none');
         } else {
-            // Thêm các sản phẩm vào mini cart
+            // Add each item to mini cart
             cartItems.forEach((item, index) => {
                 let addonsHtml = '';
                 if (item.addons && item.addons.length > 0) {
@@ -214,26 +219,26 @@ const Cart = {
                 miniCartItems.append(itemHtml);
             });
             
-            // Bật nút thanh toán
+            // Enable checkout button
             $('.mini-cart-checkout').removeClass('opacity-50 pointer-events-none');
         }
         
-        // Cập nhật tổng tiền
+        // Update total
         $('.mini-cart-subtotal').text(this.formatPrice(subtotal));
     },
     
-    // Cập nhật trang giỏ hàng
+    // Update cart page
     updateCartPage() {
         const cartItems = this.getItems();
         const cartItemsContainer = $('#cartItems');
         
         if (!cartItemsContainer.length) return;
         
-        // Xóa nội dung hiện tại
+        // Clear current content
         cartItemsContainer.empty();
         
         if (cartItems.length === 0) {
-            // Hiển thị thông báo giỏ hàng trống
+            // Show empty cart message
             cartItemsContainer.html(`
                 <div class="p-8 text-center">
                     <i class="fas fa-shopping-cart text-5xl mb-4 text-theme-secondary"></i>
@@ -245,16 +250,16 @@ const Cart = {
                 </div>
             `);
             
-            // Ẩn phần điều khiển thanh toán
+            // Hide checkout controls
             $('#checkoutControls').addClass('hidden');
             
-            // Cập nhật tiêu đề
+            // Update title
             $('.cart-title').text(window.translations.cart_empty || 'Giỏ hàng trống');
         } else {
-            // Cập nhật tiêu đề
+            // Update title
             $('.cart-title').text(`${window.translations.cart_items || 'Cart Items'} (${cartItems.length})`);
             
-            // Thêm từng sản phẩm vào giỏ hàng
+            // Add each item to cart page
             cartItems.forEach((item, index) => {
                 let addonsHtml = '';
                 if (item.addons && item.addons.length > 0) {
@@ -306,20 +311,20 @@ const Cart = {
                 cartItemsContainer.append(itemHtml);
             });
             
-            // Hiện phần điều khiển thanh toán
+            // Show checkout controls
             $('#checkoutControls').removeClass('hidden');
             
-            // Cập nhật phần tóm tắt giỏ hàng
+            // Update cart summary
             this.updateCartSummary();
         }
     },
     
-    // Cập nhật phần tóm tắt giỏ hàng (tổng tiền, phí vận chuyển,...)
+    // Update cart summary (subtotal, shipping, etc.)
     updateCartSummary() {
         const subtotal = this.getSubtotal();
         const deliveryFee = parseFloat($('#deliveryFee').data('fee') || 0);
         
-        // Kiểm tra xem có mã giảm giá không
+        // Check for discount
         let discount = 0;
         if (!$('#discountRow').hasClass('hidden')) {
             discount = parseFloat($('#discountAmount').data('value') || 0);
@@ -327,24 +332,24 @@ const Cart = {
         
         const total = this.getTotal(deliveryFee, discount);
         
-        // Cập nhật tạm tính
+        // Update subtotal
         $('#cartSubtotal').text(this.formatPrice(subtotal));
         
-        // Cập nhật tổng cộng
+        // Update total
         $('#cartTotal').text(this.formatPrice(total));
     },
     
-    // Hiển thị thông báo
+    // Show toast notification
     showToast(message, type = 'success') {
-        // Kiểm tra xem container toast đã tồn tại chưa
+        // Check if toast container exists
         let toastContainer = $('.toast-container');
         if (!toastContainer.length) {
-            // Tạo container toast
+            // Create toast container
             $('body').append('<div class="toast-container"></div>');
             toastContainer = $('.toast-container');
         }
         
-        // Tạo toast
+        // Create toast
         const toastId = 'toast-' + Date.now();
         const toast = $(`
             <div id="${toastId}" class="toast toast-${type}">
@@ -357,15 +362,15 @@ const Cart = {
             </div>
         `);
         
-        // Thêm toast vào container
+        // Add toast to container
         toastContainer.append(toast);
         
-        // Hiển thị toast
+        // Show toast
         setTimeout(() => {
             toast.addClass('show');
         }, 100);
         
-        // Tự động đóng sau 3 giây
+        // Auto-close after 3 seconds
         setTimeout(() => {
             toast.removeClass('show');
             setTimeout(() => {
@@ -373,7 +378,7 @@ const Cart = {
             }, 300);
         }, 3000);
         
-        // Đóng khi click vào nút đóng
+        // Close on click
         toast.find('.toast-close').on('click', function() {
             toast.removeClass('show');
             setTimeout(() => {
@@ -382,17 +387,96 @@ const Cart = {
         });
     },
     
-    // Khởi tạo các lắng nghe sự kiện
+    // --- MENU ITEM SPECIFIC ADDON METHODS ---
+    
+    // Load addons for a specific menu item
+    loadMenuItemAddons(menuItemId) {
+        // Get addon container
+        const addonSection = $('#addonSection');
+        const addonsContainer = $('#menuItemAddons');
+        
+        // Show loading state
+        addonsContainer.html('<div class="text-center py-2"><i class="fas fa-spinner fa-spin mr-2"></i> Loading...</div>');
+        
+        // Fetch addons for this menu item
+        $.ajax({
+            url: `/api/menu-items/${menuItemId}/addons`,
+            type: 'GET',
+            success: (response) => {
+                if (response.success && response.addons.length > 0) {
+                    // Render addons
+                    let addonHtml = '';
+                    
+                    response.addons.forEach(addon => {
+                        addonHtml += `
+                            <div class="addon-item">
+                                <div class="addon-checkbox-container">
+                                    <input type="checkbox" id="addon${addon.id}" class="custom-checkbox addon-checkbox" 
+                                        data-id="${addon.id}" 
+                                        data-name="${addon.name}" 
+                                        data-price="${addon.price}">
+                                    <label for="addon${addon.id}" class="addon-label">${addon.name}</label>
+                                </div>
+                                <span class="addon-price">${this.formatPrice(addon.price)}</span>
+                            </div>
+                        `;
+                    });
+                    
+                    // Update addon container
+                    addonsContainer.html(addonHtml);
+                    addonSection.show();
+                } else {
+                    // No addons available
+                    addonSection.hide();
+                }
+                
+                // Update modal total after addons are loaded
+                this.updateModalTotal();
+            },
+            error: () => {
+                // Handle error
+                addonSection.hide();
+            }
+        });
+    },
+    
+    // Calculate and update total in order modal
+    updateModalTotal() {
+        const basePrice = parseFloat($('#addToCartBtn').data('price')) || 0;
+        let qty = parseInt($('#productQty').val()) || 1;
+        
+        // Calculate addon total
+        let addonTotal = 0;
+        $('.addon-checkbox:checked').each(function() {
+            const addonPrice = parseFloat($(this).data('price')) || 0;
+            addonTotal += addonPrice;
+        });
+        
+        // Calculate total
+        const total = (basePrice * qty) + addonTotal;
+        
+        // Update display
+        $('#modalTotal').text(this.formatPrice(total));
+        $('#modalQtySummary').text(`${qty} x ${this.formatPrice(basePrice)}`);
+        
+        if (addonTotal > 0) {
+            $('#modalQtySummary').append(` + ${this.formatPrice(addonTotal)}`);
+        }
+    },
+    
+    // --- EVENT HANDLERS ---
+    
+    // Initialize event listeners
     initEventListeners() {
         const self = this;
         
-        // Modal sản phẩm
+        // --- PRODUCT MODAL HANDLERS ---
         
-        // Mở modal khi click vào nút "Đặt món"
+        // Open modal when clicking "Order" button
         $(document).on('click', '.order-btn', function(e) {
             e.preventDefault();
             
-            // Lấy thông tin sản phẩm
+            // Get product information
             const productId = $(this).data('id');
             const productCode = $(this).data('code');
             const productName = $(this).data('name');
@@ -402,10 +486,9 @@ const Cart = {
             
             // Reset modal
             $('#productQty').val(1);
-            $('.addon-checkbox').prop('checked', false);
             $('#orderNote').val('');
             
-            // Thiết lập thông tin sản phẩm trong modal
+            // Set product information in modal
             $('#modalProductCode').text(productCode);
             $('#modalProductName').text(productName);
             $('#modalProductImage').attr('src', productImage);
@@ -414,7 +497,7 @@ const Cart = {
             $('#modalTotal').text(self.formatPrice(productPrice));
             $('#modalQtySummary').text(`1 x ${self.formatPrice(productPrice)}`);
             
-            // Lưu thông tin sản phẩm vào nút "Thêm vào giỏ hàng"
+            // Save product information to "Add to Cart" button
             $('#addToCartBtn').data({
                 id: productId,
                 code: productCode,
@@ -423,66 +506,69 @@ const Cart = {
                 image: productImage
             });
             
-            // Mở modal
+            // Load item-specific addons
+            self.loadMenuItemAddons(productId);
+            
+            // Open modal
             $('#productModalOverlay').addClass('active');
             $('#productModal').addClass('active');
             $('body').addClass('overflow-hidden');
         });
         
-        // Đóng modal sản phẩm
+        // Close product modal
         $(document).on('click', '#closeProductModal, #productModalOverlay', function() {
             $('#productModalOverlay').removeClass('active');
             $('#productModal').removeClass('active');
             $('body').removeClass('overflow-hidden');
         });
         
-        // Ngăn modal đóng khi click vào nội dung
+        // Prevent modal closing when clicking modal content
         $(document).on('click', '#productModal', function(e) {
             e.stopPropagation();
         });
         
-        // Tăng số lượng trong modal
+        // Increase quantity in modal
         $(document).on('click', '#increaseQty', function() {
             let qty = parseInt($('#productQty').val()) || 1;
             $('#productQty').val(qty + 1);
-            updateModalTotal();
+            self.updateModalTotal();
         });
         
-        // Giảm số lượng trong modal
+        // Decrease quantity in modal
         $(document).on('click', '#decreaseQty', function() {
             let qty = parseInt($('#productQty').val()) || 1;
             if (qty > 1) {
                 $('#productQty').val(qty - 1);
-                updateModalTotal();
+                self.updateModalTotal();
             }
         });
         
-        // Thay đổi số lượng trực tiếp
+        // Direct quantity change
         $(document).on('input', '#productQty', function() {
             let qty = parseInt($(this).val()) || 1;
             if (qty < 1) {
                 qty = 1;
                 $(this).val(1);
             }
-            updateModalTotal();
+            self.updateModalTotal();
         });
         
-        // Thay đổi addon
+        // Addon checkbox change
         $(document).on('change', '.addon-checkbox', function() {
-            updateModalTotal();
+            self.updateModalTotal();
         });
         
-        // Thêm vào giỏ hàng
+        // Add to cart
         $(document).on('click', '#addToCartBtn', function() {
             const productData = $(this).data();
             const qty = parseInt($('#productQty').val()) || 1;
             const note = $('#orderNote').val() || '';
             
-            // Lấy thông tin addon
+            // Get addon information
             let addons = [];
             $('.addon-checkbox:checked').each(function() {
                 const addonId = $(this).data('id');
-                const addonName = $(this).next('label').text().trim();
+                const addonName = $(this).data('name');
                 const addonPrice = parseFloat($(this).data('price')) || 0;
                 
                 addons.push({
@@ -492,7 +578,7 @@ const Cart = {
                 });
             });
             
-            // Tạo sản phẩm mới
+            // Create new item
             const newItem = {
                 id: productData.id,
                 code: productData.code,
@@ -505,50 +591,25 @@ const Cart = {
                 dateAdded: new Date().toISOString()
             };
             
-            // Thêm vào giỏ hàng
+            // Add to cart
             self.addItem(newItem);
             
-            // Đóng modal
+            // Close modal
             $('#productModalOverlay').removeClass('active');
             $('#productModal').removeClass('active');
             $('body').removeClass('overflow-hidden');
             
-            // Hiển thị thông báo thành công
+            // Show success notification
             self.showToast(`${qty}x ${productData.name} ${window.translations.added_to_cart || 'đã thêm vào giỏ hàng'}`);
             
-            // Hiển thị mini cart
+            // Show mini cart
             $('#miniCart').addClass('active');
         });
         
-        // Tính tổng tiền trong modal
-        function updateModalTotal() {
-            const basePrice = parseFloat($('#addToCartBtn').data('price')) || 0;
-            let qty = parseInt($('#productQty').val()) || 1;
-            
-            // Tính tổng giá trị addon
-            let addonTotal = 0;
-            $('.addon-checkbox:checked').each(function() {
-                const addonPrice = parseFloat($(this).data('price')) || 0;
-                addonTotal += addonPrice;
-            });
-            
-            // Tính tổng cộng
-            const total = (basePrice * qty) + addonTotal;
-            
-            // Cập nhật hiển thị
-            $('#modalTotal').text(self.formatPrice(total));
-            $('#modalQtySummary').text(`${qty} x ${self.formatPrice(basePrice)}`);
-            
-            if (addonTotal > 0) {
-                $('#modalQtySummary').append(` + ${self.formatPrice(addonTotal)}`);
-            }
-        }
+        // --- MINI CART HANDLERS ---
         
-        // Mini Cart
-        
-        // Tăng số lượng trong mini cart
+        // Increase quantity in mini cart
         $(document).on('click', '.increase-qty-mini', function(e) {
-            
             e.preventDefault();
             e.stopPropagation();
             const index = $(this).data('index');
@@ -559,10 +620,8 @@ const Cart = {
             }
         });
         
-            // Giảm số lượng trong mini cart
+        // Decrease quantity in mini cart
         $(document).on('click', '.decrease-qty-mini', function(e) {
-            console.log(123);
-            
             e.preventDefault();
             e.stopPropagation();
             const index = $(this).data('index');
@@ -573,7 +632,7 @@ const Cart = {
             }
         });
         
-        // Xóa sản phẩm khỏi mini cart
+        // Remove item from mini cart
         $(document).on('click', '.remove-cart-item', function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -583,9 +642,9 @@ const Cart = {
             self.showToast(`${item.name} ${window.translations.removed_from_cart || 'đã xóa khỏi giỏ hàng'}`);
         });
         
-        // Cart Page
+        // --- CART PAGE HANDLERS ---
         
-        // Tăng số lượng trong trang giỏ hàng
+        // Increase quantity in cart page
         $(document).on('click', '.cart-item-increase', function(e) {
             e.preventDefault();
             const index = $(this).data('index');
@@ -596,7 +655,7 @@ const Cart = {
             }
         });
         
-        // Giảm số lượng trong trang giỏ hàng
+        // Decrease quantity in cart page
         $(document).on('click', '.cart-item-decrease', function(e) {
             e.preventDefault();
             const index = $(this).data('index');
@@ -607,15 +666,15 @@ const Cart = {
             }
         });
         
-        // Thay đổi số lượng trực tiếp trong trang giỏ hàng
+        // Direct quantity change in cart page
         $(document).on('change', '.cart-item-qty', function() {
             const index = $(this).data('index');
             const qty = parseInt($(this).val()) || 1;
             self.updateQuantity(index, Math.max(1, qty));
-            $(this).val(Math.max(1, qty)); // Đảm bảo giá trị hiển thị là >= 1
+            $(this).val(Math.max(1, qty)); // Ensure displayed value is >= 1
         });
         
-        // Xóa sản phẩm khỏi trang giỏ hàng
+        // Remove item from cart page
         $(document).on('click', '.cart-item-remove', function(e) {
             e.preventDefault();
             const index = $(this).data('index');
@@ -624,7 +683,7 @@ const Cart = {
             self.showToast(`${item.name} ${window.translations.removed_from_cart || 'đã xóa khỏi giỏ hàng'}`);
         });
         
-        // Xóa toàn bộ giỏ hàng
+        // Clear entire cart
         $(document).on('click', '#clearCart', function() {
             if (confirm(window.translations.confirm_clear_cart || 'Bạn có chắc muốn xóa toàn bộ giỏ hàng không?')) {
                 self.clearCart();
@@ -632,7 +691,7 @@ const Cart = {
             }
         });
         
-        // Áp dụng mã giảm giá
+        // Apply promo code
         $(document).on('click', '#applyPromo', function() {
             const promoCode = $('#promoCode').val().trim();
             
@@ -641,71 +700,70 @@ const Cart = {
                 return;
             }
             
-            // Giả lập kiểm tra mã giảm giá (thực tế sẽ gửi yêu cầu lên máy chủ)
+            // Mock promo code check (in reality, this would be a server request)
             if (promoCode.toUpperCase() === 'AISUKI10') {
-                // Giả sử giảm 3€
+                // Assume €3 discount
                 const discount = 3.00;
                 
-                // Hiển thị hàng giảm giá
+                // Show discount row
                 $('#discountRow').removeClass('hidden');
                 $('#discountAmount').text(`-${self.formatPrice(discount)}`).data('value', discount);
                 
-                // Cập nhật tổng cộng
+                // Update total
                 self.updateCartSummary();
                 
-                // Hiển thị thông báo thành công
+                // Show success notification
                 self.showToast(window.translations.promo_applied || 'Đã áp dụng mã giảm giá');
             } else {
-                // Mã giảm giá không hợp lệ
+                // Invalid promo code
                 self.showToast(window.translations.invalid_promo || 'Mã giảm giá không hợp lệ', 'error');
             }
         });
         
-        // Bật/tắt Mini Cart dropdown
+        // Toggle mini cart dropdown
         $(document).on('click', '#cartToggle', function(e) {
             e.preventDefault();
             e.stopPropagation();
             $('#miniCart').toggleClass('active');
             
-            // Đóng các dropdown khác
+            // Close other dropdowns
             $('#langDropdown').removeClass('active');
         });
         
-        // Đóng dropdown khi click ra ngoài
+        // Close dropdown when clicking outside
         $(document).on('click', function(e) {
             if (!$(e.target).closest('#miniCart, #cartToggle').length) {
                 $('#miniCart').removeClass('active');
             }
         });
         
-        // Ngăn dropdown đóng khi click vào nội dung
+        // Prevent dropdown closing when clicking content
         $(document).on('click', '#miniCart', function(e) {
             e.stopPropagation();
         });
     },
     
-    // Khởi tạo Cart
+    // Initialize Cart
     init() {
         this.updateCartUI();
         this.initEventListeners();
-        console.log('Cart initialized');
     }
 };
 
-// Khởi tạo đối tượng Cart khi trang đã tải xong
+// Initialize Cart when page is loaded
 $(document).ready(function() {
-    // Thiết lập đối tượng translations để sử dụng trong cart
+    // Set up translations object
     window.translations = window.translations || {};
     
-    // Thiết lập đối tượng routes
+    // Set up routes object
     window.routes = window.routes || {
         cart: '/cart',
         menu: '/menu'
     };
     
-    // Khởi tạo cart
+    // Initialize cart
     Cart.init();
 });
 
-// Xuất đối tượng Cart để sử dụng ở các file khác
+// Export Cart object for use in other files
 window.Cart = Cart;

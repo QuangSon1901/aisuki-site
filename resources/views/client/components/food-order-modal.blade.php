@@ -48,19 +48,17 @@
             <!-- Phần add-on -->
             <div class="option-section" id="addonSection">
                 <h5 class="option-title">{{ trans_db('sections', 'addons', false) ?: 'Món ăn kèm' }}</h5>
-                <div class="addons-grid">
-                    @foreach($addons as $addon)
-                    <div class="addon-item">
-                        <div class="addon-checkbox-container">
-                            <input type="checkbox" id="addon{{ $addon->id }}" class="custom-checkbox addon-checkbox" 
-                                data-id="{{ $addon->id }}" 
-                                data-name="{{ $addon->name }}" 
-                                data-price="{{ $addon->price }}">
-                            <label for="addon{{ $addon->id }}" class="addon-label">{{ $addon->name }}</label>
-                        </div>
-                        <span class="addon-price">{{ number_format($addon->price, 2, ',', '.') }} {{ setting('currency', '€') }}</span>
+                
+                <div class="addons-grid" id="menuItemAddons">
+                    <!-- Addon items will be loaded dynamically here -->
+                    <div class="text-center py-3 text-theme-secondary">
+                        <i class="fas fa-spinner fa-spin mr-2"></i> {{ trans_db('sections', 'loading_addons', false) ?: 'Đang tải món ăn kèm...' }}
                     </div>
-                    @endforeach
+                </div>
+                
+                <!-- Empty state for when no addons are available -->
+                <div id="noAddonsMessage" class="text-center py-3 text-theme-secondary hidden">
+                    <i class="fas fa-info-circle mr-2"></i> {{ trans_db('sections', 'no_addons', false) ?: 'Không có món ăn kèm cho sản phẩm này' }}
                 </div>
             </div>
             

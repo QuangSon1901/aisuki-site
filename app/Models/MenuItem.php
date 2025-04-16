@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -6,8 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class MenuItem extends Model
 {
     protected $fillable = [
-        'language_id', 'mass_id', 'category_id', 'code', 'name', 
-        'description', 'price', 'image', 'is_active', 'is_featured', 'sort_order'
+        'language_id',
+        'mass_id',
+        'category_id',
+        'code',
+        'name',
+        'description',
+        'price',
+        'image',
+        'is_active',
+        'is_featured',
+        'sort_order'
     ];
 
     protected $casts = [
@@ -20,7 +30,7 @@ class MenuItem extends Model
     {
         return $this->belongsTo(MenuCategory::class, 'category_id');
     }
-    
+
     public function language()
     {
         return $this->belongsTo(Language::class, 'language_id');
@@ -30,7 +40,7 @@ class MenuItem extends Model
     {
         return $this->belongsToMany(AddonItem::class, 'menu_item_addon', 'menu_item_id', 'addon_item_id');
     }
-    
+
     /**
      * Lấy các record cùng nội dung (cùng mass_id) nhưng khác ngôn ngữ
      */
@@ -40,66 +50,64 @@ class MenuItem extends Model
             ->where('id', '!=', $this->id)
             ->get();
     }
-    
-    /**
-     * Lấy món ăn theo danh mục và ngôn ngữ hiện tại
-     */
-    public static function getByCategory($categoryId)
-    {
-        $currentLanguage = Language::where('code', app()->getLocale())->first();
-        if (!$currentLanguage) {
-            $currentLanguage = Language::where('is_default', true)->first();
-        }
-        
-        $items = self::where('category_id', $categoryId)
-            ->where('language_id', $currentLanguage->id)
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->get();
-            
-        if ($items->isEmpty()) {
-            // Fallback: Lấy món ăn với ngôn ngữ mặc định
-            $defaultLanguage = Language::where('is_default', true)->first();
-            if ($defaultLanguage) {
-                $items = self::where('category_id', $categoryId)
-                    ->where('language_id', $defaultLanguage->id)
-                    ->where('is_active', true)
-                    ->orderBy('sort_order')
-                    ->get();
-            }
-        }
-        
-        return $items;
-    }
-    
-    /**
-     * Lấy món ăn nổi bật theo ngôn ngữ hiện tại
-     */
+
     public static function getFeatured()
     {
         $currentLanguage = Language::where('code', app()->getLocale())->first();
         if (!$currentLanguage) {
             $currentLanguage = Language::where('is_default', true)->first();
         }
-        
-        $items = self::where('language_id', $currentLanguage->id)
+
+        $items = self::with('addons')
+            ->where('language_id', $currentLanguage->id)
             ->where('is_active', true)
             ->where('is_featured', true)
             ->orderBy('sort_order')
             ->get();
-            
+
         if ($items->isEmpty()) {
-            // Fallback: Lấy món ăn nổi bật với ngôn ngữ mặc định
+            // Fallback: Get featured items with default language
             $defaultLanguage = Language::where('is_default', true)->first();
             if ($defaultLanguage) {
-                $items = self::where('language_id', $defaultLanguage->id)
+                $items = self::with('addons')
+                    ->where('language_id', $defaultLanguage->id)
                     ->where('is_active', true)
                     ->where('is_featured', true)
                     ->orderBy('sort_order')
                     ->get();
             }
         }
-        
+
+        return $items;
+    }
+
+    public static function getByCategory($categoryId)
+    {
+        $currentLanguage = Language::where('code', app()->getLocale())->first();
+        if (!$currentLanguage) {
+            $currentLanguage = Language::where('is_default', true)->first();
+        }
+
+        $items = self::with('addons')
+            ->where('category_id', $categoryId)
+            ->where('language_id', $currentLanguage->id)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        if ($items->isEmpty()) {
+            // Fallback: Get menu items with default language
+            $defaultLanguage = Language::where('is_default', true)->first();
+            if ($defaultLanguage) {
+                $items = self::with('addons')
+                    ->where('category_id', $categoryId)
+                    ->where('language_id', $defaultLanguage->id)
+                    ->where('is_active', true)
+                    ->orderBy('sort_order')
+                    ->get();
+            }
+        }
+
         return $items;
     }
 }

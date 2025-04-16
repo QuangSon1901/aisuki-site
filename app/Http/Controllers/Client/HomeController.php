@@ -16,22 +16,24 @@ class HomeController extends Controller
         $contactSettings = settings_group('contact');
         $socialSettings = settings_group('social');
         
-        // Lấy danh mục món ăn
+        // Get menu categories
         $categories = MenuCategory::getActive();
         
-        // Lấy món ăn nổi bật (có is_featured = true)
+        // First get featured items, then eager load addons
         $featuredItems = MenuItem::getFeatured()->take(8);
         
-        // Lấy các addon (món ăn kèm)
-        $addons = AddonItem::getActive();
+        // Eager load the addons relationship if needed
+        if($featuredItems->isNotEmpty()) {
+            $itemIds = $featuredItems->pluck('id')->toArray();
+            $featuredItems = MenuItem::with('addons')->whereIn('id', $itemIds)->get();
+        }
         
         return view('client.pages.home', compact(
             'seoSettings', 
             'contactSettings', 
             'socialSettings',
             'categories',
-            'featuredItems',
-            'addons'
+            'featuredItems'
         ));
     }
 }
