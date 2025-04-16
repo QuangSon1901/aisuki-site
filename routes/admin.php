@@ -34,6 +34,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('menu-items/{id}/create-translation', [MenuItemController::class, 'storeTranslation'])->name('admin.menu-items.store-translation');
     Route::resource('menu-items', MenuItemController::class)->names('admin.menu-items');
 
+    Route::get('addon-items/{id}/create-translation', [AddonItemController::class, 'createTranslation'])->name('admin.addon-items.create-translation');
+    Route::post('addon-items/{id}/create-translation', [AddonItemController::class, 'storeTranslation'])->name('admin.addon-items.store-translation');
     Route::resource('addon-items', AddonItemController::class)->names('admin.addon-items');
 
     Route::post('pages/upload-image', [PageController::class, 'uploadEditorImage'])->name('admin.pages.upload-image');
