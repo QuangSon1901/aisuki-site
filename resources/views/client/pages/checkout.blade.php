@@ -72,7 +72,7 @@
                                                 <div class="w-6 h-6 rounded-full border-2 border-theme-secondary flex items-center justify-center mr-3 delivery-radio">
                                                     <div class="w-3 h-3 rounded-full bg-aisuki-red hidden delivery-radio-inner"></div>
                                                 </div>
-                                                <div>
+                                                <div style="flex: 1;">
                                                     <span class="font-medium text-theme-primary">{{ trans_db('sections', 'delivery', false) ?: 'Delivery' }}</span>
                                                     <p class="text-sm text-theme-secondary">{{ trans_db('sections', 'delivery_to_address', false) ?: 'Delivery to your address' }}</p>
                                                 </div>
@@ -87,7 +87,7 @@
                                                 <div class="w-6 h-6 rounded-full border-2 border-theme-secondary flex items-center justify-center mr-3 delivery-radio">
                                                     <div class="w-3 h-3 rounded-full bg-aisuki-red hidden delivery-radio-inner"></div>
                                                 </div>
-                                                <div>
+                                                <div style="flex: 1;">
                                                     <span class="font-medium text-theme-primary">{{ trans_db('sections', 'pickup', false) ?: 'Pickup' }}</span>
                                                     <p class="text-sm text-theme-secondary">{{ trans_db('sections', 'pickup_from_restaurant', false) ?: 'Pickup from our restaurant' }}</p>
                                                 </div>
@@ -206,7 +206,7 @@
                                     <div class="w-6 h-6 rounded-full border-2 border-theme-secondary flex items-center justify-center mr-3">
                                         <div class="w-3 h-3 rounded-full bg-aisuki-red"></div>
                                     </div>
-                                    <div>
+                                    <div style="flex: 1;">
                                         <span class="font-medium text-theme-primary">{{ trans_db('sections', 'cash', false) ?: 'Cash on Delivery/Pickup' }}</span>
                                     </div>
                                 </label>
