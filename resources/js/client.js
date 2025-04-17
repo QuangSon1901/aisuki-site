@@ -163,28 +163,4 @@ $(document).ready(function() {
     if ($(window).scrollTop() > 300 && $(window).width() < 768) {
         $('#mobileCta').css('transform', 'translateY(0)');
     }
-    
-    $(document).on('submit', '#checkoutForm', function(e) {
-        e.preventDefault();
-        
-        // Get cart items
-        const cartItems = Cart.getItems();
-        
-        // Ensure cart is not empty
-        if (cartItems.length === 0) {
-            Cart.showToast('Your cart is empty', 'error');
-            return false;
-        }
-        
-        // Add cart items to form data
-        const cartItemsInput = $('<input>')
-            .attr('type', 'hidden')
-            .attr('name', 'cart_items')
-            .val(JSON.stringify(cartItems));
-        
-        $(this).append(cartItemsInput);
-        
-        // Submit the form
-        this.submit();
-    });
 });

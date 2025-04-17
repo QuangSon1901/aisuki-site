@@ -1,5 +1,26 @@
 @extends('client.layouts.app')
 
+@push('styles')
+    <style>
+        #submitOrderBtn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .loading-state .fa-spin {
+            animation: fa-spin 1s infinite linear;
+        }
+        
+        @keyframes fa-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+@endpush
 @section('content')
     <!-- Tiêu đề trang -->
     <section class="py-6 bg-theme-primary border-b border-theme">
@@ -219,7 +240,12 @@
                                 <i class="fas fa-chevron-left mr-2"></i> {{ trans_db('sections', 'back_to_cart', false) ?: 'Back to Cart' }}
                             </a>
                             <button type="submit" id="submitOrderBtn" class="bg-aisuki-red text-white py-3 px-6 rounded-md hover:bg-aisuki-red-dark transition-colors flex items-center justify-center">
-                                {{ trans_db('sections', 'submit_order', false) ?: 'Submit Order' }} <i class="fas fa-chevron-right ml-2"></i>
+                                <span class="normal-state">
+                                    {{ trans_db('sections', 'submit_order', false) ?: 'Submit Order' }} <i class="fas fa-chevron-right ml-2"></i>
+                                </span>
+                                <span class="loading-state hidden">
+                                    <i class="fas fa-spinner fa-spin mr-2"></i> {{ trans_db('sections', 'processing', false) ?: 'Processing...' }}
+                                </span>
                             </button>
                         </div>
                     </form>
@@ -276,7 +302,7 @@
         function initCheckout() {
             updateOrderSummary();
             setupDeliveryMethodToggle();
-            validateForm();
+            setupFormSubmit();
         }
         
         // Cập nhật tóm tắt đơn hàng
@@ -400,83 +426,141 @@
             $(`.delivery-option[data-method="${selectedMethod}"]`).click();
         }
         
-        // Kiểm tra form trước khi submit
-        function validateForm() {
+        // Thiết lập sự kiện submit form
+        function setupFormSubmit() {
+            // Biến để theo dõi trạng thái submit
+            let isSubmitting = false;
+            
+            // Chuẩn bị nút submit
+            const submitBtn = $('#submitOrderBtn');
+            const submitBtnText = submitBtn.html();
+            
+            // Thêm loading state vào nút
+            submitBtn.html(`
+                <span class="normal-state">${submitBtnText}</span>
+                <span class="loading-state hidden">
+                    <i class="fas fa-spinner fa-spin mr-2"></i>${window.translations.processing || 'Processing...'}
+                </span>
+            `);
+            
+            // Xử lý submit form
             $('#checkoutForm').on('submit', function(e) {
-                const cartItems = Cart.getItems();
+                // Ngăn chặn submit nếu đang trong quá trình submit
+                if (isSubmitting) {
+                    e.preventDefault();
+                    return false;
+                }
                 
+                // Kiểm tra giỏ hàng có trống không
+                const cartItems = Cart.getItems();
                 if (cartItems.length === 0) {
                     e.preventDefault();
                     Cart.showToast(window.translations.cart_empty || 'Your cart is empty', 'error');
                     return false;
                 }
                 
-                // Kiểm tra các trường bắt buộc
-                let isValid = true;
-                
-                // Kiểm tra tên
-                if ($('#fullName').val().trim() === '') {
-                    isValid = false;
-                    $('#fullName').addClass('border-red-500');
-                } else {
-                    $('#fullName').removeClass('border-red-500');
-                }
-                
-                // Kiểm tra email
-                if ($('#email').val().trim() === '' || !isValidEmail($('#email').val().trim())) {
-                    isValid = false;
-                    $('#email').addClass('border-red-500');
-                } else {
-                    $('#email').removeClass('border-red-500');
-                }
-                
-                // Kiểm tra số điện thoại
-                if ($('#phone').val().trim() === '') {
-                    isValid = false;
-                    $('#phone').addClass('border-red-500');
-                } else {
-                    $('#phone').removeClass('border-red-500');
-                }
-                
-                // Nếu chọn giao hàng, kiểm tra địa chỉ
-                if ($('input[name="delivery_method"]:checked').val() === 'delivery') {
-                    if ($('#street').val().trim() === '') {
-                        isValid = false;
-                        $('#street').addClass('border-red-500');
-                    } else {
-                        $('#street').removeClass('border-red-500');
-                    }
-                    
-                    if ($('#houseNumber').val().trim() === '') {
-                        isValid = false;
-                        $('#houseNumber').addClass('border-red-500');
-                    } else {
-                        $('#houseNumber').removeClass('border-red-500');
-                    }
-                    
-                    if ($('#city').val().trim() === '') {
-                        isValid = false;
-                        $('#city').addClass('border-red-500');
-                    } else {
-                        $('#city').removeClass('border-red-500');
-                    }
-                    
-                    if ($('#postalCode').val().trim() === '') {
-                        isValid = false;
-                        $('#postalCode').addClass('border-red-500');
-                    } else {
-                        $('#postalCode').removeClass('border-red-500');
-                    }
-                }
-                
-                if (!isValid) {
+                // Kiểm tra các trường form
+                if (!validateFormFields()) {
                     e.preventDefault();
-                    Cart.showToast(window.translations.required_field || 'Please fill in all required fields', 'error');
                     return false;
                 }
                 
+                // Thiết lập trạng thái đang submit
+                isSubmitting = true;
+                
+                // Hiển thị loading và vô hiệu hóa nút
+                submitBtn.prop('disabled', true);
+                submitBtn.find('.normal-state').addClass('hidden');
+                submitBtn.find('.loading-state').removeClass('hidden');
+                
+                // Thêm cart items vào form data
+                const cartItemsInput = $('<input>')
+                    .attr('type', 'hidden')
+                    .attr('name', 'cart_items')
+                    .val(JSON.stringify(cartItems));
+                
+                $(this).append(cartItemsInput);
+                
+                // Form sẽ tự submit
                 return true;
             });
+            
+            // Reset trạng thái form khi back lại trang
+            $(window).on('pageshow', function(event) {
+                if (event.originalEvent.persisted) {
+                    // Trang được tải từ cache (back button)
+                    isSubmitting = false;
+                    submitBtn.prop('disabled', false);
+                    submitBtn.find('.normal-state').removeClass('hidden');
+                    submitBtn.find('.loading-state').addClass('hidden');
+                }
+            });
+        }
+        
+        // Kiểm tra các trường form
+        function validateFormFields() {
+            let isValid = true;
+            
+            // Kiểm tra tên
+            if ($('#fullName').val().trim() === '') {
+                isValid = false;
+                $('#fullName').addClass('border-red-500');
+            } else {
+                $('#fullName').removeClass('border-red-500');
+            }
+            
+            // Kiểm tra email
+            if ($('#email').val().trim() === '' || !isValidEmail($('#email').val().trim())) {
+                isValid = false;
+                $('#email').addClass('border-red-500');
+            } else {
+                $('#email').removeClass('border-red-500');
+            }
+            
+            // Kiểm tra số điện thoại
+            if ($('#phone').val().trim() === '') {
+                isValid = false;
+                $('#phone').addClass('border-red-500');
+            } else {
+                $('#phone').removeClass('border-red-500');
+            }
+            
+            // Nếu chọn giao hàng, kiểm tra địa chỉ
+            if ($('input[name="delivery_method"]:checked').val() === 'delivery') {
+                if ($('#street').val().trim() === '') {
+                    isValid = false;
+                    $('#street').addClass('border-red-500');
+                } else {
+                    $('#street').removeClass('border-red-500');
+                }
+                
+                if ($('#houseNumber').val().trim() === '') {
+                    isValid = false;
+                    $('#houseNumber').addClass('border-red-500');
+                } else {
+                    $('#houseNumber').removeClass('border-red-500');
+                }
+                
+                if ($('#city').val().trim() === '') {
+                    isValid = false;
+                    $('#city').addClass('border-red-500');
+                } else {
+                    $('#city').removeClass('border-red-500');
+                }
+                
+                if ($('#postalCode').val().trim() === '') {
+                    isValid = false;
+                    $('#postalCode').addClass('border-red-500');
+                } else {
+                    $('#postalCode').removeClass('border-red-500');
+                }
+            }
+            
+            if (!isValid) {
+                Cart.showToast(window.translations.required_field || 'Please fill in all required fields', 'error');
+            }
+            
+            return isValid;
         }
         
         // Kiểm tra email hợp lệ
