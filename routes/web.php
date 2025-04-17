@@ -26,10 +26,14 @@ Route::group(['prefix' => '{locale?}', 'middleware' => 'setLocale', 'where' => [
     Route::get('/about-us', [PageController::class, 'about'])->name('about');
 
     Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-    Route::post('/reservation/submit', [PageController::class, 'submitReservation'])->name('reservation.submit');
+    Route::post('/reservation/submit', [PageController::class, 'submitReservation'])
+        ->name('reservation.submit')
+        ->middleware('throttle:reservation');
 
     Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
-    Route::post('/checkout/submit', [CartController::class, 'submitOrder'])->name('checkout.submit');
+    Route::post('/checkout/submit', [CartController::class, 'submitOrder'])
+        ->name('checkout.submit')
+        ->middleware('throttle:checkout');
 
     Route::get('/order-success/{orderNumber}', [CartController::class, 'orderSuccess'])->name('order.success');
     
