@@ -59,7 +59,8 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string('type'); // 'order', 'reservation', 'contact', etc.
-            $table->morphs('notifiable'); // Polymorphic relation to orders, reservations, etc.
+            $table->unsignedBigInteger('notifiable_id')->nullable();
+            $table->string('notifiable_type')->nullable();
             $table->string('title');
             $table->text('content');
             $table->boolean('is_read')->default(false);

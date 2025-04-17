@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 notificationItem.innerHTML = `
                     <div class="flex-shrink-0">
                         <div class="bg-${notification.color_class} text-white rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                            <i class="fas ${notification.icon_class}"></i>
+                            <i class="fas ${notification.icon_class}" style="margin-right: 0px;"></i>
                         </div>
                     </div>
                     <div class="ms-3 flex-grow-1">

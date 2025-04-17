@@ -214,8 +214,13 @@
                                 
                                 <!-- Nút đặt bàn -->
                                 <div class="flex justify-end">
-                                    <button type="submit" class="bg-aisuki-red text-white py-3 px-8 rounded-md hover:bg-aisuki-red-dark transition-colors flex items-center justify-center">
-                                        {{ trans_db('sections', 'reservation_form_submit', false) ?: 'Confirm Reservation' }} <i class="fas fa-calendar-check ml-2"></i>
+                                    <button type="submit" id="reservationSubmitBtn" class="bg-aisuki-red text-white py-3 px-8 rounded-md hover:bg-aisuki-red-dark transition-colors flex items-center justify-center">
+                                        <span class="normal-state">
+                                            {{ trans_db('sections', 'reservation_form_submit', false) ?: 'Confirm Reservation' }} <i class="fas fa-calendar-check ml-2"></i>
+                                        </span>
+                                        <span class="loading-state hidden">
+                                            <i class="fas fa-spinner fa-spin mr-2"></i> {{ trans_db('sections', 'processing', false) ?: 'Processing...' }}
+                                        </span>
                                     </button>
                                 </div>
                             </form>
@@ -235,7 +240,7 @@
             </h2>
         </div>
         
-        <div class="w-full h-96">
+        <div class="google-maps w-full h-96">
             {!! setting('google_maps_iframe') !!}
         </div>
     </section>
@@ -247,12 +252,65 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        // Đặt ngày tối thiểu là ngày hiện tại
+        // Set minimum date to today
         const today = new Date().toISOString().split('T')[0];
         $('#date').attr('min', today);
         
-        // Form validation
-        $('#reservationForm').on('submit', function(e) {
+        // Check for success message on page load and show toast if present
+        @if(session('success'))
+            showToast('{{ session('success') }}', 'success');
+        @endif
+        
+        // Setup form submission with loading state
+        setupFormSubmit();
+        
+        function setupFormSubmit() {
+            // Track submission state
+            let isSubmitting = false;
+            
+            // Get submit button
+            const submitBtn = $('#reservationSubmitBtn');
+            
+            // Form validation and submission
+            $('#reservationForm').on('submit', function(e) {
+                // Prevent double submission
+                if (isSubmitting) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Validate form fields
+                if (!validateFormFields()) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Set submitting state
+                isSubmitting = true;
+                
+                // Show loading state and disable button
+                submitBtn.prop('disabled', true);
+                submitBtn.find('.normal-state').addClass('hidden');
+                submitBtn.find('.loading-state').removeClass('hidden');
+                
+                // Let the form submit naturally
+                return true;
+            });
+            
+            // Reset form state when using back button
+            $(window).on('pageshow', function(event) {
+                if (event.originalEvent.persisted) {
+                    // Page was loaded from cache (back button)
+                    isSubmitting = false;
+                    submitBtn.prop('disabled', false);
+                    submitBtn.find('.normal-state').removeClass('hidden');
+                    submitBtn.find('.loading-state').addClass('hidden');
+                }
+            });
+        }
+        
+        // Form field validation
+        function validateFormFields() {
             let isValid = true;
             
             // Validate name
@@ -305,16 +363,14 @@
             }
             
             if (!isValid) {
-                e.preventDefault();
-                // Hiển thị thông báo lỗi
-                showToast('Please fill in all required fields correctly', 'error');
-                return false;
+                // Show error toast
+                showToast(`{{ trans_db('sections', 'required_field', false) ?: 'Please fill in all required fields correctly' }}`, 'error');
             }
             
-            return true;
-        });
+            return isValid;
+        }
         
-        // Hiển thị toast notification
+        // Toast notification function
         function showToast(message, type = 'success') {
             const toastContainer = $('.toast-container');
             const toastId = 'toast-' + Date.now();
@@ -341,7 +397,7 @@
                 setTimeout(() => {
                     toast.remove();
                 }, 300);
-            }, 3000);
+            }, 5000); // Show toast for 5 seconds instead of 3
             
             toast.find('.toast-close').on('click', function() {
                 toast.removeClass('show');
@@ -352,4 +408,25 @@
         }
     });
 </script>
+@endpush
+@push('styles')
+<style>
+    #reservationSubmitBtn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+    
+    .loading-state .fa-spin {
+        animation: fa-spin 1s infinite linear;
+    }
+    
+    @keyframes fa-spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
 @endpush

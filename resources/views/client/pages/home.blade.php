@@ -214,64 +214,89 @@
                 <h3 class="text-xl sm:text-2xl text-aisuki-red font-bold mb-6">
                     {{ trans_db('sections', 'reservation_form_title', false) ?: 'Reservation Information' }}
                 </h3>
-                <form>
+                
+                @if(session('success'))
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded">
+                        <p>{{ session('success') }}</p>
+                    </div>
+                @endif
+                
+                <form action="{{ route('reservation.submit', ['locale' => app()->getLocale()]) }}" method="POST" id="homeReservationForm">
+                    @csrf
                     <div class="mb-4">
-                        <label for="name" class="block font-semibold text-sm mb-2 text-theme-primary">
-                            {{ trans_db('sections', 'reservation_form_name', false) ?: 'Full Name' }}
+                        <label for="home_name" class="block font-semibold text-sm mb-2 text-theme-primary">
+                            {{ trans_db('sections', 'reservation_form_name', false) ?: 'Full Name' }} <span class="text-aisuki-red">*</span>
                         </label>
-                        <input type="text" id="name" placeholder="{{ trans_db('sections', 'reservation_form_name_placeholder', false) ?: 'Enter your full name' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red">
+                        <input type="text" id="home_name" name="name" placeholder="{{ trans_db('sections', 'reservation_form_name_placeholder', false) ?: 'Enter your full name' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required value="{{ old('name') }}">
                     </div>
                     <div class="mb-4">
-                        <label for="phone" class="block font-semibold text-sm mb-2 text-theme-primary">
-                            {{ trans_db('sections', 'reservation_form_phone', false) ?: 'Phone Number' }}
+                        <label for="home_phone" class="block font-semibold text-sm mb-2 text-theme-primary">
+                            {{ trans_db('sections', 'reservation_form_phone', false) ?: 'Phone Number' }} <span class="text-aisuki-red">*</span>
                         </label>
-                        <input type="tel" id="phone" placeholder="{{ trans_db('sections', 'reservation_form_phone_placeholder', false) ?: 'Enter your phone number' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red">
+                        <input type="tel" id="home_phone" name="phone" placeholder="{{ trans_db('sections', 'reservation_form_phone_placeholder', false) ?: 'Enter your phone number' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required value="{{ old('phone') }}">
                     </div>
                     <div class="mb-4">
-                        <label for="email" class="block font-semibold text-sm mb-2 text-theme-primary">
-                            {{ trans_db('sections', 'reservation_form_email', false) ?: 'Email' }}
+                        <label for="home_email" class="block font-semibold text-sm mb-2 text-theme-primary">
+                            {{ trans_db('sections', 'reservation_form_email', false) ?: 'Email' }} <span class="text-aisuki-red">*</span>
                         </label>
-                        <input type="email" id="email" placeholder="{{ trans_db('sections', 'reservation_form_email_placeholder', false) ?: 'Enter your email' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red">
+                        <input type="email" id="home_email" name="email" placeholder="{{ trans_db('sections', 'reservation_form_email_placeholder', false) ?: 'Enter your email' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required value="{{ old('email') }}">
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                         <div>
-                            <label for="date" class="block font-semibold text-sm mb-2 text-theme-primary">
-                                {{ trans_db('sections', 'reservation_form_date', false) ?: 'Date' }}
+                            <label for="home_date" class="block font-semibold text-sm mb-2 text-theme-primary">
+                                {{ trans_db('sections', 'reservation_form_date', false) ?: 'Date' }} <span class="text-aisuki-red">*</span>
                             </label>
-                            <input type="date" id="date" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red">
+                            <input type="date" id="home_date" name="date" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required value="{{ old('date', date('Y-m-d')) }}">
                         </div>
                         <div>
-                            <label for="time" class="block font-semibold text-sm mb-2 text-theme-primary">
-                                {{ trans_db('sections', 'reservation_form_time', false) ?: 'Time' }}
+                            <label for="home_time" class="block font-semibold text-sm mb-2 text-theme-primary">
+                                {{ trans_db('sections', 'reservation_form_time', false) ?: 'Time' }} <span class="text-aisuki-red">*</span>
                             </label>
-                            <input type="time" id="time" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red">
+                            <select id="home_time" name="time" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required>
+                                <option value="">{{ trans_db('sections', 'select_time', false) ?: 'Select time' }}</option>
+                                <option value="12:00" {{ old('time') == '12:00' ? 'selected' : '' }}>12:00</option>
+                                <option value="12:30" {{ old('time') == '12:30' ? 'selected' : '' }}>12:30</option>
+                                <option value="13:00" {{ old('time') == '13:00' ? 'selected' : '' }}>13:00</option>
+                                <option value="13:30" {{ old('time') == '13:30' ? 'selected' : '' }}>13:30</option>
+                                <option value="18:00" {{ old('time') == '18:00' ? 'selected' : '' }}>18:00</option>
+                                <option value="18:30" {{ old('time') == '18:30' ? 'selected' : '' }}>18:30</option>
+                                <option value="19:00" {{ old('time') == '19:00' ? 'selected' : '' }}>19:00</option>
+                                <option value="19:30" {{ old('time') == '19:30' ? 'selected' : '' }}>19:30</option>
+                                <option value="20:00" {{ old('time') == '20:00' ? 'selected' : '' }}>20:00</option>
+                            </select>
                         </div>
                     </div>
                     <div class="mb-4">
-                        <label for="guests" class="block font-semibold text-sm mb-2 text-theme-primary">
-                            {{ trans_db('sections', 'reservation_form_guests', false) ?: 'Number of Guests' }}
+                        <label for="home_guests" class="block font-semibold text-sm mb-2 text-theme-primary">
+                            {{ trans_db('sections', 'reservation_form_guests', false) ?: 'Number of Guests' }} <span class="text-aisuki-red">*</span>
                         </label>
-                        <select id="guests" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red">
-                            <option value="1">{{ trans_db('sections', 'reservation_form_guests_1', false) ?: '1 person' }}</option>
-                            <option value="2">{{ trans_db('sections', 'reservation_form_guests_2', false) ?: '2 people' }}</option>
-                            <option value="3">{{ trans_db('sections', 'reservation_form_guests_3', false) ?: '3 people' }}</option>
-                            <option value="4">{{ trans_db('sections', 'reservation_form_guests_4', false) ?: '4 people' }}</option>
-                            <option value="5">{{ trans_db('sections', 'reservation_form_guests_5', false) ?: '5 people' }}</option>
-                            <option value="6">{{ trans_db('sections', 'reservation_form_guests_6plus', false) ?: '6 or more people' }}</option>
+                        <select id="home_guests" name="guests" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required>
+                            <option value="">{{ trans_db('sections', 'select_guests', false) ?: 'Select guests' }}</option>
+                            <option value="1" {{ old('guests') == '1' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_1', false) ?: '1 person' }}</option>
+                            <option value="2" {{ old('guests') == '2' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_2', false) ?: '2 people' }}</option>
+                            <option value="3" {{ old('guests') == '3' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_3', false) ?: '3 people' }}</option>
+                            <option value="4" {{ old('guests') == '4' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_4', false) ?: '4 people' }}</option>
+                            <option value="5" {{ old('guests') == '5' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_5', false) ?: '5 people' }}</option>
+                            <option value="6+" {{ old('guests') == '6+' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_6plus', false) ?: '6 or more people' }}</option>
                         </select>
                     </div>
                     <div class="mb-6">
-                        <label for="message" class="block font-semibold text-sm mb-2 text-theme-primary">
+                        <label for="home_notes" class="block font-semibold text-sm mb-2 text-theme-primary">
                             {{ trans_db('sections', 'reservation_form_notes', false) ?: 'Notes' }}
                         </label>
-                        <textarea id="message" rows="3" placeholder="{{ trans_db('sections', 'reservation_form_notes_placeholder', false) ?: 'Enter your notes' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red"></textarea>
+                        <textarea id="home_notes" name="notes" rows="3" placeholder="{{ trans_db('sections', 'reservation_form_notes_placeholder', false) ?: 'Enter your notes' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red">{{ old('notes') }}</textarea>
                     </div>
-                    <button type="submit" class="w-full bg-aisuki-red text-white py-3 px-6 rounded-full font-semibold hover:bg-[#c41017] transition-all">
-                        {{ trans_db('sections', 'reservation_form_submit', false) ?: 'Confirm Reservation' }}
+                    <button type="submit" id="homeReservationBtn" class="w-full bg-aisuki-red text-white py-3 px-6 rounded-full font-semibold hover:bg-[#c41017] transition-all">
+                        <span class="normal-state">
+                            {{ trans_db('sections', 'reservation_form_submit', false) ?: 'Confirm Reservation' }}
+                        </span>
+                        <span class="loading-state hidden">
+                            <i class="fas fa-spinner fa-spin mr-2"></i> {{ trans_db('sections', 'processing', false) ?: 'Processing...' }}
+                        </span>
                     </button>
                 </form>
             </div>
-            <div class="w-full md:w-1/2 order-0 md:order-1 h-64 md:h-auto">
+            <div class="w-full md:w-1/2 order-0 md:order-1 h-64 md:h-auto google-maps">
                 {!! setting('google_maps_iframe') !!}
             </div>
         </div>
@@ -314,5 +339,180 @@
         text-overflow: initial;
         white-space: normal;
     }
+
+    /* Button loading state */
+    #homeReservationBtn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+    
+    .loading-state .fa-spin {
+        animation: fa-spin 1s infinite linear;
+    }
+    
+    @keyframes fa-spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>
 @endpush
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        $('#home_date').attr('min', today);
+        // Setup form submission with loading state
+        setupHomeReservationForm();
+        
+        function setupHomeReservationForm() {
+            // Track submission state
+            let isSubmitting = false;
+            
+            // Get submit button
+            const submitBtn = $('#homeReservationBtn');
+            
+            // Form validation and submission
+            $('#homeReservationForm').on('submit', function(e) {
+                // Prevent double submission
+                if (isSubmitting) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Validate form fields
+                if (!validateHomeFormFields()) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Set submitting state
+                isSubmitting = true;
+                
+                // Show loading state and disable button
+                submitBtn.prop('disabled', true);
+                submitBtn.find('.normal-state').addClass('hidden');
+                submitBtn.find('.loading-state').removeClass('hidden');
+                
+                // Let the form submit naturally
+                return true;
+            });
+            
+            // Reset form state when using back button
+            $(window).on('pageshow', function(event) {
+                if (event.originalEvent.persisted) {
+                    // Page was loaded from cache (back button)
+                    isSubmitting = false;
+                    submitBtn.prop('disabled', false);
+                    submitBtn.find('.normal-state').removeClass('hidden');
+                    submitBtn.find('.loading-state').addClass('hidden');
+                }
+            });
+        }
+        
+        // Form field validation
+        function validateHomeFormFields() {
+            let isValid = true;
+            const fields = [
+                { id: 'home_name', type: 'text' },
+                { id: 'home_email', type: 'email' },
+                { id: 'home_phone', type: 'text' },
+                { id: 'home_date', type: 'date' },
+                { id: 'home_time', type: 'select' },
+                { id: 'home_guests', type: 'select' }
+            ];
+            
+            fields.forEach(field => {
+                const $field = $('#' + field.id);
+                let fieldValid = true;
+                
+                // Basic required validation
+                if ($field.val().trim() === '') {
+                    fieldValid = false;
+                }
+                
+                // Email validation
+                if (field.type === 'email' && fieldValid) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test($field.val().trim())) {
+                        fieldValid = false;
+                    }
+                }
+                
+                // Apply styling based on validation result
+                if (!fieldValid) {
+                    $field.addClass('border-red-500');
+                    isValid = false;
+                } else {
+                    $field.removeClass('border-red-500');
+                }
+            });
+            
+            if (!isValid) {
+                // Show error message
+                showToast(`{{ trans_db('sections', 'required_field', false) ?: 'Please fill in all required fields correctly' }}`, 'error');
+            }
+            
+            return isValid;
+        }
+        
+        // Function to scroll to an element
+        function scrollToElement(selector) {
+            const element = $(selector);
+            if (element.length) {
+                $('html, body').animate({
+                    scrollTop: element.offset().top - 100
+                }, 1000);
+            }
+        }
+        
+        // Toast notification function
+        function showToast(message, type = 'success') {
+            // Create toast container if it doesn't exist
+            if ($('.toast-container').length === 0) {
+                $('body').append('<div class="toast-container"></div>');
+            }
+            
+            const toastContainer = $('.toast-container');
+            const toastId = 'toast-' + Date.now();
+            
+            const toast = $(`
+                <div id="${toastId}" class="toast toast-${type} fixed bottom-4 right-4 z-50 bg-white rounded-lg shadow-lg p-4 max-w-md">
+                    <div class="toast-content flex items-center">
+                        <i class="fas ${type === 'success' ? 'fa-check-circle text-green-500' : 'fa-exclamation-circle text-red-500'} text-xl mr-3"></i>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <button class="toast-close absolute top-2 right-2 text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+                    <div class="toast-progress absolute bottom-0 left-0 h-1 bg-${type === 'success' ? 'green' : 'red'}-500" style="width: 100%; transition: width 5s linear;"></div>
+                </div>
+            `);
+            
+            toastContainer.append(toast);
+            
+            setTimeout(() => {
+                toast.addClass('show');
+                toast.find('.toast-progress').css('width', '0');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.removeClass('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 5000); // Show toast for 5 seconds
+            
+            toast.find('.toast-close').on('click', function() {
+                toast.removeClass('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            });
+        }
+    });
+</script>
+@endpush    

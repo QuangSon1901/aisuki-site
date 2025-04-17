@@ -188,7 +188,6 @@ class CartController extends Controller
             }
         }
         
-        // Create notification for admin
         $notification = new Notification([
             'type' => 'order',
             'title' => 'New Order: ' . $orderNumber,

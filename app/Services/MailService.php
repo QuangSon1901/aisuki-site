@@ -252,4 +252,62 @@ class MailService
             return false;
         }
     }
+
+    public function sendReservationConfirmation($to, array $data)
+    {
+        // Check if notifications are enabled
+        $enableNotification = setting('mail_enable_notification') == '1';
+        if (!$enableNotification) {
+            return false;
+        }
+
+        try {
+            // Configure mail settings
+            $this->configureMailSettings();
+
+            // Send email
+            Mail::send('emails.reservation_confirmation', $data, function ($message) use ($to, $data) {
+                $message->to($to);
+                $message->subject('Reservation Confirmation');
+                
+                if (!empty($this->defaultReplyTo)) {
+                    $message->replyTo($this->defaultReplyTo);
+                }
+            });
+
+            return true;
+        } catch (Exception $e) {
+            Log::error('Cannot send reservation confirmation: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Send reservation notification to admin
+     */
+    public function sendReservationNotificationToAdmin($to, array $data)
+    {
+        // Check if notifications are enabled
+        $enableNotification = setting('mail_enable_notification') == '1';
+        if (!$enableNotification) {
+            return false;
+        }
+
+        try {
+            // Configure mail settings
+            $this->configureMailSettings();
+
+            // Send email
+            Mail::send('emails.admin_reservation_notification', $data, function ($message) use ($to, $data) {
+                $message->to($to);
+                $message->subject('New Reservation Request');
+                $message->replyTo($data['email'], $data['name']);
+            });
+
+            return true;
+        } catch (Exception $e) {
+            Log::error('Cannot send admin reservation notification: ' . $e->getMessage());
+            return false;
+        }
+    }
 }

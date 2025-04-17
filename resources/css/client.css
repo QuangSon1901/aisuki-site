@@ -408,3 +408,8 @@ input, select, textarea {
     display: none;  /* Chrome, Safari and Opera */
 /*}
 */
+
+.google-maps iframe {
+    width: 100%;
+    height: 100%;
+}

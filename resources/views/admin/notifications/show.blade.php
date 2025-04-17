@@ -21,7 +21,7 @@
                             <h6 class="fw-bold">Notification Details</h6>
                             <span class="badge bg-{{ $notification->getColorClass() }}">{{ ucfirst($notification->type) }}</span>
                         </div>
-                        <p>{{ $notification->content }}</p>
+                        <p>{!! nl2br(e($notification->content)) !!}</p>
                         <div class="text-muted small">
                             <span><i class="fas fa-clock me-1"></i> {{ $notification->created_at->format('M d, Y H:i') }}</span>
                             <span class="ms-3"><i class="fas fa-check{{ $notification->is_read ? '-double' : '' }} me-1"></i> {{ $notification->is_read ? 'Read' : 'Unread' }}</span>

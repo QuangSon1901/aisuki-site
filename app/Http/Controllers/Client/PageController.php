@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\Language;
+use App\Models\Notification;
+use App\Services\MailService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PageController extends Controller
 {
@@ -60,12 +63,63 @@ class PageController extends Controller
             'notes' => 'nullable|string',
         ]);
         
-        // Phần này sẽ được xử lý sau (gửi mail, lưu vào database...)
+        // Format content for notification
+        $content = "Name: {$request->name}\n";
+        $content .= "Email: {$request->email}\n";
+        $content .= "Phone: {$request->phone}\n";
+        $content .= "Date: {$request->date}\n";
+        $content .= "Time: {$request->time}\n";
+        $content .= "Guests: {$request->guests}\n";
+        if ($request->notes) {
+            $content .= "Notes: {$request->notes}\n";
+        }
         
-        // Redirect với thông báo thành công
-        return redirect()->route('contact', ['locale' => app()->getLocale()])->with('success', 
-            trans_db('sections', 'reservation_success', false) ?: 'Thank you for your reservation. We will contact you shortly to confirm!'
-        );
+        // Create notification
+        $notification = Notification::create([
+            'type' => 'reservation',
+            'title' => 'New Table Reservation',
+            'content' => $content,
+            'is_read' => false,
+            'is_processed' => false,
+        ]);
+        
+        // Send email notifications
+        $this->sendReservationEmails($request, $notification);
+        $successMessage = trans_db('sections', 'reservation_success', false) ?: 'Thank you for your reservation. We will contact you shortly to confirm!';
+    
+        return redirect()
+            ->route('contact', ['locale' => app()->getLocale()])
+            ->with('success', $successMessage);
+    }
+
+    protected function sendReservationEmails($request, $notification)
+    {
+        try {
+            // Prepare email data
+            $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'date' => $request->date,
+                'time' => $request->time,
+                'guests' => $request->guests,
+                'notes' => $request->notes,
+                'site_name' => setting('site_name', 'AISUKI Restaurant'),
+                'submitted_at' => now()->format('F j, Y, g:i a'),
+            ];
+            
+            // Send notification to admin
+            $adminEmail = setting('mail_reservation_to', setting('email'));
+            $mailService = app(MailService::class);
+            $mailService->sendReservationNotificationToAdmin($adminEmail, $data);
+            $mailService->sendReservationConfirmation($request->email, $data);
+            
+            return true;
+        } catch (\Exception $e) {
+            // Log error but don't break flow
+            Log::error('Failed to send reservation emails: ' . $e->getMessage());
+            return false;
+        }
     }
     
     /**
