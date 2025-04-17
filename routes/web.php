@@ -15,6 +15,10 @@ Route::get('/', function () {
     return redirect('/' . $locale);
 });
 
+Route::get('sitemap.xml', function() {
+    return response()->file(public_path('sitemap.xml'));
+});
+
 Route::get('language/{locale}', [LanguageController::class, 'change'])->name('language.change');
 
 // Đảm bảo middleware setLocale xử lý đúng khi locale là null

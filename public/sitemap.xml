@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Home Page -->
+    <url>
+        <loc>https://aisuki.com/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Menu -->
+    <url>
+        <loc>https://aisuki.com/menu</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Cart -->
+    <url>
+        <loc>https://aisuki.com/cart</loc>
+        <changefreq>always</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- About Us -->
+    <url>
+        <loc>https://aisuki.com/about-us</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Contact -->
+    <url>
+        <loc>https://aisuki.com/contact</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Checkout -->
+    <url>
+        <loc>https://aisuki.com/checkout</loc>
+        <changefreq>always</changefreq>
+        <priority>0.7</priority>
+    </url>
+</urlset>
