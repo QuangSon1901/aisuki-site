@@ -24,33 +24,33 @@
 <!-- Quick Contact -->
 <div class="max-w-7xl mx-auto px-4">
     <div class="card rounded-lg shadow-lg -mt-16 sm:-mt-20 relative z-10 p-5 sm:p-8 flex flex-col md:flex-row justify-between">
-        <div class="flex flex-col sm:flex-row items-center mb-7 md:mb-0">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-aisuki-red/10 flex justify-center items-center mb-4 sm:mb-0 sm:mr-4">
+        <div class="flex flex-row sm:items-center mb-7 md:mb-0">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-aisuki-red/10 flex justify-center items-center mb-4 sm:mb-0 mr-4">
                 <i class="fas fa-phone-alt text-aisuki-red"></i>
             </div>
-            <div class="text-center sm:text-left">
+            <div class="text-left" style="flex: 1;">
                 <h4 class="text-sm sm:text-base font-semibold mb-1 text-theme-primary">
                     {{ trans_db('sections', 'quick_contact_reservation_title', false) ?: 'Reservation Contact' }}
                 </h4>
-                <p class="text-theme-secondary text-sm">{{ setting('phone') }}</p>
+                <p class="text-theme-secondary text-sm whitespace-nowrap">{{ setting('phone') }}</p>
             </div>
         </div>
-        <div class="flex flex-col sm:flex-row items-center mb-7 md:mb-0">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-aisuki-red/10 flex justify-center items-center mb-4 sm:mb-0 sm:mr-4">
+        <div class="flex flex-row sm:items-center mb-7 md:mb-0">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-aisuki-red/10 flex justify-center items-center mb-4 sm:mb-0 mr-4">
                 <i class="fas fa-clock text-aisuki-red"></i>
             </div>
-            <div class="text-center sm:text-left">
+            <div class="text-left" style="flex: 1;">
                 <h4 class="text-sm sm:text-base font-semibold mb-1 text-theme-primary">
                     {{ trans_db('sections', 'quick_contact_hours_title', false) ?: 'Opening Hours' }}
                 </h4>
                 <p class="text-theme-secondary text-sm">{{ setting('opening_hours') }}</p>
             </div>
         </div>
-        <div class="flex flex-col sm:flex-row items-center">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-aisuki-red/10 flex justify-center items-center mb-4 sm:mb-0 sm:mr-4">
+        <div class="flex flex-row sm:items-center">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-aisuki-red/10 flex justify-center items-center mb-4 sm:mb-0 mr-4">
                 <i class="fas fa-map-marker-alt text-aisuki-red"></i>
             </div>
-            <div class="text-center sm:text-left">
+            <div class="text-left" style="flex: 1;">
                 <h4 class="text-sm sm:text-base font-semibold mb-1 text-theme-primary">
                     {{ trans_db('sections', 'quick_contact_address_title', false) ?: 'Address' }}
                 </h4>
