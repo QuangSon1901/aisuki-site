@@ -41,12 +41,6 @@
                 <div class="menu-category mb-10" id="category-{{ $category->slug }}">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-xl font-bold text-theme-primary">{{ $category->name }}</h2>
-                        
-                        @if($category->slug == 'ki-lunch')
-                        <span class="text-sm text-theme-secondary">
-                            {{ trans_db('sections', 'lunch_special_note', false) ?: 'Available from 11:00 to 14:30' }}
-                        </span>
-                        @endif
                     </div>
                     
                     <!-- Desktop Menu Grid - Hidden on mobile -->
