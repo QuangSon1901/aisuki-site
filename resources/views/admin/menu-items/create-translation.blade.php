@@ -47,7 +47,7 @@
 
                             <div class="col-md-6">
                                 <label for="category_id" class="form-label">Category <span class="text-danger">*</span></label>
-                                <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" name="category_id" required>
+                                <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
                                     <option value="">Select language first</option>
                                 </select>
                                 @error('category_id')
@@ -222,6 +222,43 @@
                 });
             }
         });
+
+        $('#language_id').on('change', function() {
+    const languageId = $(this).val();
+    
+    if (languageId) {
+        // Update categories dropdown
+        $.ajax({
+            url: "{{ route('admin.menu-items.get-categories') }}",
+            type: "GET",
+            data: {
+                language_id: languageId
+            },
+            success: function(response) {
+                const $categorySelect = $('#category_id');
+                $categorySelect.empty();
+                
+                if (response.categories && response.categories.length > 0) {
+                    $categorySelect.append('<option value="">Select category</option>');
+                    
+                    response.categories.forEach(function(category) {
+                        $categorySelect.append(`<option value="${category.id}">${category.name}</option>`);
+                    });
+                } else {
+                    $categorySelect.append('<option value="">No categories available</option>');
+                }
+            },
+            error: function(xhr) {
+                console.error('Error loading categories:', xhr.responseText);
+                $('#category_id').html('<option value="">Failed to load categories</option>');
+            }
+        });
+        
+        // Your existing addon loading code will still run here
+    } else {
+        $('#category_id').html('<option value="">Select language first</option>');
+    }
+});
 
         // Auto-generate code from name
         $('#name').on('input', function() {
