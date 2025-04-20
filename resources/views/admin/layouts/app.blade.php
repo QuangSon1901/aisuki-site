@@ -87,7 +87,7 @@
                     <li class="nav-item {{ request()->routeIs('admin.notifications.*') ? 'active' : '' }}">
                         <a href="{{ route('admin.notifications.index') }}" class="nav-link">
                             <i class="fas fa-bell"></i>
-                            <span class="nav-text" style="flex: 1;">Thông báo</span>
+                            <span class="nav-text" style="flex: 1;">Notifications</span>
                             @php
                                 $unreadCount = \App\Models\Notification::where('is_read', false)->count();
                             @endphp

@@ -8,9 +8,26 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $notifications = Notification::orderBy('created_at', 'desc')->paginate(20);
+        $query = Notification::orderBy('created_at', 'desc');
+        
+        // Filter by type (order, reservation, contact)
+        if ($request->has('type') && in_array($request->type, ['order', 'reservation', 'contact'])) {
+            $query->where('type', $request->type);
+        }
+        
+        // Filter by read status
+        if ($request->has('read') && in_array($request->read, ['0', '1'])) {
+            $query->where('is_read', $request->read);
+        }
+        
+        // Filter by processed status
+        if ($request->has('processed') && in_array($request->processed, ['0', '1'])) {
+            $query->where('is_processed', $request->processed);
+        }
+        
+        $notifications = $query->paginate(20);
         return view('admin.notifications.index', compact('notifications'));
     }
     
