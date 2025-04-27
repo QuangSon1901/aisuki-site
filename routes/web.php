@@ -5,12 +5,13 @@ use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\LanguageController;
 use App\Http\Controllers\Client\MenuController;
 use App\Http\Controllers\Client\PageController;
+use App\Models\Language;
 use Illuminate\Support\Facades\Route;
 
 // Redirect root to default locale
 Route::get('/', function () {
     $localeCookie = request()->cookie('locale');
-    $locale = $localeCookie ?? 'en'; // Default to English
+    $locale = $localeCookie ?? Language::getDefault()->code; // Default to English
     
     return redirect('/' . $locale);
 });

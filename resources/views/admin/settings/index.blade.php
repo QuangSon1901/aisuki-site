@@ -71,6 +71,11 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="text-end mb-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i> Save Settings
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -141,6 +146,11 @@
                                 <small class="text-muted">Paste the full iframe code from Google Maps</small>
                             </div>
                         </div>
+                        <div class="text-end mb-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i> Save Settings
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -185,6 +195,11 @@
                                 </label>
                                 <input type="url" class="form-control" name="settings[youtube]" value="{{ $socialSettingItems['youtube']->value ?? '' }}" placeholder="https://youtube.com/channel/yourchannelid">
                             </div>
+                        </div>
+                        <div class="text-end mb-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i> Save Settings
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -262,6 +277,11 @@
                                 </div>
                                 <small class="text-muted">Separate keywords with commas</small>
                             </div>
+                        </div>
+                        <div class="text-end mb-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i> Save Settings
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -449,6 +469,11 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="text-end mb-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i> Save Settings
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -533,13 +558,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="text-end mb-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i> Save Settings
+                            </button>
+                        </div>
                     </div>
-                </div>
-
-                <div class="text-end mb-4">
-                    <button type="submit" class="btn btn-primary btn-lg">
-                        <i class="fas fa-save me-2"></i> Save Settings
-                    </button>
                 </div>
             </div>
         </div>
@@ -575,6 +599,7 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
+        const translationValue = @json($translations);
         // Scrollspy for settings navigation
         $('.settings-nav a').on('click', function(e) {
             e.preventDefault();
@@ -630,6 +655,7 @@
         // Handle translation modal
         $('#translationModal').on('show.bs.modal', function(e) {
             var button = $(e.relatedTarget);
+            
             var field = button.data('field');
             var language = button.data('language');
             var languageName = button.data('language-name');
@@ -642,7 +668,6 @@
             $('#translationLabel').text(field.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()) + ' (' + languageName + ')');
 
             // Set current translation value if exists
-            var translationValue = @json($translations);
             if (translationValue[language] && translationValue[language][field]) {
                 $('#translationValue').val(translationValue[language][field].value || '');
             } else {

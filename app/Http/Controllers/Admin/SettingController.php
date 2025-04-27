@@ -25,8 +25,7 @@ class SettingController extends Controller
         $mailSettingItems = Setting::where('group', 'mail')->get()->keyBy('key');
         
         // Get all active languages for translatable settings
-        $languages = Language::where('is_active', true)->get();
-        
+        $languages = Language::where('is_active', true)->where('code', '!=', 'en')->get();
         // Get translations for translatable settings
         $translations = [];
         foreach ($languages as $language) {
@@ -35,7 +34,6 @@ class SettingController extends Controller
                 ->get()
                 ->keyBy('key');
         }
-        
         return view('admin.settings.index', compact(
             'generalSettingItems',
             'contactSettingItems',
