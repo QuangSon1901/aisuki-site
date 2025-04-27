@@ -192,7 +192,7 @@
                 <p class="text-theme-primary mb-6">
                     {{ trans_db('sections', 'about_paragraph_3', false) ?: 'Thanks to our commitment to quality and our passion for authentic Japanese cuisine, AISUKI has received support and love from customers. We are always grateful and wish to express our sincere thanks to our customers until the next encounter.' }}
                 </p>
-                <a href="#" class="inline-block bg-aisuki-red text-white py-3 px-6 rounded-full font-semibold hover:bg-[#c41017] transition-all">
+                <a href="{{ route('about', ['locale' => $currentLocale]) }}" class="inline-block bg-aisuki-red text-white py-3 px-6 rounded-full font-semibold hover:bg-[#c41017] transition-all">
                     {{ trans_db('sections', 'about_button', false) ?: 'Learn More' }}
                 </a>
             </div>
