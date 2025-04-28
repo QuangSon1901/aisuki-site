@@ -256,7 +256,7 @@ class CartController extends Controller
 
             // Get admin email from settings
             $mailService = app(MailService::class);
-            $adminEmail = setting('mail_contact_to', '');
+            $adminEmail = setting('mail_contact_to', setting('email'));
             
             if ($adminEmail) {
                 $mailService->sendOrderNotificationToAdmin($adminEmail, $emailData);

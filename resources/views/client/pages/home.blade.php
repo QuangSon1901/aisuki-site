@@ -227,32 +227,32 @@
                         <label for="home_name" class="block font-semibold text-sm mb-2 text-theme-primary">
                             {{ trans_db('sections', 'reservation_form_name', false) ?: 'Full Name' }} <span class="text-aisuki-red">*</span>
                         </label>
-                        <input type="text" id="home_name" name="name" placeholder="{{ trans_db('sections', 'reservation_form_name_placeholder', false) ?: 'Enter your full name' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required value="{{ old('name') }}">
+                        <input type="text" id="home_name" name="name" placeholder="{{ trans_db('sections', 'reservation_form_name_placeholder', false) ?: 'Enter your full name' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" value="{{ old('name') }}">
                     </div>
                     <div class="mb-4">
                         <label for="home_phone" class="block font-semibold text-sm mb-2 text-theme-primary">
                             {{ trans_db('sections', 'reservation_form_phone', false) ?: 'Phone Number' }} <span class="text-aisuki-red">*</span>
                         </label>
-                        <input type="tel" id="home_phone" name="phone" placeholder="{{ trans_db('sections', 'reservation_form_phone_placeholder', false) ?: 'Enter your phone number' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required value="{{ old('phone') }}">
+                        <input type="tel" id="home_phone" name="phone" placeholder="{{ trans_db('sections', 'reservation_form_phone_placeholder', false) ?: 'Enter your phone number' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" value="{{ old('phone') }}">
                     </div>
                     <div class="mb-4">
                         <label for="home_email" class="block font-semibold text-sm mb-2 text-theme-primary">
                             {{ trans_db('sections', 'reservation_form_email', false) ?: 'Email' }} <span class="text-aisuki-red">*</span>
                         </label>
-                        <input type="email" id="home_email" name="email" placeholder="{{ trans_db('sections', 'reservation_form_email_placeholder', false) ?: 'Enter your email' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required value="{{ old('email') }}">
+                        <input type="email" id="home_email" name="email" placeholder="{{ trans_db('sections', 'reservation_form_email_placeholder', false) ?: 'Enter your email' }}" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" value="{{ old('email') }}">
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label for="home_date" class="block font-semibold text-sm mb-2 text-theme-primary">
                                 {{ trans_db('sections', 'reservation_form_date', false) ?: 'Date' }} <span class="text-aisuki-red">*</span>
                             </label>
-                            <input type="date" id="home_date" name="date" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required value="{{ old('date', date('Y-m-d')) }}">
+                            <input type="date" id="home_date" name="date" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" value="{{ old('date', date('Y-m-d')) }}">
                         </div>
                         <div>
                             <label for="home_time" class="block font-semibold text-sm mb-2 text-theme-primary">
                                 {{ trans_db('sections', 'reservation_form_time', false) ?: 'Time' }} <span class="text-aisuki-red">*</span>
                             </label>
-                            <select id="home_time" name="time" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required>
+                            <select id="home_time" name="time" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red">
                                 <option value="">{{ trans_db('sections', 'select_time', false) ?: 'Select time' }}</option>
                                 <option value="12:00" {{ old('time') == '12:00' ? 'selected' : '' }}>12:00</option>
                                 <option value="12:30" {{ old('time') == '12:30' ? 'selected' : '' }}>12:30</option>
@@ -270,7 +270,7 @@
                         <label for="home_guests" class="block font-semibold text-sm mb-2 text-theme-primary">
                             {{ trans_db('sections', 'reservation_form_guests', false) ?: 'Number of Guests' }} <span class="text-aisuki-red">*</span>
                         </label>
-                        <select id="home_guests" name="guests" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required>
+                        <select id="home_guests" name="guests" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red">
                             <option value="">{{ trans_db('sections', 'select_guests', false) ?: 'Select guests' }}</option>
                             <option value="2" {{ old('guests') == '2' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_2', false) ?: '2 people' }}</option>
                             <option value="3" {{ old('guests') == '3' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_3', false) ?: '3 people' }}</option>
@@ -366,6 +366,12 @@
         // Set minimum date to today
         const today = new Date().toISOString().split('T')[0];
         $('#home_date').attr('min', today);
+
+        $('#homeReservationForm input, #homeReservationForm select, #homeReservationForm textarea').on('input change', function() {
+            $(this).removeClass('border-red-500 focus\:border-aisuki-red');
+            $(this).next('.validation-error').remove();
+        });
+
         // Setup form submission with loading state
         setupHomeReservationForm();
         
@@ -417,44 +423,95 @@
         // Form field validation
         function validateHomeFormFields() {
             let isValid = true;
-            const fields = [
-                { id: 'home_name', type: 'text' },
-                { id: 'home_email', type: 'email' },
-                { id: 'home_phone', type: 'text' },
-                { id: 'home_date', type: 'date' },
-                { id: 'home_time', type: 'select' },
-                { id: 'home_guests', type: 'select' }
-            ];
             
-            fields.forEach(field => {
-                const $field = $('#' + field.id);
-                let fieldValid = true;
-                
-                // Basic required validation
-                if ($field.val().trim() === '') {
-                    fieldValid = false;
-                }
-                
-                // Email validation
-                if (field.type === 'email' && fieldValid) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test($field.val().trim())) {
-                        fieldValid = false;
+            // Reset all error states
+            $('.validation-error').remove();
+            $('.border-red-500').removeClass('border-red-500');
+            
+            // Define validation rules for each field
+            const fields = [
+                { 
+                    id: 'home_name', 
+                    rules: ['required'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'name_required', false) ?: 'Name is required' }}"
+                    }
+                },
+                { 
+                    id: 'home_email', 
+                    rules: ['required', 'email'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'email_required', false) ?: 'Email is required' }}",
+                        email: "{{ trans_db('validation', 'email_invalid', false) ?: 'Please enter a valid email address' }}"
+                    }
+                },
+                { 
+                    id: 'home_phone', 
+                    rules: ['required'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'phone_required', false) ?: 'Phone number is required' }}"
+                    }
+                },
+                { 
+                    id: 'home_date', 
+                    rules: ['required'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'date_required', false) ?: 'Date is required' }}"
+                    }
+                },
+                { 
+                    id: 'home_time', 
+                    rules: ['required'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'time_required', false) ?: 'Time is required' }}"
+                    }
+                },
+                { 
+                    id: 'home_guests', 
+                    rules: ['required'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'guests_required', false) ?: 'Please select number of guests' }}"
                     }
                 }
+            ];
+            
+            // Validate each field
+            fields.forEach(field => {
+                const $field = $('#' + field.id);
+                let fieldErrors = [];
                 
-                // Apply styling based on validation result
-                if (!fieldValid) {
+                // Check each validation rule
+                field.rules.forEach(rule => {
+                    const value = $field.val().trim();
+                    
+                    if (rule === 'required' && value === '') {
+                        fieldErrors.push(field.messages.required);
+                    } else if (rule === 'email' && value !== '') {
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(value)) {
+                            fieldErrors.push(field.messages.email);
+                        }
+                    }
+                });
+                
+                // If field has errors, mark it and show messages
+                if (fieldErrors.length > 0) {
                     $field.addClass('border-red-500');
+                    
+                    // Add error message after the field
+                    const errorContainer = $('<div class="validation-error text-red-500 text-xs mt-1"></div>');
+                    errorContainer.text(fieldErrors[0]); // Show only the first error for each field
+                    
+                    // Find the field's parent and append error
+                    $field.parent().append(errorContainer);
+                    
                     isValid = false;
-                } else {
-                    $field.removeClass('border-red-500');
                 }
             });
             
             if (!isValid) {
                 // Show error message
-                showToast(`{{ trans_db('sections', 'required_field', false) ?: 'Please fill in all required fields correctly' }}`, 'error');
+                showToast("{{ trans_db('validation', 'form_errors', false) ?: 'Please fix the errors in the form' }}", 'error');
             }
             
             return isValid;

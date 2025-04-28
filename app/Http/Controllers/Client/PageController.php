@@ -86,7 +86,7 @@ class PageController extends Controller
         // Send email notifications
         $this->sendReservationEmails($request, $notification);
         $successMessage = trans_db('sections', 'reservation_success', false) ?: 'Thank you for your reservation. We will contact you shortly to confirm!';
-    
+        
         return redirect()
             ->route('contact', ['locale' => app()->getLocale()])
             ->with('success', $successMessage);
@@ -109,7 +109,7 @@ class PageController extends Controller
             ];
             
             // Send notification to admin
-            $adminEmail = setting('mail_reservation_to', setting('email'));
+            $adminEmail = setting('mail_contact_to', setting('email'));
             $mailService = app(MailService::class);
             $mailService->sendReservationNotificationToAdmin($adminEmail, $data);
             $mailService->sendReservationConfirmation($request->email, $data);

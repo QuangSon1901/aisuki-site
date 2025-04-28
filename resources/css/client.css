@@ -413,3 +413,13 @@ input, select, textarea {
     width: 100%;
     height: 100%;
 }
+
+.focus\:border-aisuki-red:focus {
+    --tw-border-opacity: 1;
+    border-color: rgb(230 28 35 / var(--tw-border-opacity, 1));
+}
+
+.border-red-500 {
+    --tw-border-opacity: 1;
+    border-color: rgb(239 68 68 / var(--tw-border-opacity, 1));
+}

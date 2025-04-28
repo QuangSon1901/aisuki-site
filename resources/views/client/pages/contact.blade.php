@@ -121,7 +121,7 @@
                                         <label for="name" class="block text-theme-primary font-medium mb-1">
                                             {{ trans_db('sections', 'reservation_form_name', false) ?: 'Full Name' }} <span class="text-aisuki-red">*</span>
                                         </label>
-                                        <input type="text" id="name" name="name" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('name') border-red-500 @enderror" required placeholder="{{ trans_db('sections', 'reservation_form_name_placeholder', false) ?: 'Enter your full name' }}" value="{{ old('name') }}">
+                                        <input type="text" id="name" name="name" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('name') border-red-500 @enderror" placeholder="{{ trans_db('sections', 'reservation_form_name_placeholder', false) ?: 'Enter your full name' }}" value="{{ old('name') }}">
                                         @error('name')
                                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                         @enderror
@@ -132,7 +132,7 @@
                                         <label for="phone" class="block text-theme-primary font-medium mb-1">
                                             {{ trans_db('sections', 'reservation_form_phone', false) ?: 'Phone Number' }} <span class="text-aisuki-red">*</span>
                                         </label>
-                                        <input type="tel" id="phone" name="phone" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('phone') border-red-500 @enderror" required placeholder="{{ trans_db('sections', 'reservation_form_phone_placeholder', false) ?: 'Enter your phone number' }}" value="{{ old('phone') }}">
+                                        <input type="tel" id="phone" name="phone" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('phone') border-red-500 @enderror" placeholder="{{ trans_db('sections', 'reservation_form_phone_placeholder', false) ?: 'Enter your phone number' }}" value="{{ old('phone') }}">
                                         @error('phone')
                                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                         @enderror
@@ -144,7 +144,7 @@
                                     <label for="email" class="block text-theme-primary font-medium mb-1">
                                         {{ trans_db('sections', 'reservation_form_email', false) ?: 'Email' }} <span class="text-aisuki-red">*</span>
                                     </label>
-                                    <input type="email" id="email" name="email" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('email') border-red-500 @enderror" required placeholder="{{ trans_db('sections', 'reservation_form_email_placeholder', false) ?: 'Enter your email' }}" value="{{ old('email') }}">
+                                    <input type="email" id="email" name="email" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('email') border-red-500 @enderror" placeholder="{{ trans_db('sections', 'reservation_form_email_placeholder', false) ?: 'Enter your email' }}" value="{{ old('email') }}">
                                     @error('email')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror
@@ -156,7 +156,7 @@
                                         <label for="date" class="block text-theme-primary font-medium mb-1">
                                             {{ trans_db('sections', 'reservation_form_date', false) ?: 'Date' }} <span class="text-aisuki-red">*</span>
                                         </label>
-                                        <input type="date" id="date" name="date" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('date') border-red-500 @enderror" required value="{{ old('date', date('Y-m-d')) }}">
+                                        <input type="date" id="date" name="date" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('date') border-red-500 @enderror" value="{{ old('date', date('Y-m-d')) }}">
                                         @error('date')
                                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                         @enderror
@@ -167,7 +167,7 @@
                                         <label for="time" class="block text-theme-primary font-medium mb-1">
                                             {{ trans_db('sections', 'reservation_form_time', false) ?: 'Time' }} <span class="text-aisuki-red">*</span>
                                         </label>
-                                        <select id="time" name="time" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('time') border-red-500 @enderror" required>
+                                        <select id="time" name="time" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('time') border-red-500 @enderror">
                                             <option value="">{{ trans_db('sections', 'select_time', false) ?: 'Select time' }}</option>
                                             <option value="12:00" {{ old('time') == '12:00' ? 'selected' : '' }}>12:00</option>
                                             <option value="12:30" {{ old('time') == '12:30' ? 'selected' : '' }}>12:30</option>
@@ -189,7 +189,7 @@
                                         <label for="guests" class="block text-theme-primary font-medium mb-1">
                                             {{ trans_db('sections', 'reservation_form_guests', false) ?: 'Number of Guests' }} <span class="text-aisuki-red">*</span>
                                         </label>
-                                        <select id="guests" name="guests" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('guests') border-red-500 @enderror" required>
+                                        <select id="guests" name="guests" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('guests') border-red-500 @enderror">
                                             <option value="">{{ trans_db('sections', 'select_guests', false) ?: 'Select guests' }}</option>
                                             <option value="2" {{ old('guests') == '2' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_2', false) ?: '2 people' }}</option>
                                             <option value="3" {{ old('guests') == '3' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_3', false) ?: '3 people' }}</option>
@@ -254,7 +254,12 @@
         // Set minimum date to today
         const today = new Date().toISOString().split('T')[0];
         $('#date').attr('min', today);
-        
+
+        $('input, select, textarea').on('input change', function() {
+            $(this).removeClass('border-red-500 focus\:border-aisuki-red');
+            $(this).next('.validation-error').remove();
+        });
+
         // Check for success message on page load and show toast if present
         @if(session('success'))
             showToast('{{ session('success') }}', 'success');
@@ -278,9 +283,15 @@
                     return false;
                 }
                 
+                // Remove existing error messages
+                $('.validation-error').remove();
+                
                 // Validate form fields
                 if (!validateFormFields()) {
                     e.preventDefault();
+                    
+                    // Show general error message
+                    showToast("{{ trans_db('validation', 'form_errors', false) ?: 'Please fix the errors in the form' }}", 'error');
                     return false;
                 }
                 
@@ -304,6 +315,7 @@
                     submitBtn.prop('disabled', false);
                     submitBtn.find('.normal-state').removeClass('hidden');
                     submitBtn.find('.loading-state').addClass('hidden');
+                    $('.validation-error').remove();
                 }
             });
         }
@@ -312,62 +324,94 @@
         function validateFormFields() {
             let isValid = true;
             
-            // Validate name
-            if ($('#name').val().trim() === '') {
-                $('#name').addClass('border-red-500');
-                isValid = false;
-            } else {
-                $('#name').removeClass('border-red-500');
-            }
+            // Reset all error states
+            $('.validation-error').remove();
+            $('.border-red-500').removeClass('border-red-500');
             
-            // Validate email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if ($('#email').val().trim() === '' || !emailRegex.test($('#email').val().trim())) {
-                $('#email').addClass('border-red-500');
-                isValid = false;
-            } else {
-                $('#email').removeClass('border-red-500');
-            }
+            // Define validation rules for each field
+            const fields = [
+                { 
+                    id: 'name', 
+                    rules: ['required'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'name_required', false) ?: 'Name is required' }}"
+                    }
+                },
+                { 
+                    id: 'email', 
+                    rules: ['required', 'email'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'email_required', false) ?: 'Email is required' }}",
+                        email: "{{ trans_db('validation', 'email_invalid', false) ?: 'Please enter a valid email address' }}"
+                    }
+                },
+                { 
+                    id: 'phone', 
+                    rules: ['required'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'phone_required', false) ?: 'Phone number is required' }}"
+                    }
+                },
+                { 
+                    id: 'date', 
+                    rules: ['required'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'date_required', false) ?: 'Date is required' }}"
+                    }
+                },
+                { 
+                    id: 'time', 
+                    rules: ['required'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'time_required', false) ?: 'Time is required' }}"
+                    }
+                },
+                { 
+                    id: 'guests', 
+                    rules: ['required'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'guests_required', false) ?: 'Please select number of guests' }}"
+                    }
+                }
+            ];
             
-            // Validate phone
-            if ($('#phone').val().trim() === '') {
-                $('#phone').addClass('border-red-500');
-                isValid = false;
-            } else {
-                $('#phone').removeClass('border-red-500');
-            }
-            
-            // Validate date
-            if ($('#date').val() === '') {
-                $('#date').addClass('border-red-500');
-                isValid = false;
-            } else {
-                $('#date').removeClass('border-red-500');
-            }
-            
-            // Validate time
-            if ($('#time').val() === '') {
-                $('#time').addClass('border-red-500');
-                isValid = false;
-            } else {
-                $('#time').removeClass('border-red-500');
-            }
-            
-            // Validate guests
-            if ($('#guests').val() === '') {
-                $('#guests').addClass('border-red-500');
-                isValid = false;
-            } else {
-                $('#guests').removeClass('border-red-500');
-            }
-            
-            if (!isValid) {
-                // Show error toast
-                showToast(`{{ trans_db('sections', 'required_field', false) ?: 'Please fill in all required fields correctly' }}`, 'error');
-            }
+            // Validate each field
+            fields.forEach(field => {
+                const $field = $('#' + field.id);
+                let fieldErrors = [];
+                
+                // Check each validation rule
+                field.rules.forEach(rule => {
+                    const value = $field.val().trim();
+                    
+                    if (rule === 'required' && value === '') {
+                        fieldErrors.push(field.messages.required);
+                    } else if (rule === 'email' && value !== '') {
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(value)) {
+                            fieldErrors.push(field.messages.email);
+                        }
+                    }
+                });
+                
+                // If field has errors, mark it and show messages
+                if (fieldErrors.length > 0) {
+                    $field.addClass('border-red-500');
+                    
+                    // Add error message after the field
+                    const errorContainer = $('<div class="validation-error text-red-500 text-xs mt-1"></div>');
+                    errorContainer.text(fieldErrors[0]); // Show only the first error for each field
+                    
+                    // Find the field's parent and append error
+                    $field.parent().append(errorContainer);
+                    
+                    isValid = false;
+                }
+            });
             
             return isValid;
         }
+
         
         // Toast notification function
         function showToast(message, type = 'success') {
