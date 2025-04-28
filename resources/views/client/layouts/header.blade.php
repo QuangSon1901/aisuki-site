@@ -7,7 +7,7 @@
         <div class="flex items-center space-x-4">
             <div class="flex items-center">
                 <i class="fas fa-map-marker-alt text-aisuki-red mr-1.5"></i>
-                <span>{{ setting('address') }}</span>
+                <span>{{ $currentLocale == 'en' ? setting('address') : trans_db('settings', 'address', false) }}</span>
             </div>
             <div class="flex items-center">
                 <i class="fas fa-phone-alt text-aisuki-red mr-1.5"></i>
@@ -17,7 +17,7 @@
         <div class="flex items-center space-x-4">
             <div class="flex items-center">
                 <i class="fas fa-clock text-aisuki-red mr-1.5"></i>
-                <span>{{ setting('opening_hours') }}</span>
+                <span>{{ $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false) }}</span>
             </div>
             <div class="flex space-x-2">
                 @if(setting('facebook'))
@@ -242,14 +242,14 @@
                     <i class="fas fa-clock text-aisuki-red mt-1 mr-3 w-5 text-center"></i>
                     <div>
                         <p class="font-medium text-theme-primary">{{ trans_db('sections', 'quick_contact_hours_title', false) ?: 'Opening Hours' }}</p>
-                        <p class="text-theme-secondary">{{ setting('opening_hours') }}</p>
+                        <p class="text-theme-secondary">{{ $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false) }}</p>
                     </div>
                 </div>
                 <div class="flex items-start">
                     <i class="fas fa-map-marker-alt text-aisuki-red mt-1 mr-3 w-5 text-center"></i>
                     <div>
                         <p class="font-medium text-theme-primary">{{ trans_db('sections', 'quick_contact_address_title', false) ?: 'Address' }}</p>
-                        <p class="text-theme-secondary">{{ setting('address') }}</p>
+                        <p class="text-theme-secondary">{{ $currentLocale == 'en' ? setting('address') : trans_db('settings', 'address', false) }}</p>
                     </div>
                 </div>
             </div>

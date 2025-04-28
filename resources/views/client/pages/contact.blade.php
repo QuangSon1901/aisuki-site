@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <h3 class="font-medium text-theme-primary mb-1">{{ trans_db('sections', 'quick_contact_address_title', false) ?: 'Address' }}</h3>
-                                        <p class="text-theme-secondary">{{ setting('address') }}</p>
+                                        <p class="text-theme-secondary">{{ $currentLocale == 'en' ? setting('address') : trans_db('settings', 'address', false) }}</p>
                                     </div>
                                 </div>
                                 
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <h3 class="font-medium text-theme-primary mb-1">{{ trans_db('sections', 'business_hours', false) ?: 'Business Hours' }}</h3>
-                                        <p class="text-theme-secondary">{{ setting('opening_hours') }}</p>
+                                        <p class="text-theme-secondary">{{ $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false) }}</p>
                                     </div>
                                 </div>
                             </div>

@@ -52,7 +52,7 @@
                 <div class="space-y-3">
                     <div class="flex">
                         <i class="fas fa-map-marker-alt text-aisuki-red mt-1 mr-3"></i>
-                        <span class="text-gray-400 text-sm">{{ setting('address') }}</span>
+                        <span class="text-gray-400 text-sm">{{ $currentLocale == 'en' ? setting('address') : trans_db('settings', 'address', false) }}</span>
                     </div>
                     <div class="flex">
                         <i class="fas fa-phone-alt text-aisuki-red mt-1 mr-3"></i>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="flex">
                         <i class="fas fa-clock text-aisuki-red mt-1 mr-3"></i>
-                        <span class="text-gray-400 text-sm">{{ setting('opening_hours') }}</span>
+                        <span class="text-gray-400 text-sm">{{ $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false) }}</span>
                     </div>
                 </div>
             </div>

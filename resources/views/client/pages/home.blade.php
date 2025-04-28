@@ -43,7 +43,7 @@
                 <h4 class="text-sm sm:text-base font-semibold mb-1 text-theme-primary">
                     {{ trans_db('sections', 'quick_contact_hours_title', false) ?: 'Opening Hours' }}
                 </h4>
-                <p class="text-theme-secondary text-sm">{{ setting('opening_hours') }}</p>
+                <p class="text-theme-secondary text-sm">{{ $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false) }}</p>
             </div>
         </div>
         <div class="flex flex-row sm:items-center">
@@ -54,7 +54,7 @@
                 <h4 class="text-sm sm:text-base font-semibold mb-1 text-theme-primary">
                     {{ trans_db('sections', 'quick_contact_address_title', false) ?: 'Address' }}
                 </h4>
-                <p class="text-theme-secondary text-sm">{{ setting('address') }}</p>
+                <p class="text-theme-secondary text-sm">{{ $currentLocale == 'en' ? setting('address') : trans_db('settings', 'address', false) }}</p>
             </div>
         </div>
     </div>

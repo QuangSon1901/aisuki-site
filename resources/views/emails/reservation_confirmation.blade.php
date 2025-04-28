@@ -66,7 +66,7 @@
     
     <div class="footer">
         <p>© {{ date('Y') }} {{ $site_name }}. All rights reserved.</p>
-        <p>{{ setting('address') }}</p>
+        <p>{{ $currentLocale == 'en' ? setting('address') : trans_db('settings', 'address', false) }}</p>
     </div>
 </body>
 </html>

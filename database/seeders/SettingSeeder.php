@@ -54,13 +54,13 @@ class SettingSeeder extends Seeder
                 'key' => 'address',
                 'value' => 'Korbinianstraße 60 (Ecke Frankfurter Ring 12). 80807 München',
                 'group' => 'contact',
-                'is_translatable' => true,
+                'is_translatable' => false,
             ],
             [
                 'key' => 'opening_hours',
                 'value' => '11:00 - 14:30 (Mon-Fri)',
                 'group' => 'contact',
-                'is_translatable' => true,
+                'is_translatable' => false,
             ],
             [
                 'key' => 'google_maps_iframe',

@@ -72,7 +72,7 @@
                             <div class="bg-theme-secondary p-3 rounded-md">
                                 <p class="text-theme-primary font-medium mb-2">{{ trans_db('sections', 'need_help', false) ?: 'Cần trợ giúp?' }}</p>
                                 <p class="text-theme-secondary text-sm mb-2">{{ trans_db('sections', 'call_us', false) ?: 'Gọi cho chúng tôi' }}: {{ setting('phone') }}</p>
-                                <p class="text-theme-secondary text-sm">{{ trans_db('sections', 'opening_hours', false) ?: 'Giờ mở cửa' }}: {{ setting('opening_hours') }}</p>
+                                <p class="text-theme-secondary text-sm">{{ trans_db('sections', 'opening_hours', false) ?: 'Giờ mở cửa' }}: {{ $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false) }}</p>
                             </div>
                         </div>
                     </div>
