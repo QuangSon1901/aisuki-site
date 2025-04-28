@@ -17,7 +17,7 @@
         <div class="flex items-center space-x-4">
             <div class="flex items-center">
                 <i class="fas fa-clock text-aisuki-red mr-1.5"></i>
-                <span>{{ $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false) }}</span>
+                <span>{{ str_replace(["\\r\\n", "\\n"], "", $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false)) }}</span>
             </div>
             <div class="flex space-x-2">
                 @if(setting('facebook'))
@@ -242,7 +242,7 @@
                     <i class="fas fa-clock text-aisuki-red mt-1 mr-3 w-5 text-center"></i>
                     <div>
                         <p class="font-medium text-theme-primary">{{ trans_db('sections', 'quick_contact_hours_title', false) ?: 'Opening Hours' }}</p>
-                        <p class="text-theme-secondary">{{ $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false) }}</p>
+                        <p class="text-theme-secondary">{!! nl2br(str_replace(["\\r\\n", "\\n"], "<br />", $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false))) !!}</p>
                     </div>
                 </div>
                 <div class="flex items-start">

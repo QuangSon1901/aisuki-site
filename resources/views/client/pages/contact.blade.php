@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <h3 class="font-medium text-theme-primary mb-1">{{ trans_db('sections', 'business_hours', false) ?: 'Business Hours' }}</h3>
-                                        <p class="text-theme-secondary">{{ $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false) }}</p>
+                                        <p class="text-theme-secondary">{!! nl2br(str_replace(["\\r\\n", "\\n"], "<br />", $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false))) !!}</p>
                                     </div>
                                 </div>
                             </div>

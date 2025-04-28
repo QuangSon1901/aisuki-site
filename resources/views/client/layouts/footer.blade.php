@@ -64,7 +64,7 @@
                     </div>
                     <div class="flex">
                         <i class="fas fa-clock text-aisuki-red mt-1 mr-3"></i>
-                        <span class="text-gray-400 text-sm">{{ $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false) }}</span>
+                        <span class="text-gray-400 text-sm">{!! nl2br(str_replace(["\\r\\n", "\\n"], "<br />", $currentLocale == 'en' ? setting('opening_hours') : trans_db('settings', 'opening_hours', false))) !!}</span>
                     </div>
                 </div>
             </div>
