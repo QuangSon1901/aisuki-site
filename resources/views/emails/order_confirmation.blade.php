@@ -1,4 +1,7 @@
 <!-- resources/views/emails/order_confirmation.blade.php -->
+@php
+    $currentLocale = app()->getLocale();
+@endphp
 <!DOCTYPE html>
 <html>
 <head>

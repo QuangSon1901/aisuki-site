@@ -1,3 +1,6 @@
+@php
+    $currentLocale = app()->getLocale();
+@endphp
 <!DOCTYPE html>
 <html>
 <head>

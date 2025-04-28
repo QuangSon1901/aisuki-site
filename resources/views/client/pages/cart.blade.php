@@ -1,6 +1,9 @@
 @extends('client.layouts.app')
 
 @section('content')
+    @php
+        $currentLocale = app()->getLocale();
+    @endphp
     <!-- Tiêu đề trang -->
     <section class="py-6 bg-theme-primary border-b border-theme">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
