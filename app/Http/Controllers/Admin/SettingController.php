@@ -55,7 +55,25 @@ class SettingController extends Controller
             'site_logo' => 'nullable|image|max:1024', // 1MB max
             'favicon' => 'nullable|image|max:512', // 512KB max
         ]);
-
+    
+        // Define checkbox settings that should be treated as boolean
+        $checkboxSettings = [
+            'mail_enable_contact_form',
+            'mail_enable_notification',
+            'enable_delivery',
+            'enable_pickup'
+        ];
+        
+        // First, set all checkbox settings to 0 if they exist
+        foreach ($checkboxSettings as $checkboxKey) {
+            $setting = Setting::where('key', $checkboxKey)->first();
+            if ($setting) {
+                $setting->value = '0';
+                $setting->save();
+            }
+        }
+    
+        // Then process all settings from the request (checked checkboxes will be overwritten to 1)
         foreach ($request->settings as $key => $value) {
             $setting = Setting::where('key', $key)->first();
             if ($setting) {

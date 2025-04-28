@@ -272,12 +272,25 @@
                                 </div>
                                 <div class="flex justify-between text-theme-primary" id="checkoutDeliveryRow">
                                     <span>{{ trans_db('sections', 'delivery_fee', false) ?: 'Delivery Fee' }}:</span>
-                                    <span id="checkoutDeliveryFee" data-fee="{{ setting('delivery_fee', 2.50) }}">{{ setting('currency', '€') }}{{ number_format(setting('delivery_fee', 2.50), 2, ',', '.') }}</span>
+                                    <span id="checkoutDeliveryFee" data-fee="{{ setting('delivery_fee', 2.50) }}">{{ number_format(setting('delivery_fee', 2.50), 2, ',', '.') }} {{ setting('currency', '€') }}</span>
                                 </div>
                                 <div id="checkoutDiscountRow" class="flex justify-between text-green-600 hidden">
                                     <span>{{ trans_db('sections', 'discount', false) ?: 'Discount' }}:</span>
                                     <span id="checkoutDiscountAmount" data-value="0">-0,00 {{ setting('currency', '€') }}</span>
                                 </div>
+                            </div>
+                            
+                            <!-- Mã giảm giá -->
+                            <div class="mb-4">
+                                <div class="flex">
+                                    <input type="text" id="promoCode" placeholder="{{ trans_db('sections', 'promo_code_placeholder', false) ?: 'Nhập mã giảm giá' }}" class="flex-1 p-2 border border-theme rounded-l-md bg-theme-primary text-theme-primary">
+                                    <button id="applyPromo" class="bg-aisuki-red text-white px-4 py-2 rounded-r-md hover:bg-aisuki-red-dark transition-colors">
+                                        {{ trans_db('sections', 'apply', false) ?: 'Áp dụng' }}
+                                    </button>
+                                </div>
+                                {{--<div class="text-xs text-theme-secondary mt-1">
+                                    <i class="fas fa-info-circle mr-1"></i> Mã thử nghiệm: <strong>AISUKI10</strong>
+                                </div>--}}
                             </div>
                             
                             <div class="border-t border-theme pt-3">
@@ -298,6 +311,34 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
+        $('#applyPromo').click(function() {
+            const promoCode = $('#promoCode').val().trim();
+            
+            if (!promoCode) {
+                Cart.showToast(window.translations.enter_promo_code || 'Vui lòng nhập mã giảm giá', 'error');
+                return;
+            }
+            
+            // Mock promo code check (in reality, this would be a server request)
+            if (promoCode.toUpperCase() === 'AISUKI10') {
+                // Assume €3 discount
+                const discount = 3.00;
+                
+                // Show discount row
+                $('#checkoutDiscountRow').removeClass('hidden');
+                $('#checkoutDiscountAmount').text(`-${Cart.formatPrice(discount)}`).data('value', discount);
+                
+                // Update total
+                updateCheckoutTotals();
+                
+                // Show success notification
+                Cart.showToast(window.translations.promo_applied || 'Đã áp dụng mã giảm giá');
+            } else {
+                // Invalid promo code
+                Cart.showToast(window.translations.invalid_promo || 'Mã giảm giá không hợp lệ', 'error');
+            }
+        });
+
         // Khởi tạo trang checkout
         function initCheckout() {
             updateOrderSummary();

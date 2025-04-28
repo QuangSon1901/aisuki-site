@@ -322,21 +322,16 @@ const Cart = {
     // Update cart summary (subtotal, shipping, etc.)
     updateCartSummary() {
         const subtotal = this.getSubtotal();
-        const deliveryFee = parseFloat($('#deliveryFee').data('fee') || 0);
         
-        // Check for discount
-        let discount = 0;
-        if (!$('#discountRow').hasClass('hidden')) {
-            discount = parseFloat($('#discountAmount').data('value') || 0);
-        }
-        
-        const total = this.getTotal(deliveryFee, discount);
-        
-        // Update subtotal
-        $('#cartSubtotal').text(this.formatPrice(subtotal));
-        
-        // Update total
-        $('#cartTotal').text(this.formatPrice(total));
+        // On the cart page, we just show subtotal as total
+        if ($('#cartPage').length) {
+            // Update subtotal
+            $('#cartSubtotal').text(this.formatPrice(subtotal));
+            
+            // For cart page, total equals subtotal (no delivery fee or discount)
+            $('#cartTotal').text(this.formatPrice(subtotal));
+        } 
+        // On checkout page calculation is handled separately
     },
     
     // Show toast notification
@@ -691,34 +686,34 @@ const Cart = {
             }
         });
         
-        // Apply promo code
-        $(document).on('click', '#applyPromo', function() {
-            const promoCode = $('#promoCode').val().trim();
+        // // Apply promo code
+        // $(document).on('click', '#applyPromo', function() {
+        //     const promoCode = $('#promoCode').val().trim();
             
-            if (!promoCode) {
-                self.showToast(window.translations.enter_promo_code || 'Vui lòng nhập mã giảm giá', 'error');
-                return;
-            }
+        //     if (!promoCode) {
+        //         self.showToast(window.translations.enter_promo_code || 'Vui lòng nhập mã giảm giá', 'error');
+        //         return;
+        //     }
             
-            // Mock promo code check (in reality, this would be a server request)
-            if (promoCode.toUpperCase() === 'AISUKI10') {
-                // Assume €3 discount
-                const discount = 3.00;
+        //     // Mock promo code check (in reality, this would be a server request)
+        //     if (promoCode.toUpperCase() === 'AISUKI10') {
+        //         // Assume €3 discount
+        //         const discount = 3.00;
                 
-                // Show discount row
-                $('#discountRow').removeClass('hidden');
-                $('#discountAmount').text(`-${self.formatPrice(discount)}`).data('value', discount);
+        //         // Show discount row
+        //         $('#discountRow').removeClass('hidden');
+        //         $('#discountAmount').text(`-${self.formatPrice(discount)}`).data('value', discount);
                 
-                // Update total
-                self.updateCartSummary();
+        //         // Update total
+        //         self.updateCartSummary();
                 
-                // Show success notification
-                self.showToast(window.translations.promo_applied || 'Đã áp dụng mã giảm giá');
-            } else {
-                // Invalid promo code
-                self.showToast(window.translations.invalid_promo || 'Mã giảm giá không hợp lệ', 'error');
-            }
-        });
+        //         // Show success notification
+        //         self.showToast(window.translations.promo_applied || 'Đã áp dụng mã giảm giá');
+        //     } else {
+        //         // Invalid promo code
+        //         self.showToast(window.translations.invalid_promo || 'Mã giảm giá không hợp lệ', 'error');
+        //     }
+        // });
         
         // Toggle mini cart dropdown
         $(document).on('click', '#cartToggle', function(e) {

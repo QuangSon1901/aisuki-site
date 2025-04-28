@@ -59,14 +59,6 @@
                                     <span>{{ trans_db('sections', 'subtotal', false) ?: 'Tạm tính' }}:</span>
                                     <span id="cartSubtotal">0,00 {{ setting('currency', '€') }}</span>
                                 </div>
-                                <div class="flex justify-between text-theme-primary">
-                                    <span>{{ trans_db('sections', 'delivery_fee', false) ?: 'Phí vận chuyển' }}:</span>
-                                    <span id="deliveryFee" data-fee="{{ $deliveryFee }}">{{ number_format($deliveryFee, 2, ',', '.') }} {{ setting('currency', '€') }}</span>
-                                </div>
-                                <div id="discountRow" class="flex justify-between text-green-600 hidden">
-                                    <span>{{ trans_db('sections', 'discount', false) ?: 'Giảm giá' }}:</span>
-                                    <span id="discountAmount" data-value="0">-0,00 {{ setting('currency', '€') }}</span>
-                                </div>
                             </div>
                             
                             <div class="border-t border-theme pt-3 mb-4">
@@ -74,19 +66,6 @@
                                     <span>{{ trans_db('sections', 'total', false) ?: 'Tổng cộng' }}:</span>
                                     <span class="text-aisuki-red text-lg" id="cartTotal">0,00 {{ setting('currency', '€') }}</span>
                                 </div>
-                            </div>
-
-                            <!-- Mã giảm giá -->
-                            <div class="mb-4">
-                                <div class="flex">
-                                    <input type="text" id="promoCode" placeholder="{{ trans_db('sections', 'promo_code_placeholder', false) ?: 'Nhập mã giảm giá' }}" class="flex-1 p-2 border border-theme rounded-l-md bg-theme-primary text-theme-primary">
-                                    <button id="applyPromo" class="bg-aisuki-red text-white px-4 py-2 rounded-r-md hover:bg-aisuki-red-dark transition-colors">
-                                        {{ trans_db('sections', 'apply', false) ?: 'Áp dụng' }}
-                                    </button>
-                                </div>
-                                {{--<div class="text-xs text-theme-secondary mt-1">
-                                    <i class="fas fa-info-circle mr-1"></i> Mã thử nghiệm: <strong>AISUKI10</strong>
-                                </div>--}}
                             </div>
 
                             <!-- Phần trợ giúp -->
