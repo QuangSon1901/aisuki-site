@@ -272,7 +272,6 @@
                         </label>
                         <select id="home_guests" name="guests" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red" required>
                             <option value="">{{ trans_db('sections', 'select_guests', false) ?: 'Select guests' }}</option>
-                            <option value="1" {{ old('guests') == '1' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_1', false) ?: '1 person' }}</option>
                             <option value="2" {{ old('guests') == '2' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_2', false) ?: '2 people' }}</option>
                             <option value="3" {{ old('guests') == '3' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_3', false) ?: '3 people' }}</option>
                             <option value="4" {{ old('guests') == '4' ? 'selected' : '' }}>{{ trans_db('sections', 'reservation_form_guests_4', false) ?: '4 people' }}</option>
