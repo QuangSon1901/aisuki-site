@@ -3,7 +3,7 @@
 @endphp
 <footer class="bg-footer-bg text-footer-text pt-12 pb-20 sm:pt-16 sm:pb-16 px-4" id="contact">
     <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
             <div>
                 <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="flex items-center mb-6">
                     <img src="{{ asset(setting('site_logo', 'logo.png')) }}" alt="{{ setting('site_name', 'AISUKI') }} Logo" class="h-12">
@@ -42,8 +42,8 @@
                 <h3 class="text-lg font-semibold mb-6 pb-2 border-b border-aisuki-red inline-block text-aisuki-red">{{ trans_db('sections', 'quick_links', false) ?: 'Quick Links' }}</h3>
                 <ul class="space-y-2">
                     <li><a href="{{ route('home', ['locale' => $currentLocale]) }}" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'home', false) ?: 'Home' }}</a></li>
-                    <li><a href="{{ route('about', ['locale' => $currentLocale]) }}" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'about_us', false) ?: 'About Us' }}</a></li>
                     <li><a href="{{ route('menu', ['locale' => $currentLocale]) }}" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'menu', false) ?: 'Menu' }}</a></li>
+                    <li><a href="{{ route('about', ['locale' => $currentLocale]) }}" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'about_us', false) ?: 'About Us' }}</a></li>
                     <li><a href="{{ route('contact', ['locale' => $currentLocale]) }}" class="text-gray-400 hover:text-aisuki-red hover:pl-1 transition-all text-sm">{{ trans_db('sections', 'contact', false) ?: 'Contact' }}</a></li>
                 </ul>
             </div>
@@ -68,14 +68,14 @@
                     </div>
                 </div>
             </div>
-            <div>
+            {{--<div class="hidden">
                 <h3 class="text-lg font-semibold mb-6 pb-2 border-b border-aisuki-red inline-block text-aisuki-red">{{ trans_db('sections', 'newsletter', false) ?: 'Newsletter' }}</h3>
                 <p class="text-gray-400 text-sm mb-4">{{ trans_db('sections', 'newsletter_text', false) ?: 'Subscribe to receive information about promotions and latest updates from AISUKI' }}</p>
                 <div class="mb-4">
                     <input type="email" placeholder="{{ trans_db('sections', 'email_placeholder', false) ?: 'Your email' }}" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-300 focus:outline-none focus:border-aisuki-red">
                 </div>
                 <button class="bg-aisuki-red text-white py-2 px-6 rounded-full font-semibold hover:bg-[#c41017] transition-all">{{ trans_db('sections', 'subscribe', false) ?: 'Subscribe' }}</button>
-            </div>
+            </div>--}}
         </div>
         <div class="pt-6 border-t border-gray-800 text-center">
             <p class="text-gray-500 text-sm">&copy; {{ date('Y') }} {{ setting('site_name', 'AISUKI') }}. {{ trans_db('sections', 'all_rights_reserved', false) ?: 'All rights reserved.' }}</p>
