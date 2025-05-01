@@ -122,7 +122,7 @@
                                 <label class="form-label">Opening Hours</label>
                                 <div class="translatable-field">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="settings[opening_hours]" value="{{ $contactSettingItems['opening_hours']->value ?? '' }}">
+                                        <textarea type="text" class="form-control" name="settings[opening_hours]">{{ $contactSettingItems['opening_hours']->value ?? '' }}</textarea>
                                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
                                             <i class="fas fa-globe"></i>
                                         </button>
