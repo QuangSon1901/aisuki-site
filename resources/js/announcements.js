@@ -61,11 +61,13 @@ const Announcements = {
         // Close button
         this.elements.closeBtn.addEventListener('click', () => {
             this.closeModal();
+            this.dismissFor24Hours();
         });
         
         // Overlay click
         this.elements.overlay.addEventListener('click', () => {
             this.closeModal();
+            this.dismissFor24Hours();
         });
         
         // Previous button
@@ -103,39 +105,43 @@ const Announcements = {
     },
     
     // Fetch announcements from the server
-    fetchAnnouncements() {
-        this.data.isLoading = true;
-        
-        fetch('/api/announcements')
-            .then(response => response.json())
-            .then(data => {
-                if (data.success && data.announcements.length > 0) {
-                    this.data.announcements = data.announcements;
-                    this.renderAnnouncements();
-                    this.showToggleButton();
-                    
-                    // Auto-show the modal if not dismissed
-                    if (!this.data.isDismissed) {
-                        setTimeout(() => {
-                            this.openModal();
-                        }, this.config.autoShowDelay);
-                    }
-                } else {
-                    // No announcements, hide the toggle button
-                    this.elements.toggleBtn.style.display = 'none';
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching announcements:', error);
-                // Hide toggle button on error
-                this.elements.toggleBtn.style.display = 'none';
-            })
-            .finally(() => {
-                this.data.isLoading = false;
-            });
-    },
+fetchAnnouncements() {
+    this.data.isLoading = true;
     
-    // Trong phương thức renderAnnouncements(), thay thế phần tạo slide với đoạn này:
+    // Get current locale from HTML lang attribute
+    const locale = document.documentElement.lang || 'en';
+    
+    fetch(`/api/announcements?locale=${locale}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.announcements.length > 0) {
+                console.log(`Loaded ${data.announcements.length} announcements for locale: ${data.locale}`);
+                this.data.announcements = data.announcements;
+                this.renderAnnouncements();
+                this.showToggleButton();
+                
+                // Auto-show the modal if not dismissed
+                if (!this.data.isDismissed) {
+                    setTimeout(() => {
+                        this.openModal();
+                    }, this.config.autoShowDelay);
+                }
+            } else {
+                // No announcements, hide the toggle button
+                this.elements.toggleBtn.style.display = 'none';
+                console.log('No announcements found or error loading announcements');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching announcements:', error);
+            // Hide toggle button on error
+            this.elements.toggleBtn.style.display = 'none';
+        })
+        .finally(() => {
+            this.data.isLoading = false;
+        });
+},
+    
     renderAnnouncements() {
         // Clear loading message and prepare container
         this.elements.slider.innerHTML = '';

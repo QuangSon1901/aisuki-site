@@ -153,7 +153,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="mb-3">
+                                <div class="mb-3 hidden">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="is_dismissible" name="is_dismissible" 
                                                {{ old('is_dismissible', $announcement->is_dismissible) ? 'checked' : '' }}>
