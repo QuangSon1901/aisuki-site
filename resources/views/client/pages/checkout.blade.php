@@ -52,7 +52,7 @@
                                         <label for="fullName" class="block text-theme-primary font-medium mb-1">
                                             {{ trans_db('sections', 'full_name', false) ?: 'Full Name' }} <span class="text-aisuki-red">*</span>
                                         </label>
-                                        <input type="text" id="fullName" name="full_name" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red" required>
+                                        <input type="text" id="fullName" name="full_name" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red">
                                     </div>
                                     
                                     <!-- Email -->
@@ -60,7 +60,7 @@
                                         <label for="email" class="block text-theme-primary font-medium mb-1">
                                             {{ trans_db('sections', 'email', false) ?: 'Email' }} <span class="text-aisuki-red">*</span>
                                         </label>
-                                        <input type="email" id="email" name="email" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red" required>
+                                        <input type="email" id="email" name="email" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red">
                                     </div>
                                 </div>
                                 
@@ -69,7 +69,7 @@
                                     <label for="phone" class="block text-theme-primary font-medium mb-1">
                                         {{ trans_db('sections', 'phone', false) ?: 'Phone' }} <span class="text-aisuki-red">*</span>
                                     </label>
-                                    <input type="tel" id="phone" name="phone" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red" required>
+                                    <input type="tel" id="phone" name="phone" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red">
                                 </div>
                             </div>
                         </div>
@@ -357,6 +357,11 @@
             }
         });
 
+        $('input, select, textarea').on('input change', function() {
+            $(this).removeClass('border-red-500');
+            $(this).next('.validation-error').remove();
+        });
+
         // Khởi tạo trang checkout
         function initCheckout() {
             updateOrderSummary();
@@ -469,11 +474,9 @@
                 if (method === 'delivery') {
                     $('#deliveryAddressForm').removeClass('hidden');
                     $('#pickupInformation').addClass('hidden');
-                    $('.delivery-required').attr('required', true);
                 } else {
                     $('#deliveryAddressForm').addClass('hidden');
                     $('#pickupInformation').removeClass('hidden');
-                    $('.delivery-required').removeAttr('required');
                 }
                 
                 // Cập nhật tổng tiền
@@ -492,15 +495,6 @@
             
             // Chuẩn bị nút submit
             const submitBtn = $('#submitOrderBtn');
-            const submitBtnText = submitBtn.html();
-            
-            // Thêm loading state vào nút
-            submitBtn.html(`
-                <span class="normal-state">${submitBtnText}</span>
-                <span class="loading-state hidden">
-                    <i class="fas fa-spinner fa-spin mr-2"></i>${window.translations.processing || 'Processing...'}
-                </span>
-            `);
             
             // Xử lý submit form
             $('#checkoutForm').on('submit', function(e) {
@@ -509,6 +503,9 @@
                     e.preventDefault();
                     return false;
                 }
+                
+                // Remove existing error messages
+                $('.validation-error').remove();
                 
                 // Kiểm tra giỏ hàng có trống không
                 const cartItems = Cart.getItems();
@@ -552,71 +549,116 @@
                     submitBtn.prop('disabled', false);
                     submitBtn.find('.normal-state').removeClass('hidden');
                     submitBtn.find('.loading-state').addClass('hidden');
+                    $('.validation-error').remove();
                 }
             });
         }
         
-        // Kiểm tra các trường form
+        // Form field validation
         function validateFormFields() {
             let isValid = true;
             
-            // Kiểm tra tên
-            if ($('#fullName').val().trim() === '') {
-                isValid = false;
-                $('#fullName').addClass('border-red-500');
-            } else {
-                $('#fullName').removeClass('border-red-500');
-            }
+            // Reset all error states
+            $('.validation-error').remove();
+            $('.border-red-500').removeClass('border-red-500');
             
-            // Kiểm tra email
-            if ($('#email').val().trim() === '' || !isValidEmail($('#email').val().trim())) {
-                isValid = false;
-                $('#email').addClass('border-red-500');
-            } else {
-                $('#email').removeClass('border-red-500');
-            }
+            // Define validation rules for each field
+            const fields = [
+                { 
+                    id: 'fullName', 
+                    rules: ['required'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'name_required', false) ?: 'Name is required' }}"
+                    }
+                },
+                { 
+                    id: 'email', 
+                    rules: ['required', 'email'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'email_required', false) ?: 'Email is required' }}",
+                        email: "{{ trans_db('validation', 'email_invalid', false) ?: 'Please enter a valid email address' }}"
+                    }
+                },
+                { 
+                    id: 'phone', 
+                    rules: ['required'], 
+                    messages: {
+                        required: "{{ trans_db('validation', 'phone_required', false) ?: 'Phone number is required' }}"
+                    }
+                }
+            ];
             
-            // Kiểm tra số điện thoại
-            if ($('#phone').val().trim() === '') {
-                isValid = false;
-                $('#phone').addClass('border-red-500');
-            } else {
-                $('#phone').removeClass('border-red-500');
-            }
-            
-            // Nếu chọn giao hàng, kiểm tra địa chỉ
+            // Add delivery fields if delivery method is selected
             if ($('input[name="delivery_method"]:checked').val() === 'delivery') {
-                if ($('#street').val().trim() === '') {
-                    isValid = false;
-                    $('#street').addClass('border-red-500');
-                } else {
-                    $('#street').removeClass('border-red-500');
-                }
-                
-                if ($('#houseNumber').val().trim() === '') {
-                    isValid = false;
-                    $('#houseNumber').addClass('border-red-500');
-                } else {
-                    $('#houseNumber').removeClass('border-red-500');
-                }
-                
-                if ($('#city').val().trim() === '') {
-                    isValid = false;
-                    $('#city').addClass('border-red-500');
-                } else {
-                    $('#city').removeClass('border-red-500');
-                }
-                
-                if ($('#postalCode').val().trim() === '') {
-                    isValid = false;
-                    $('#postalCode').addClass('border-red-500');
-                } else {
-                    $('#postalCode').removeClass('border-red-500');
-                }
+                fields.push(
+                    { 
+                        id: 'street', 
+                        rules: ['required'], 
+                        messages: {
+                            required: "{{ trans_db('validation', 'street_required', false) ?: 'Street is required' }}"
+                        }
+                    },
+                    { 
+                        id: 'houseNumber', 
+                        rules: ['required'], 
+                        messages: {
+                            required: "{{ trans_db('validation', 'house_number_required', false) ?: 'House number is required' }}"
+                        }
+                    },
+                    { 
+                        id: 'city', 
+                        rules: ['required'], 
+                        messages: {
+                            required: "{{ trans_db('validation', 'city_required', false) ?: 'City is required' }}"
+                        }
+                    },
+                    { 
+                        id: 'postalCode', 
+                        rules: ['required'], 
+                        messages: {
+                            required: "{{ trans_db('validation', 'postal_code_required', false) ?: 'Postal code is required' }}"
+                        }
+                    }
+                );
             }
+            
+            // Validate each field
+            fields.forEach(field => {
+                const $field = $('#' + field.id);
+                let fieldErrors = [];
+                
+                // Check each validation rule
+                field.rules.forEach(rule => {
+                    const value = $field.val().trim();
+                    
+                    if (rule === 'required' && value === '') {
+                        fieldErrors.push(field.messages.required);
+                    } else if (rule === 'email' && value !== '') {
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(value)) {
+                            fieldErrors.push(field.messages.email);
+                        }
+                    }
+                });
+                
+                // If field has errors, mark it and show messages
+                if (fieldErrors.length > 0) {
+                    $field.addClass('border-red-500');
+                    
+                    // Add error message after the field
+                    const errorContainer = $('<div class="validation-error text-red-500 text-xs mt-1"></div>');
+                    errorContainer.text(fieldErrors[0]); // Show only the first error for each field
+                    
+                    // Find the field's parent and append error
+                    $field.parent().append(errorContainer);
+                    
+                    isValid = false;
+                }
+            });
             
             if (!isValid) {
-                Cart.showToast(window.translations.required_field || 'Please fill in all required fields', 'error');
+                // Show error message
+                Cart.showToast("{{ trans_db('validation', 'form_errors', false) ?: 'Please fix the errors in the form' }}", 'error');
             }
             
             return isValid;
