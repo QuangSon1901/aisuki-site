@@ -73,6 +73,12 @@
                                             </td>
                                             <td class="text-end">
                                                 <div class="d-flex justify-content-end">
+                                                    <form action="{{ route('admin.announcements.toggle-active', $announcementData['announcement']->id) }}" method="POST" class="me-1">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-sm {{ $announcementData['announcement']->is_active ? 'btn-success' : 'btn-secondary' }}" title="{{ $announcementData['announcement']->is_active ? 'Deactivate' : 'Activate' }}">
+                                                            <i class="fas fa-{{ $announcementData['announcement']->is_active ? 'toggle-on' : 'toggle-off' }}"></i>
+                                                        </button>
+                                                    </form>
                                                     <a href="{{ route('admin.announcements.edit', $announcementData['announcement']->id) }}" class="btn btn-sm btn-info me-1" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>

@@ -307,4 +307,32 @@ class AnnouncementController extends Controller
             'message' => 'No image provided'
         ], 400);
     }
+
+    /**
+     * Toggle active status for an announcement and all its translations
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function toggleActive($id)
+    {
+        try {
+            // Find the announcement
+            $announcement = Announcement::findOrFail($id);
+            
+            // Get the current active state (we'll toggle to the opposite)
+            $newActiveState = !$announcement->is_active;
+            
+            // Update all announcements with the same mass_id
+            Announcement::where('mass_id', $announcement->mass_id)
+                ->update(['is_active' => $newActiveState]);
+            
+            $statusText = $newActiveState ? 'activated' : 'deactivated';
+            return redirect()->route('admin.announcements.index')
+                ->with('success', "Announcement '{$announcement->title}' and all its translations have been {$statusText}.");
+        } catch (\Exception $e) {
+            return redirect()->route('admin.announcements.index')
+                ->with('error', 'Failed to update announcement status: ' . $e->getMessage());
+        }
+    }
 }

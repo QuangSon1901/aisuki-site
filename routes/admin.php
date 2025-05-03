@@ -91,6 +91,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Announcements with translation support
     Route::get('announcements/{id}/create-translation', [AnnouncementController::class, 'createTranslation'])->name('admin.announcements.create-translation');
     Route::post('announcements/{id}/create-translation', [AnnouncementController::class, 'storeTranslation'])->name('admin.announcements.store-translation');
+    Route::post('announcements/{id}/toggle-active', [AnnouncementController::class, 'toggleActive'])->name('admin.announcements.toggle-active');
     Route::post('announcements/upload-image', [AnnouncementController::class, 'uploadEditorImage'])->name('admin.announcements.upload-image');
     Route::resource('announcements', AnnouncementController::class)->names('admin.announcements');
 });

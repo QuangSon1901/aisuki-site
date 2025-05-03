@@ -94,7 +94,7 @@
                                 @enderror
                             </div>
                             
-                            <div class="col-md-6">
+                            <div class="col-md-6 hidden">
                                 <label for="sort_order" class="form-label">Sort Order</label>
                                 <input type="number" class="form-control @error('sort_order') is-invalid @enderror" 
                                     id="sort_order" name="sort_order" value="{{ old('sort_order', 0) }}" min="0">

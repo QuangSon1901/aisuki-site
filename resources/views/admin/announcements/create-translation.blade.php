@@ -76,7 +76,7 @@
                         
                         <div class="mt-4">
                             <div class="alert alert-info">
-                                <p><i class="fas fa-info-circle"></i> Other settings like dates, priority, and dismissible status will be inherited from the source announcement.</p>
+                                <p><i class="fas fa-info-circle"></i> Other settings like dates, and priority status will be inherited from the source announcement.</p>
                             </div>
                         </div>
                         
