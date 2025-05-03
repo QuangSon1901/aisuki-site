@@ -8,6 +8,7 @@ use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AnnouncementController extends Controller
 {
@@ -276,5 +277,34 @@ class AnnouncementController extends Controller
                 ->with('error', 'Failed to create translation: ' . $e->getMessage())
                 ->withInput();
         }
+    }
+
+    /**
+     * Upload an image from the Quill editor.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function uploadEditorImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
+        
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = 'announcement_' . time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads'), $imageName);
+            
+            return response()->json([
+                'success' => true,
+                'url' => asset('uploads/' . $imageName)
+            ]);
+        }
+        
+        return response()->json([
+            'success' => false,
+            'message' => 'No image provided'
+        ], 400);
     }
 }
