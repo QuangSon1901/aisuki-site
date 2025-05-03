@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MenuCategoryController;
 use App\Http\Controllers\Admin\MenuItemController;
 use App\Http\Controllers\Admin\AddonItemController;
+use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\LanguageController;
@@ -86,4 +87,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('api/notifications/check', [NotificationApiController::class, 'checkNewNotifications'])
         ->name('admin.api.notifications.check');
+
+    // Announcements with translation support
+    Route::get('announcements/{id}/create-translation', [AnnouncementController::class, 'createTranslation'])->name('admin.announcements.create-translation');
+    Route::post('announcements/{id}/create-translation', [AnnouncementController::class, 'storeTranslation'])->name('admin.announcements.store-translation');
+    Route::resource('announcements', AnnouncementController::class)->names('admin.announcements');
 });

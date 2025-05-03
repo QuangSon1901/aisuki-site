@@ -1,5 +1,6 @@
 import './bootstrap';
 import './cart';
+import './announcements';
 
 // public/client/js/global.js
 $(document).ready(function() {

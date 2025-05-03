@@ -107,6 +107,13 @@
                         </a>
                     </li>
 
+                    <li class="nav-item {{ request()->routeIs('admin.announcements.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.announcements.index') }}" class="nav-link">
+                            <i class="fas fa-bullhorn"></i>
+                            <span class="nav-text">Announcements</span>
+                        </a>
+                    </li>
+
                     <li class="nav-heading">Localization</li>
 
                     <li class="nav-item {{ request()->routeIs('admin.translations.*') ? 'active' : '' }}">

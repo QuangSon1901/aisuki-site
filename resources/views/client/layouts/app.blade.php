@@ -78,5 +78,7 @@
             menu: "{{ route('menu', ['locale' => app()->getLocale()]) }}"
         };
     </script>
+
+    @include('client.components.announcement-modal')
 </body>
 </html>
