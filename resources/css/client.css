@@ -267,7 +267,7 @@ input, select, textarea {
 }
 
 .toast-message {
-    color: var(--text-primary);
+    color: #121212;
     font-size: 0.875rem;
 }
 
