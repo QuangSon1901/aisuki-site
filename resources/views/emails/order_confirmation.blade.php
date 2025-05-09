@@ -82,6 +82,9 @@
                 <p><strong>Pickup Address:</strong> {{ setting('store_address') }}</p>
             @endif
             <p><strong>Payment Method:</strong> {{ ucfirst($order->payment_method) }}</p>
+            @if($order->notes)
+                <p><strong>Notes:</strong> {{ $order->notes }}</p>
+            @endif
         </div>
         
         <div class="order-items">
@@ -129,13 +132,6 @@
             @endif
             <p class="total-row"><strong>Total:</strong> {{ setting('currency', '€') }}{{ number_format($order->total, 2) }}</p>
         </div>
-        
-        @if($order->notes)
-            <div class="order-notes">
-                <h3>Order Notes</h3>
-                <p>{{ $order->notes }}</p>
-            </div>
-        @endif
         
         <p>If you have any questions about your order, please contact us at {{ setting('email') }} or {{ setting('phone') }}.</p>
         
