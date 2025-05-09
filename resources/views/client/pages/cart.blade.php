@@ -33,7 +33,7 @@
 
                         <!-- Điều khiển giỏ hàng -->
                         <div id="checkoutControls" class="p-4 border-t border-theme hidden">
-                            <div class="flex justify-between items-center">
+                            <div class="flex flex-col gap-5 md:flex-row md:gap-0 justify-between items-center">
                                 <div class="flex flex-wrap gap-4">
                                     <a href="{{ route('menu', ['locale' => app()->getLocale()]) }}" class="text-aisuki-red hover:underline flex items-center">
                                         <i class="fas fa-chevron-left mr-2"></i> {{ trans_db('sections', 'continue_shopping', false) ?: 'Tiếp tục mua hàng' }}
