@@ -680,10 +680,46 @@ const Cart = {
         
         // Clear entire cart
         $(document).on('click', '#clearCart', function() {
-            if (confirm(window.translations.confirm_clear_cart || 'Bạn có chắc muốn xóa toàn bộ giỏ hàng không?')) {
-                self.clearCart();
-                self.showToast(window.translations.cart_cleared || 'Giỏ hàng đã được xóa');
-            }
+            // Create a confirm toast
+            const toastContainer = $('.toast-container');
+            const toastId = 'confirm-toast-' + Date.now();
+            
+            const toast = $(`
+                <div id="${toastId}" class="toast toast-warning">
+                    <div class="toast-content">
+                        <i class="fas fa-question-circle toast-icon"></i>
+                        <div class="toast-message">${window.translations.confirm_clear_cart || 'Are you sure you want to clear your cart?'}</div>
+                    </div>
+                    <div class="toast-actions">
+                        <button class="toast-cancel-btn">${window.translations.cancel || 'Cancel'}</button>
+                        <button class="toast-confirm-btn">${window.translations.confirm || 'Clear'}</button>
+                    </div>
+                    <div class="toast-progress"></div>
+                </div>
+            `);
+            
+            toastContainer.append(toast);
+            
+            // Show the toast
+            setTimeout(() => {
+                toast.addClass('show');
+            }, 100);
+            
+            // Handle cancel button
+            toast.find('.toast-cancel-btn').on('click', function() {
+                toast.removeClass('show');
+                setTimeout(() => toast.remove(), 300);
+            });
+            
+            // Handle confirm button
+            toast.find('.toast-confirm-btn').on('click', function() {
+                toast.removeClass('show');
+                setTimeout(() => {
+                    toast.remove();
+                    Cart.clearCart();
+                    Cart.showToast(window.translations.cart_cleared || 'Cart has been cleared');
+                }, 300);
+            });
         });
         
         // // Apply promo code

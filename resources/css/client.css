@@ -834,3 +834,36 @@ input, select, textarea {
 [data-theme="dark"] .action-btn:hover {
     background: rgba(230, 28, 35, 0.2);
 }
+
+.toast-warning {
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.toast-warning .toast-icon {
+    color: #856404;
+}
+
+.toast-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 8px 0;
+}
+
+.toast-cancel-btn, .toast-confirm-btn {
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.toast-cancel-btn {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.toast-confirm-btn {
+    background-color: #e12e2e;
+    color: white;
+}
