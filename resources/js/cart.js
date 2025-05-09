@@ -148,6 +148,7 @@ const Cart = {
         // Update cart page if we're on it
         if ($('#cartPage').length) {
             this.updateCartPage();
+            this.updateCartSummary();
         }
         
         // Update checkout button state
