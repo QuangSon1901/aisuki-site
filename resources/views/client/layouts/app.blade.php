@@ -3,6 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Theme initialization script - must be placed as early as possible -->
+    <script>
+        // Run before page renders to prevent theme flash
+        (function() {
+            // Check localStorage for saved theme
+            var savedTheme = localStorage.getItem('aisuki-theme');
+            
+            // If we have a saved theme, use it
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            }
+            // Otherwise check for system preference if set to 'system' mode
+            else if ('{{ setting("theme_mode", "light") }}' === 'system') {
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+            }
+            // Use the default setting
+            else {
+                document.documentElement.setAttribute('data-theme', '{{ setting("theme_mode", "light") }}');
+            }
+        })();
+    </script>
+
     <title>{{ setting('meta_title', 'AISUKI - Japanese Restaurant') }}</title>
     <meta name="description" content="{{ setting('meta_description') }}">
     <meta name="keywords" content="{{ setting('meta_keywords') }}">
