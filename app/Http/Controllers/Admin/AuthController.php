@@ -24,8 +24,20 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended(route('admin.dashboard'));
+            // Luego verificamos si el usuario es administrador
+            if (Auth::user()->is_admin) {
+                $request->session()->regenerate();
+                return redirect()->intended(route('admin.dashboard'));
+            }
+            
+            // Si no es administrador, cerramos sesión y devolvemos error
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            
+            return back()->withErrors([
+                'email' => 'You do not have permission to access the admin area.',
+            ])->withInput($request->except('password'));
         }
 
         return back()->withErrors([
