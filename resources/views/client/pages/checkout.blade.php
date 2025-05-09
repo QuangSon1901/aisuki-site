@@ -161,28 +161,20 @@
                                                 {{ trans_db('sections', 'delivery_time', false) ?: 'Delivery Time' }}
                                             </label>
                                             <select id="deliveryTime" name="delivery_time" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red">
-                                                <option value="asap">{{ trans_db('sections', 'asap', false) ?: 'As soon as possible' }}</option>
-                                                <option value="today_11:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 11:00</option>
-                                                <option value="today_11:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 11:30</option>
-                                                <option value="today_12:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 12:00</option>
-                                                <option value="today_12:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 12:30</option>
-                                                <option value="today_13:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 13:00</option>
-                                                <option value="today_13:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 13:30</option>
-                                                <option value="today_14:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 14:00</option>
-                                                <option value="today_14:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 14:30</option>
-                                                <option value="today_15:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 15:00</option>
-                                                <option value="today_15:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 15:30</option>
-                                                <option value="today_16:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 16:00</option>
-                                                <option value="today_16:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 16:30</option>
-                                                <option value="today_17:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 17:00</option>
-                                                <option value="today_17:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 17:30</option>
-                                                <option value="today_18:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 18:00</option>
-                                                <option value="today_18:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 18:30</option>
-                                                <option value="today_19:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 19:00</option>
-                                                <option value="today_19:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 19:30</option>
-                                                <option value="today_20:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 20:00</option>
-                                                <option value="today_20:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 20:30</option>
-                                                <option value="today_21:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 21:00</option>
+                                                @php
+                                                $deliveryTimeJson = setting('pickup_times', '[]');
+                                                $deliveryTime = json_decode($deliveryTimeJson, true) ?: [];
+                                                @endphp
+                                                
+                                                @foreach($deliveryTime as $time)
+                                                    <option value="{{ $time['value'] }}" {{ old('pickup_time') == $time['value'] ? 'selected' : '' }}>
+                                                        @if($time['value'] === 'asap')
+                                                            {{ trans_db('sections', 'asap', false) ?: $time['label'] }}
+                                                        @else
+                                                            {{ trans_db('sections', 'today', false) ?: 'Today' }} {{ str_replace('today_', '', $time['value']) }}
+                                                        @endif
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -207,28 +199,20 @@
                                                 {{ trans_db('sections', 'pickup_time', false) ?: 'Pickup Time' }}
                                             </label>
                                             <select id="pickupTime" name="pickup_time" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red">
-                                                <option value="asap">{{ trans_db('sections', 'asap', false) ?: 'As soon as possible' }}</option>
-                                                <option value="today_11:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 11:00</option>
-                                                <option value="today_11:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 11:30</option>
-                                                <option value="today_12:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 12:00</option>
-                                                <option value="today_12:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 12:30</option>
-                                                <option value="today_13:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 13:00</option>
-                                                <option value="today_13:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 13:30</option>
-                                                <option value="today_14:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 14:00</option>
-                                                <option value="today_14:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 14:30</option>
-                                                <option value="today_15:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 15:00</option>
-                                                <option value="today_15:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 15:30</option>
-                                                <option value="today_16:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 16:00</option>
-                                                <option value="today_16:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 16:30</option>
-                                                <option value="today_17:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 17:00</option>
-                                                <option value="today_17:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 17:30</option>
-                                                <option value="today_18:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 18:00</option>
-                                                <option value="today_18:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 18:30</option>
-                                                <option value="today_19:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 19:00</option>
-                                                <option value="today_19:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 19:30</option>
-                                                <option value="today_20:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 20:00</option>
-                                                <option value="today_20:30">{{ trans_db('sections', 'today', false) ?: 'Today' }} 20:30</option>
-                                                <option value="today_21:00">{{ trans_db('sections', 'today', false) ?: 'Today' }} 21:00</option>
+                                                @php
+                                                $pickupTimesJson = setting('pickup_times', '[]');
+                                                $pickupTimes = json_decode($pickupTimesJson, true) ?: [];
+                                                @endphp
+                                                
+                                                @foreach($pickupTimes as $time)
+                                                    <option value="{{ $time['value'] }}" {{ old('pickup_time') == $time['value'] ? 'selected' : '' }}>
+                                                        @if($time['value'] === 'asap')
+                                                            {{ trans_db('sections', 'asap', false) ?: $time['label'] }}
+                                                        @else
+                                                            {{ trans_db('sections', 'today', false) ?: 'Today' }} {{ str_replace('today_', '', $time['value']) }}
+                                                        @endif
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

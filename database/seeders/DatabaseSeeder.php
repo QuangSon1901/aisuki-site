@@ -13,14 +13,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            // LanguageSeeder::class,
-            // SettingSeeder::class,
-            // TranslationSeeder::class,
-            // MenuCategorySeeder::class,
-            // MenuItemSeeder::class,
-            // AddonItemSeeder::class,
-            // PageSeeder::class, 
-            // UserSeeder::class, 
+            LanguageSeeder::class,
+            SettingSeeder::class,
+            TranslationSeeder::class,
+            MenuCategorySeeder::class,
+            MenuItemSeeder::class,
+            AddonItemSeeder::class,
+            PageSeeder::class, 
+            UserSeeder::class, 
             AnnouncementSeeder::class,
         ]);
     }

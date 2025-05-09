@@ -557,6 +557,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 mb-4">
+                                <label class="form-label">Pickup Times</label>
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="pickupTimesTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="40%">Value</th>
+                                                        <th width="40%">Label</th>
+                                                        <th width="20%">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- JavaScript will populate this -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-success mt-2" id="addPickupTimeBtn">
+                                            <i class="fas fa-plus-circle"></i> Add New Time
+                                        </button>
+                                        <input type="hidden" name="settings[pickup_times]" id="pickupTimesInput" value="{{ $orderSettingItems['pickup_times']->value ?? '[]' }}">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="text-end mb-4">
                             <button type="submit" class="btn btn-primary">
@@ -797,6 +822,80 @@
                 }
             });
         });
+
+
+    });
+
+    // Pickup Times Management
+    $(document).ready(function() {
+        let pickupTimes = [];
+        
+        // Initialize pickup times from input
+        function initPickupTimes() {
+            try {
+                pickupTimes = JSON.parse($('#pickupTimesInput').val() || '[]');
+            } catch (e) {
+                pickupTimes = [];
+                console.error("Error parsing pickup times:", e);
+            }
+            renderPickupTimesTable();
+        }
+        
+        // Render the pickup times table
+        function renderPickupTimesTable() {
+            const tbody = $('#pickupTimesTable tbody');
+            tbody.empty();
+            
+            if (pickupTimes.length === 0) {
+                tbody.html('<tr><td colspan="3" class="text-center">No pickup times configured</td></tr>');
+                return;
+            }
+            
+            pickupTimes.forEach((time, index) => {
+                tbody.append(`
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control pickup-time-value" data-index="${index}" value="${time.value || ''}" placeholder="e.g., today_11:00">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control pickup-time-label" data-index="${index}" value="${time.label || ''}" placeholder="e.g., 11:00">
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-sm btn-danger remove-pickup-time" data-index="${index}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `);
+            });
+            
+            // Update hidden input
+            $('#pickupTimesInput').val(JSON.stringify(pickupTimes));
+        }
+        
+        // Add new pickup time
+        $('#addPickupTimeBtn').click(function() {
+            pickupTimes.push({ value: '', label: '' });
+            renderPickupTimesTable();
+        });
+        
+        // Handle removing pickup time
+        $(document).on('click', '.remove-pickup-time', function() {
+            const index = $(this).data('index');
+            pickupTimes.splice(index, 1);
+            renderPickupTimesTable();
+        });
+        
+        // Handle changing pickup time values
+        $(document).on('change', '.pickup-time-value, .pickup-time-label', function() {
+            const index = $(this).data('index');
+            const field = $(this).hasClass('pickup-time-value') ? 'value' : 'label';
+            pickupTimes[index][field] = $(this).val();
+            $('#pickupTimesInput').val(JSON.stringify(pickupTimes));
+        });
+        
+        // Initialize
+        initPickupTimes();
     });
 </script>
 @endpush

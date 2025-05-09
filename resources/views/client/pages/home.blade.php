@@ -252,31 +252,20 @@
                             <label for="home_time" class="block font-semibold text-sm mb-2 text-theme-primary">
                                 {{ trans_db('sections', 'reservation_form_time', false) ?: 'Time' }} <span class="text-aisuki-red">*</span>
                             </label>
-                            <select id="home_time" name="time" class="w-full px-4 py-3 border border-theme rounded-lg focus:outline-none focus:ring-2 focus:ring-aisuki-red/30 focus:border-aisuki-red">
+                            <select id="time" name="time" class="w-full p-3 border border-theme rounded-md bg-theme-primary text-theme-primary focus:border-aisuki-red @error('time') border-red-500 @enderror">
                                 <option value="">{{ trans_db('sections', 'select_time', false) ?: 'Select time' }}</option>
-                                <!-- Lunch hours -->
-                                <option value="11:00" {{ old('time') == '11:00' ? 'selected' : '' }}>11:00</option>
-                                <option value="11:30" {{ old('time') == '11:30' ? 'selected' : '' }}>11:30</option>
-                                <option value="12:00" {{ old('time') == '12:00' ? 'selected' : '' }}>12:00</option>
-                                <option value="12:30" {{ old('time') == '12:30' ? 'selected' : '' }}>12:30</option>
-                                <option value="13:00" {{ old('time') == '13:00' ? 'selected' : '' }}>13:00</option>
-                                <option value="13:30" {{ old('time') == '13:30' ? 'selected' : '' }}>13:30</option>
-                                <option value="14:00" {{ old('time') == '14:00' ? 'selected' : '' }}>14:00</option>
-                                <option value="14:30" {{ old('time') == '14:30' ? 'selected' : '' }}>14:30</option>
-                                <option value="15:00" {{ old('time') == '15:00' ? 'selected' : '' }}>15:00</option>
-                                <option value="15:30" {{ old('time') == '15:30' ? 'selected' : '' }}>15:30</option>
-                                <option value="16:00" {{ old('time') == '16:00' ? 'selected' : '' }}>16:00</option>
-                                <option value="16:30" {{ old('time') == '16:30' ? 'selected' : '' }}>16:30</option>
-                                <!-- Dinner hours -->
-                                <option value="17:00" {{ old('time') == '17:00' ? 'selected' : '' }}>17:00</option>
-                                <option value="17:30" {{ old('time') == '17:30' ? 'selected' : '' }}>17:30</option>
-                                <option value="18:00" {{ old('time') == '18:00' ? 'selected' : '' }}>18:00</option>
-                                <option value="18:30" {{ old('time') == '18:30' ? 'selected' : '' }}>18:30</option>
-                                <option value="19:00" {{ old('time') == '19:00' ? 'selected' : '' }}>19:00</option>
-                                <option value="19:30" {{ old('time') == '19:30' ? 'selected' : '' }}>19:30</option>
-                                <option value="20:00" {{ old('time') == '20:00' ? 'selected' : '' }}>20:00</option>
-                                <option value="20:30" {{ old('time') == '20:30' ? 'selected' : '' }}>20:30</option>
-                                <option value="21:00" {{ old('time') == '21:00' ? 'selected' : '' }}>21:00</option>
+                                @php
+                                $pickupTimesJson = setting('pickup_times', '[]');
+                                $pickupTimes = json_decode($pickupTimesJson, true) ?: [];
+                                @endphp
+                                
+                                @foreach($pickupTimes as $time)
+                                    @if($time['value'] !== 'asap')
+                                        <option value="{{ str_replace('today_', '', $time['value']) }}" {{ old('time') == str_replace('today_', '', $time['value']) ? 'selected' : '' }}>
+                                            {{ $time['label'] }}
+                                        </option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                     </div>
