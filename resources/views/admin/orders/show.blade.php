@@ -55,7 +55,7 @@
                     <div class="row mb-4">
                         <div class="col-12">
                             <h6 class="fw-bold">Order Notes</h6>
-                            <p class="alert alert-info">{{ $order->notes }}</p>
+                            <p class="alway alert alert-info">{{ $order->notes }}</p>
                         </div>
                     </div>
                     @endif

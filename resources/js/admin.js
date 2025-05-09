@@ -58,7 +58,7 @@ $(document).ready(function() {
     
     // Auto close alerts after 5 seconds
     setTimeout(function() {
-        $('.alert').alert('close');
+        $('.alert:not(.alway)').alert('close');
     }, 5000);
     
     // Image preview functionality

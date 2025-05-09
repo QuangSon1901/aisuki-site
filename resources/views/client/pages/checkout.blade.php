@@ -404,6 +404,15 @@
                     });
                     addonsText += '</div>';
                 }
+
+                let noteHtml = '';
+                if (item.note) {
+                    noteHtml = `
+                        <div class="mt-2 italic text-xs text-theme-secondary">
+                            <i class="fas fa-sticky-note mr-1"></i> ${item.note}
+                        </div>
+                    `;
+                }
                 
                 const itemHtml = `
                     <div class="py-3">
@@ -414,6 +423,7 @@
                                     <h4 class="font-medium text-theme-primary">${item.name}</h4>
                                 </div>
                                 ${addonsText}
+                                ${noteHtml}
                             </div>
                             <p class="font-medium text-theme-primary">${Cart.formatPrice(item.total)}</p>
                         </div>
